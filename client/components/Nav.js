@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Nav = ({handleClick, isLoggedIn}) => (
   <div>
     <h1>FS-App-Template</h1>
     <nav>
@@ -27,9 +27,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   </div>
 )
 
-/**
- * CONTAINER
- */
+
 const mapState = state => {
   return {
     isLoggedIn: !!state.auth.id
@@ -44,4 +42,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Nav)
