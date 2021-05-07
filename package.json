@@ -4,9 +4,8 @@
   "description": "Some boilerplate code to get you started - get shakin'!",
   "main": "index.js",
   "scripts": {
-    "build": "npm run install && webpack",
-    "build:dev": "webpack --watch --mode=development",
-    "install": "npm ci",
+    "build": "webpack",
+    "build:dev": "npm run build -- --watch --mode=development",
     "seed": "node script/seed.js",
     "start": "node server",
     "start:dev": "npm run build:dev & npm run start-server",
