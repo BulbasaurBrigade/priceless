@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run install && webpack",
     "build:dev": "webpack --watch --mode=development",
-    "install": "npm i",
+    "install": "npm ci",
     "seed": "node script/seed.js",
     "start": "node server",
     "start:dev": "npm run build:dev & npm run start-server",
