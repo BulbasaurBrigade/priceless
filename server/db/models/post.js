@@ -3,11 +3,11 @@ const db = require('../db');
 
 const Post = db.define('post', {
   posterId: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
   recipientId: {
-    type: Sequelize.STRING,
+    type: Sequelize.INTEGER,
   },
   photoURLs: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
@@ -20,7 +20,7 @@ const Post = db.define('post', {
     type: Sequelize.TEXT,
   },
   location: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.GEOMETRY('POINT', 4326),
     allowNull: false,
   },
   category: {
@@ -30,8 +30,14 @@ const Post = db.define('post', {
       'books',
       'decor',
       'kitchen',
+      'food',
+      'personal care',
+      'pet supplies',
+      'entertainment',
+      `children's items`,
       'other',
     ]),
+    defaultValue: 'other',
   },
   status: {
     type: Sequelize.ENUM(['lottery', 'open', 'pending', 'claimed']),
