@@ -6,8 +6,18 @@ const User = require('./models/user');
 const LotteryTicket = require('./models/lotteryTicket')
 const Chat = require('./models/chat')
 const Message = require('./models/message')
+const Post = require('./models/post');
 
 //associations could go here!
+
+Post.hasMany(LotteryTicket)
+LotteryTicket.belongsTo(Post)
+
+Post.hasMany(Chat)
+Chat.belongsTo(Post)
+
+Chat.hasMany(Message)
+Message.belongsTo(Chat)
 
 module.exports = {
   db,
@@ -15,6 +25,7 @@ module.exports = {
     User,
     LotteryTicket,
     Chat,
-    Message
+    Message,
+    Post,
   },
 };
