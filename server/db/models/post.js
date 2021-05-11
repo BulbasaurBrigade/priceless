@@ -2,13 +2,6 @@ const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../db");
 
 const Post = db.define("post", {
-  posterId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  recipientId: {
-    type: Sequelize.INTEGER,
-  },
   title: {
     type: Sequelize.STRING,
     allowNull: false,

@@ -11,17 +11,33 @@ const PostImage = require("./models/postImage");
 
 //associations could go here!
 
-Post.hasMany(LotteryTicket);
-LotteryTicket.belongsTo(Post);
+User.hasMany(Post, { as: "poster", foreignKey: "posterId" });
+Post.belongsTo(User, { as: "poster", foreignKey: "posterId" });
 
-Post.hasMany(Chat);
-Chat.belongsTo(Post);
+Post.belongsToMany(User, {
+  as: "requester",
+  foreignKey: "postId",
+  through: LotteryTicket,
+});
+User.belongsToMany(Post, {
+  as: "lotteryItem",
+  foreignKey: "requesterId",
+  through: LotteryTicket,
+});
+
+User.belongsToMany(Post, {
+  as: "post",
+  foreignKey: "recipientId",
+  through: Chat,
+});
+Post.belongsToMany(User, {
+  as: "recipient",
+  foreignKey: "postId",
+  through: LotteryTicket,
+});
 
 Post.hasMany(PostImage);
 PostImage.belongsTo(Post);
-
-Chat.hasMany(Message);
-Message.belongsTo(Chat);
 
 module.exports = {
   db,
