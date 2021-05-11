@@ -33,8 +33,14 @@ User.belongsToMany(Post, {
 Post.belongsToMany(User, {
   as: "recipient",
   foreignKey: "postId",
-  through: LotteryTicket,
+  through: Chat,
 });
+
+Message.belongsTo(Chat)
+Chat.hasMany(Message)
+
+Message.belongsTo(User)
+User.hasMany(Message)
 
 Post.hasMany(PostImage);
 PostImage.belongsTo(Post);

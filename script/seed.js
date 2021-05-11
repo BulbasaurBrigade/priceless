@@ -25,6 +25,10 @@ async function seed() {
     Post.create({ title: "Couch", latitude: 40.333, longitude: 70.455 }),
   ]);
 
+  //console.log(users[0].__proto__)
+  // view user magic methods 
+
+
   await posts[0].setPoster(users[0]);
   await posts[0].addRequester(users[1]);
   await posts[1].addRecipient(users[0]);
