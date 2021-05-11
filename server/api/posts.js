@@ -15,6 +15,15 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:postId", async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.postId, { include: PostImage });
+    res.send(post);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // POST
 router.post("/", async (req, res, next) => {
   try {

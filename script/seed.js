@@ -30,14 +30,19 @@ async function seed() {
       imageUrl:
         "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTouWJSf6hLnf9MqF3qdudaoOsXRc2Rbz1uWnxd22ddxy9KYWNDFlluU1Rhl9I1x76WOQTBTXJIW7W_feklCdiG3vg48DhSw3gQpBDKh5uz&usqp=CAc",
     }),
+    PostImage.create({
+      imageUrl:
+        "https://images-na.ssl-images-amazon.com/images/I/71AcCPDMa2L._AC_SL1500_.jpg",
+    }),
   ]);
-  console.log(posts[0].__proto__);
+  // console.log(posts[0].__proto__);
   // view user magic methods
 
   await posts[0].setPoster(users[0]);
   await posts[0].addRequester(users[1]);
   await posts[1].addRecipient(users[0]);
   await posts[0].addPostImages(postImage[0]);
+  await posts[1].addPostImages(postImage[1]);
 
   //await posts[1].setUsers([users[2]]);
 
