@@ -1,10 +1,10 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Message = db.define("message", {
-  content: {
+const PostImage = db.define("postImage", {
+  imageUrl: {
     type: Sequelize.TEXT,
   },
 });
 
-module.exports = Message;
+module.exports = PostImage;

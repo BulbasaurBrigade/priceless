@@ -2,16 +2,6 @@ const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../db");
 
 const Post = db.define("post", {
-  posterId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  recipientId: {
-    type: Sequelize.INTEGER,
-  },
-  photoURLs: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
-  },
   title: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -19,10 +9,14 @@ const Post = db.define("post", {
   description: {
     type: Sequelize.TEXT,
   },
-  // location: {
-  //   type: DataTypes.GEOMETRY("POINT", 4326),
-  //   allowNull: false,
-  // },
+  latitude: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
+  longitude: {
+    type: Sequelize.FLOAT,
+    allowNull: false,
+  },
   category: {
     type: Sequelize.ENUM([
       "furniture",

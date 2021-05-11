@@ -1,23 +1,49 @@
 //this is the access point for all things database related!
 
-const db = require('./db');
+const db = require("./db");
 
-const User = require('./models/user');
-const LotteryTicket = require('./models/lotteryTicket')
-const Chat = require('./models/chat')
-const Message = require('./models/message')
-const Post = require('./models/post');
+const User = require("./models/user");
+const LotteryTicket = require("./models/lotteryTicket");
+const Chat = require("./models/chat");
+const Message = require("./models/message");
+const Post = require("./models/post");
+const PostImage = require("./models/postImage");
 
 //associations could go here!
 
-Post.hasMany(LotteryTicket)
-LotteryTicket.belongsTo(Post)
+User.hasMany(Post, { as: "poster", foreignKey: "posterId" });
+Post.belongsTo(User, { as: "poster", foreignKey: "posterId" });
 
-Post.hasMany(Chat)
-Chat.belongsTo(Post)
+Post.belongsToMany(User, {
+  as: "requester",
+  foreignKey: "postId",
+  through: LotteryTicket,
+});
+User.belongsToMany(Post, {
+  as: "lotteryItem",
+  foreignKey: "requesterId",
+  through: LotteryTicket,
+});
 
-Chat.hasMany(Message)
+User.belongsToMany(Post, {
+  as: "post",
+  foreignKey: "recipientId",
+  through: Chat,
+});
+Post.belongsToMany(User, {
+  as: "recipient",
+  foreignKey: "postId",
+  through: Chat,
+});
+
 Message.belongsTo(Chat)
+Chat.hasMany(Message)
+
+Message.belongsTo(User)
+User.hasMany(Message)
+
+Post.hasMany(PostImage);
+PostImage.belongsTo(Post);
 
 module.exports = {
   db,
@@ -27,5 +53,6 @@ module.exports = {
     Chat,
     Message,
     Post,
+    PostImage,
   },
 };
