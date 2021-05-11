@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Post },
+  models: { User, Post, PostImage },
 } = require("../server/db");
 
 /**
@@ -25,13 +25,19 @@ async function seed() {
     Post.create({ title: "Couch", latitude: 40.333, longitude: 70.455 }),
   ]);
 
-  //console.log(users[0].__proto__)
-  // view user magic methods 
-
+  const postImage = await Promise.all([
+    PostImage.create({
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTouWJSf6hLnf9MqF3qdudaoOsXRc2Rbz1uWnxd22ddxy9KYWNDFlluU1Rhl9I1x76WOQTBTXJIW7W_feklCdiG3vg48DhSw3gQpBDKh5uz&usqp=CAc",
+    }),
+  ]);
+  console.log(posts[0].__proto__);
+  // view user magic methods
 
   await posts[0].setPoster(users[0]);
   await posts[0].addRequester(users[1]);
   await posts[1].addRecipient(users[0]);
+  await posts[0].addPostImages(postImage[0]);
 
   //await posts[1].setUsers([users[2]]);
 
