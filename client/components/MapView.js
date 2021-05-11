@@ -5,7 +5,8 @@ import MapPopUp from "./MapPopUp";
 class MapView extends React.Component {
   render() {
     return (
-      <div>
+      <div id="map-view">
+        <p>Map Goes Here</p>
         <Marker />
         <MapPopUp />
       </div>
