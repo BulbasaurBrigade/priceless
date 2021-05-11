@@ -1,24 +1,15 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React from "react";
+import { connect } from "react-redux";
+import LandingPage from "./LandingPage";
+import MainContainer from "./MainContainer";
 
-
-export const Homepage = props => {
-  const {username} = props
-
+export const Homepage = (props) => {
   return (
     <div>
-      <h3>Welcome, {username}</h3>
+      <LandingPage />
+      <MainContainer />
     </div>
-  )
-}
+  );
+};
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    username: state.auth.username
-  }
-}
-
-export default connect(mapState)(Homepage)
+export default Homepage;
