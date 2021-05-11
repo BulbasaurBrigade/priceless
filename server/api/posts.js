@@ -5,6 +5,16 @@ const {
 module.exports = router;
 const CronJob = require("cron").CronJob;
 
+// GET
+router.get("/", async (req, res, next) => {
+  try {
+    const posts = await Post.findAll();
+    res.send(posts);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // POST
 router.post("/", async (req, res, next) => {
   try {
