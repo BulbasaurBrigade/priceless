@@ -17,22 +17,30 @@ class SinglePost extends React.Component {
     const images = post.postImages || [];
 
     return (
-      <div target={post.id} onClick={() => this.handleClick(post.id)}>
-        <div>
+      <div id="single-post" onClick={() => this.handleClick(post.id)}>
+        <div id="post-image">
           {images.map((image) => (
             <img src={image.imageUrl} key={image.id} />
           ))}
         </div>
-        <h1>{post.title}</h1>
-        <h3>location</h3>
-        <h3>{post.status}</h3>
-        {post.id === this.props.singlePost.id && (
-          <div>
-            <p>Description: {post.description}</p>
-            <p>Pick Up Details:</p>
-            <button>Request</button>
-          </div>
-        )}
+        <div id="post-details">
+          <h1>{post.title}</h1>
+          <p>Location</p>
+          <p>Status: {post.status}</p>
+          {post.id === this.props.singlePost.id && (
+            <div>
+              <p>
+                Description: this is a decription of this post. It is x years
+                old and is in like new condition. {post.description}
+              </p>
+              <p>
+                Pick Up Details: pick up on Monday or Wednesday between 10am and
+                4:30pm
+              </p>
+              <button>Request</button>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

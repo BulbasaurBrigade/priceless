@@ -13,8 +13,10 @@ class MainContainer extends React.Component {
     return (
       <div>
         <MapNavbar />
-        <MapView />
-        <ListView />
+        <div id="main-container-bottom">
+          <MapView />
+          <ListView />
+        </div>
       </div>
     );
   }

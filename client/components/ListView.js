@@ -6,7 +6,7 @@ class ListView extends React.Component {
   render() {
     const posts = this.props.posts;
     return (
-      <div>
+      <div id="list-view">
         {posts.map((post) => (
           <SinglePost key={post.id} post={post} />
         ))}
