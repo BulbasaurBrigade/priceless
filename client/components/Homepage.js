@@ -5,9 +5,13 @@ import MainContainer from "./MainContainer";
 
 export const Homepage = (props) => {
   return (
-    <div>
-      <LandingPage />
-      <MainContainer />
+    <div id="home-container">
+      <section>
+        <LandingPage />
+      </section>
+      <section>
+        <MainContainer />
+      </section>
     </div>
   );
 };
