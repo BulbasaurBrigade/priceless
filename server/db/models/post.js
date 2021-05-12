@@ -15,7 +15,7 @@ const Post = db.define("post", {
   },
   longitude: {
     type: Sequelize.FLOAT,
-    allowNullopen: false,
+    allowNull: false,
   },
   category: {
     type: Sequelize.ENUM([
