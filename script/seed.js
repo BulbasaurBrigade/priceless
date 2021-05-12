@@ -4,6 +4,7 @@ const {
   db,
   models: { User, Post, PostImage },
 } = require("../server/db");
+const Message = require("../server/db/models/message");
 const postData = require("./postData");
 const userData = require("./userData");
 
@@ -240,6 +241,18 @@ async function seed() {
   await patioTable.addRecipient(user2);
 
   await patioTable.addPostImages(patioTableImage);
+
+  const msg1 = await Message.create({
+    content: "Hi, you're the lucky winner! Want to meet up?",
+  });
+  const msg2 = await Message.create({
+    content: "Yes, please!",
+  });
+
+  await msg1.setChat(1);
+  await msg2.setChat(1);
+  await msg1.setUser(user5);
+  await msg2.setUser(user2);
 
   //dogToys - DOG TOYS - lottery, 1 requester, no recipients
   await dogToys.setPoster(user1);

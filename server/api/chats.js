@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Op } = require("sequelize");
 const {
-  models: { Chat, Post, User },
+  models: { Chat, Post, User, Message },
 } = require("../db");
 module.exports = router;
 
