@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require('express').Router({ mergeParams: true });
 const { Op } = require('sequelize');
 const {
   models: { Chat, Post, User, Message },
@@ -8,6 +8,7 @@ module.exports = router;
 //GET /api/users/:userId/chats
 router.get('/', async (req, res, next) => {
   try {
+    console.log(req);
     const chats = await Post.findAll({
       include: { model: User, as: 'recipient', required: true },
       where: {

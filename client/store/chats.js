@@ -28,3 +28,19 @@ export default (state = [], action) => {
       return state;
   }
 };
+
+// THE FORMAT OF CHATS
+
+// const chats = [
+//   {
+//     POST Object,
+//     recipient: [
+//       {
+//         recipientObject,
+//         chat: {
+//           chat object,
+//         }
+//       }
+//     ]
+//   }
+// ]
