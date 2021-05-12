@@ -23,6 +23,19 @@ export const setPosts = () => {
   };
 };
 
+export const setFilteredPosts = (category) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `/api/posts/filtered?filter=${category}`
+      );
+      dispatch(_setPosts(data));
+    } catch (err) {
+      console.log("error in set filtered posts thunk");
+    }
+  };
+};
+
 //reducer
 export default (state = [], action) => {
   switch (action.type) {
