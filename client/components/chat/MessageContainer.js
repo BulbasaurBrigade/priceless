@@ -1,13 +1,12 @@
-import React from 'react'
-import Message from './Message'
+import React from 'react';
+import Message from './Message';
 
 export default class MessageContainer extends React.Component {
-
-    render() {
-        return(
-            <div>
-                <Message />
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div id="message-container">
+        <Message />
+      </div>
+    );
+  }
 }

@@ -8,10 +8,14 @@ export default class Chat extends React.Component {
   }
 
   render() {
+    console.log(this.props);
+    const {
+      match: { params },
+    } = this.props;
     return (
       <div id="chat">
-        <ChatPanel />
-        <ChatRoom />
+        <ChatPanel selectedChatId={params.chatId} />
+        <ChatRoom selectedChatId={params.chatId} />
       </div>
     );
   }

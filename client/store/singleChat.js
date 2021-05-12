@@ -30,3 +30,5 @@ export default (state = {}, action) => {
       return state;
   }
 };
+
+// This is actually a post with its current chat's status
