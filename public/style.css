@@ -82,8 +82,10 @@ section {
 }
 /*list view*/
 #list-view {
+  height: 80vh;
   width: 40vw;
   background-color: rgb(226, 224, 224);
+  overflow: scroll;
 }
 #single-post {
   display: flex;
