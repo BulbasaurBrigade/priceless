@@ -1,5 +1,5 @@
 import React from "react";
-import Marker from "./Marker";
+import MarkerComponent from "./MarkerComponent";
 import MapPopUp from "./MapPopUp";
 
 class MapView extends React.Component {
@@ -7,7 +7,7 @@ class MapView extends React.Component {
     return (
       <div id="map-view">
         <p>Map Goes Here</p>
-        <Marker />
+        <MarkerComponent />
         <MapPopUp />
       </div>
     );
