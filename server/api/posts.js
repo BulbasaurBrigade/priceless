@@ -15,6 +15,19 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/filtered", async (req, res, next) => {
+  try {
+    const { filter } = req.query;
+    const posts = await Post.findAll({
+      where: { category: filter },
+      include: PostImage,
+    });
+    res.send(posts);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/:postId", async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, { include: PostImage });

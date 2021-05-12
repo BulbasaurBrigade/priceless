@@ -29,10 +29,7 @@ class SinglePost extends React.Component {
           <p>Status: {post.status}</p>
           {post.id === this.props.singlePost.id && (
             <div>
-              <p>
-                Description: this is a decription of this post. It is x years
-                old and is in like new condition. {post.description}
-              </p>
+              <p>Description: {post.description}</p>
               <p>
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
