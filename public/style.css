@@ -76,6 +76,10 @@ section {
   margin-right: 10px;
   background-color: rgb(226, 224, 224);
 }
+.leaflet-container {
+  width: 100%;
+  height: 80vh;
+}
 /*list view*/
 #list-view {
   height: 80vh;
