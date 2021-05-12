@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Post },
+  models: { Post, PostImage },
 } = require("../db");
 module.exports = router;
 const CronJob = require("cron").CronJob;
@@ -8,8 +8,17 @@ const CronJob = require("cron").CronJob;
 // GET
 router.get("/", async (req, res, next) => {
   try {
-    const posts = await Post.findAll();
+    const posts = await Post.findAll({ include: PostImage });
     res.send(posts);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:postId", async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.postId, { include: PostImage });
+    res.send(post);
   } catch (err) {
     next(err);
   }
