@@ -5,9 +5,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import posts from "./posts";
 import chats from "./chats";
-import messages from "./messages"
+import messages from "./messages";
+import singlePost from "./singlePost";
 
-const reducer = combineReducers({ auth, posts, chats, messages });
+const reducer = combineReducers({ auth, posts, chats, messages, singlePost });
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );

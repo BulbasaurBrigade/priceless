@@ -18,7 +18,7 @@ export const setPosts = () => {
       const { data } = await axios.get("/api/posts");
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log("error fetching all products via thunk");
+      console.log("error fetching all posts via thunk");
     }
   };
 };
