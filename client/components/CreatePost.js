@@ -1,6 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createPost } from "../store/posts";
+import {
+  postImagesRef,
+  uploadBytes,
+  ref,
+  getDownloadURL,
+  storage,
+} from "../firebase";
 
 class CreatePost extends React.Component {
   constructor() {
@@ -11,9 +18,11 @@ class CreatePost extends React.Component {
       category: "",
       latitude: "",
       longitude: "",
+      images: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpload = this.handleUpload.bind(this);
   }
 
   handleChange(event) {
@@ -24,14 +33,22 @@ class CreatePost extends React.Component {
     }
   }
 
+  handleUpload = async (event) => {
+    const file = event.target.files[0];
+    const postImageRef = ref(postImagesRef, file.name);
+    await uploadBytes(postImageRef, file);
+    const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
+    this.setState({ images: url });
+  };
+
   handleSubmit(event) {
     event.preventDefault();
     this.props.addPost({ ...this.state });
   }
+
   render() {
     const { title, description, category, latitude, longitude } = this.state;
-
-    console.log("state", this.state);
+    console.log("state images:", this.state.images);
 
     return (
       <div className="form-container">
@@ -39,7 +56,7 @@ class CreatePost extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>
-              Post Title `<span>*</span>
+              Post Title <span>*</span>
             </label>
             <input name="title" value={title} onChange={this.handleChange} />
 
@@ -86,6 +103,13 @@ class CreatePost extends React.Component {
               <option value="personal care">Personal Care</option>
               <option value="pet supplies">Pet Supplies</option>
             </select>
+
+            <label>Add Photos</label>
+            <input
+              type="file"
+              name="images"
+              onChange={this.handleUpload}
+            ></input>
           </div>
           <button type="submit" className="submit">
             Create

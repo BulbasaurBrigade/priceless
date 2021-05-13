@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyClMCl_RO_ziIwGDQZRrjEBmP5_gFUcxyA",
@@ -14,5 +14,20 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 const storage = getStorage(firebaseApp);
+const storageRef = ref(storage);
 
-export { storage };
+const postImagesRef = ref(storage, "postImages");
+const userImagesRef = ref(storage, "userImages");
+
+// const path = postImagesRef.fullPath;
+// const name = postImagesRef.name;
+// console.log("path", path);
+// console.log("name", name);
+export {
+  postImagesRef,
+  userImagesRef,
+  uploadBytes,
+  ref,
+  storage,
+  getDownloadURL,
+};
