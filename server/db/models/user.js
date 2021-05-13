@@ -8,8 +8,7 @@ const axios = require("axios");
 
 const User = db.define("user", {
   displayName: {
-    type: Sequelize.STRING,
-    allowNull: false,
+    type: Sequelize.STRING
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
