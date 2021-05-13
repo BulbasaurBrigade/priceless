@@ -3,7 +3,6 @@ module.exports = router;
 
 router.use("/users", require("./users"));
 router.use("/posts", require("./posts"));
-router.use("/chats", require("./chats"))
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
