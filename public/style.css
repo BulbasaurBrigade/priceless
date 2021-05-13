@@ -1,5 +1,5 @@
 body {
-  font-family: 'Tajawal', sans-serif;
+  font-family: "Tajawal", sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -14,6 +14,7 @@ body {
 
 a {
   text-decoration: none;
+  color: black;
 }
 
 label {
@@ -32,7 +33,7 @@ form div {
 
 /* landing page*/
 #landing-page {
-  background-image: url('https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmFja2dyb3VuZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');
+  background-image: url("https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmFja2dyb3VuZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -125,7 +126,7 @@ form div {
   padding: 10px;
 }
 
-form {
+.form-container form {
   width: 50%;
   margin: 0 auto;
   display: flex;
@@ -135,13 +136,13 @@ form {
   padding: 15px;
 }
 
-label {
+.form-container label {
   margin-top: 5px;
   font-size: 18px;
   text-align: left;
 }
 
-input {
+.form-container input {
   background-color: rgb(231, 231, 231);
   width: 100%;
   padding: 12px 20px;
@@ -152,12 +153,12 @@ input {
   box-sizing: border-box;
 }
 
-input:focus {
+.form-container input:focus {
   border: 1px solid gray;
   background-color: white;
 }
 
-select {
+.form-container select {
   background-color: rgb(231, 231, 231);
   width: 100%;
   padding: 12px 10px;
@@ -185,7 +186,6 @@ select {
   box-shadow: none;
 }
 
-
 /* Chat Styles */
 #chat {
   display: flex;
@@ -196,13 +196,56 @@ select {
 /* Chat Panel */
 #chat-panel {
   flex: 0 0 240px;
+  border-right: 1px solid black;
+}
+
+#chat-search {
+  background-color: lightgray;
+  border-bottom: 1px solid darkgray;
+  padding: 5px;
+}
+
+#chat-search-form {
+  display: flex;
+  justify-content: center;
+}
+
+#chat-search-form input {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-right: 2px;
+}
+
+#chat-search-form input:focus {
+  border: 1px solid gray;
+}
+
+#chat-search-form button {
+  border-radius: 6px;
+  border: none;
+}
+
+.chat-card {
+  border-bottom: 1px darkgray solid;
+  padding: 10px;
+  background-color: lightgray;
+  text-decoration: none;
 }
 
 .chat-card.closed {
-  background-color: lightgray;
+  background-color: rgb(224, 224, 224);
+}
+
+.chat-card.closed a {
+  color: rgb(112, 112, 112);
+  font-style: italic;
 }
 
 /* Chat Room */
+
 #chat-room {
   flex: 1 1 100%;
   display: flex;
@@ -213,6 +256,11 @@ select {
 #chat-header {
   display: flex;
   justify-content: space-between;
+  margin: 10px;
+}
+
+#button-group button {
+  margin: 2px;
 }
 
 #message-container {
@@ -222,6 +270,26 @@ select {
   overflow: scroll;
   padding-bottom: 1rem;
   gap: 5px;
+}
+
+#user-msg-input {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#user-msg-input input {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-right: 6px;
+  background-color: lightgray;
+}
+
+#user-msg-input input:focus {
+  border: 1px solid gray;
 }
 
 /* Messages */
@@ -255,5 +323,4 @@ select {
 .message.received {
   background-color: #e1dabd;
   justify-self: left;
-
 }
