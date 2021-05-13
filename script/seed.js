@@ -290,6 +290,8 @@ async function seed() {
   await blenderChat.setRecipient(blender.recipientId);
 
   await blender.setRecipient(user7);
+  blenderChat.isOpen = !blenderChat.isOpen;
+  await blenderChat.save();
   const blenderChatTwo = await Chat.create();
   await blenderChatTwo.setPost(blender);
   await blenderChatTwo.setPoster(blender.posterId);
