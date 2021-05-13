@@ -9,9 +9,6 @@ export const Homepage = (props) => {
       <section>
         <LandingPage />
       </section>
-      <section>
-        <MainContainer />
-      </section>
     </div>
   );
 };

@@ -21,6 +21,8 @@ const Nav = ({ handleClick, isLoggedIn }) => (
           <Link to="/chat">Chat</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <Link to="/posts">Posts</Link>
+          <Link to="/add">Create Post</Link>
         </div>
       )}
     </nav>
