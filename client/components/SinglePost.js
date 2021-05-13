@@ -34,7 +34,7 @@ class SinglePost extends React.Component {
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
               </p>
-              <button>Request</button>
+              <button className="button">Request</button>
             </div>
           )}
         </div>

@@ -48,7 +48,7 @@ router.post("/", async (req, res, next) => {
     //   post.save();
     // });
     // job.start();
-    console.log(post.__proto__);
+    // console.log(post.__proto__);
     await post.setPoster(+req.query.userId);
     res.send(post);
   } catch (err) {

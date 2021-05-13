@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Homepage from "./components/Homepage";
+import MainContainer from "./components/MainContainer";
+import CreatePost from "./components/CreatePost";
 
 import { me } from "./store";
 
@@ -20,8 +22,10 @@ class Routes extends Component {
     return (
       <div>
         <Switch>
-          <Route path="/home" component={Homepage} />
-          <Redirect to="/home" />
+          <Route exact path="/" component={Homepage} />
+          <Route path="/posts" component={MainContainer} />
+          <Route path="/add" component={CreatePost} />
+          {/* <Redirect to="/home" /> */}
         </Switch>
       </div>
       // <div>
