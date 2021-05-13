@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 import { setSinglePost } from "../store/singlePost";
 import L from 'leaflet'
 
-// const defaultIcon = new L.Icon({
-//   //iconUrl: require("../static/icon.png"),
-//   iconSize: [35, 46],
-//   iconAnchor: [17, 46]
-// })
+
 
 const selectedIcon = new L.icon({
   iconUrl: "https://i.postimg.cc/4N5hZ4Jd/noun-map-pointer-2317847.png",
@@ -26,6 +22,9 @@ const unselectedIcon = new L.icon({
 class MarkerComponent extends React.Component {
   constructor() {
     super();
+    this.state = {
+      marker: unselectedIcon
+    }
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       marker: unselectedIcon
@@ -35,11 +34,13 @@ class MarkerComponent extends React.Component {
   handleClick(id) {
     if(this.state.marker === unselectedIcon){
       this.setState({marker: selectedIcon})
-    }
-    else if(this.state.marker === selectedIcon){
+      
+    } 
+     else if (this.state.marker === selectedIcon) {
       this.setState({marker: unselectedIcon})
     }
     this.props.getSinglePost(id);
+    
   }
 
   render() {
@@ -49,7 +50,8 @@ class MarkerComponent extends React.Component {
     return (
       <div onClick={() => this.handleClick(post.id)}>
         <Marker
-          icon={this.state.marker}
+
+        icon={this.state.marker}
           position={[lat, long]}
           eventHandlers={{
             click: (e) => {
