@@ -1,12 +1,12 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
   models: { Post, PostImage },
-} = require("../db");
+} = require('../db');
 module.exports = router;
-const CronJob = require("cron").CronJob;
+const CronJob = require('cron').CronJob;
 
-// GET
-router.get("/", async (req, res, next) => {
+// GET all posts
+router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({ include: PostImage });
     res.send(posts);
@@ -15,7 +15,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/filtered", async (req, res, next) => {
+// GET all posts filtered by category
+router.get('/filtered', async (req, res, next) => {
   try {
     const { filter } = req.query;
     const posts = await Post.findAll({
@@ -28,7 +29,8 @@ router.get("/filtered", async (req, res, next) => {
   }
 });
 
-router.get("/:postId", async (req, res, next) => {
+// GET a single post by ID
+router.get('/:postId', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, { include: PostImage });
     res.send(post);
@@ -38,7 +40,7 @@ router.get("/:postId", async (req, res, next) => {
 });
 
 // POST
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const post = await Post.create(req.body);
     // const date = new Date(Date.now() + 10000);

@@ -1,13 +1,27 @@
-import React from 'react'
-import Message from './Message'
+import React from 'react';
+import { connect } from 'react-redux';
+import Message from './Message';
 
-export default class MessageContainer extends React.Component {
+const MessageContainer = ({ messages, userId }) => {
+  console.log(messages);
+  return (
+    <div id="message-container">
+      {messages.length
+        ? messages.map((message) => (
+            <Message
+              message={message}
+              key={message.id}
+              statusClass={+message.userId === userId ? 'sent' : 'received'}
+            />
+          ))
+        : ''}
+    </div>
+  );
+};
 
-    render() {
-        return(
-            <div>
-                <Message />
-            </div>
-        )
-    }
-}
+const mapState = (state) => ({
+  messages: state.messages,
+  userId: 5,
+});
+
+export default connect(mapState)(MessageContainer);

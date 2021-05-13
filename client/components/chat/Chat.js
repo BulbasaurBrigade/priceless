@@ -1,19 +1,22 @@
-import React from 'react'
-import ChatPanel from './ChatPanel'
-import ChatRoom from './ChatRoom'
+import React from 'react';
+import ChatPanel from './ChatPanel';
+import ChatRoom from './ChatRoom';
 
 export default class Chat extends React.Component {
-    constructor() {
-        super()
+  constructor() {
+    super();
+  }
 
-    }
-
-    render() {
-        return (
-            <>
-            <ChatPanel />
-            <ChatRoom />
-            </>
-        )
-    }
+  render() {
+    console.log(this.props);
+    const {
+      match: { params },
+    } = this.props;
+    return (
+      <div id="chat">
+        <ChatPanel selectedChatId={params.chatId} />
+        <ChatRoom selectedChatId={params.chatId} />
+      </div>
+    );
+  }
 }

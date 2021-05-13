@@ -1,12 +1,21 @@
-import React from 'react'
+import React from 'react';
 
 export default class ChatHeader extends React.Component {
-
-    render() {
-        return(
-            <div>
-                
-            </div>
-        )
-    }
+  render() {
+    const { postTitle, postId, chatId } = this.props;
+    console.log(postId);
+    return (
+      <div id="chat-header">
+        <span>{postTitle}</span>
+        <div id="button-group">
+          <button type="button" disabled={postId === 0}>
+            claimed
+          </button>
+          <button type="button" disabled={postId === 0}>
+            pass
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
