@@ -26,7 +26,7 @@ class ChatPanel extends React.Component {
         </div>
         <div id="chat-card-list">
           {chats.length
-            ? chats.map((post) => <ChatCard postAndChat={post} key={post.id} />)
+            ? chats.map((chat) => <ChatCard chat={chat} key={chat.id} />)
             : 'You have no chats!'}
         </div>
       </div>
