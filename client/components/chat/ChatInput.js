@@ -28,7 +28,7 @@ class ChatInput extends React.Component {
   };
 
   render() {
-    const { chatId } = this.props;
+    const { chatId, selectedChat } = this.props;
 
     if (!chatId) return '';
 
@@ -43,7 +43,9 @@ class ChatInput extends React.Component {
             value={this.state.content}
             onChange={this.handleChange}
           />
-          <button type="submit">Send</button>
+          <button type="submit" disabled={!selectedChat.isOpen}>
+            Send
+          </button>
         </form>
       </div>
     );
@@ -52,6 +54,7 @@ class ChatInput extends React.Component {
 
 const mapState = (state) => ({
   userId: 5,
+  selectedChat: state.singleChat,
 });
 
 const mapDispatch = (dispatch) => ({

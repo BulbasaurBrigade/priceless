@@ -143,6 +143,10 @@ button:hover {
   flex: 0 0 240px;
 }
 
+.chat-card.closed {
+  background-color: lightgray;
+}
+
 /* Chat Room */
 #chat-room {
   flex: 1 1 100%;
