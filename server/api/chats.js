@@ -63,10 +63,14 @@ router.get('/:chatId', async (req, res, next) => {
   }
 });
 
-//GET /api/users/:userId/chats/:chatId/messages
+// GET /api/users/:userId/chats/:chatId/messages
 router.get('/:chatId/messages', async (req, res, next) => {
   try {
     const messages = await Message.findAll({
+      include: {
+        model: User,
+        attributes: ['displayName'],
+      },
       where: {
         chatId: req.params.chatId,
       },
@@ -74,6 +78,29 @@ router.get('/:chatId/messages', async (req, res, next) => {
     });
 
     res.send(messages);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// POST /api/users/:userId/chats/:chatId/messages
+router.post('/:chatId/messages', async (req, res, next) => {
+  try {
+    const { userId, chatId } = req.params;
+
+    const message = await Message.create({ content: req.body.content });
+
+    await message.setUser(userId);
+    await message.setChat(chatId);
+
+    res.send(
+      await Message.findByPk(message.id, {
+        include: {
+          model: User,
+          attributes: ['displayName'],
+        },
+      })
+    );
   } catch (error) {
     next(error);
   }
