@@ -1,16 +1,63 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
+import { sentMessage } from '../../store/messages';
 
-export default class ChatInput extends React.Component {
+class ChatInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: '',
+    };
+  }
 
-    render(){
-        return(
-            <div>
-                <form>
-                    <input type = 'text'>
-                    </input>
-                    <button type = "submit">Send</button>
-                </form>
-            </div>
-        )
-    }
+  handleChange = (evt) => {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
+  };
+
+  handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    const { sendMessage, userId, chatId } = this.props;
+    sendMessage(userId, chatId, evt.target.content.value);
+
+    this.setState({
+      content: '',
+    });
+  };
+
+  render() {
+    const { chatId } = this.props;
+
+    if (!chatId) return '';
+
+    return (
+      <div id="chatbox">
+        <form id="user-msg-input" onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            name="content"
+            id="userText"
+            placeholder="Type here"
+            value={this.state.content}
+            onChange={this.handleChange}
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    );
+  }
 }
+
+const mapState = (state) => ({
+  userId: 5,
+});
+
+const mapDispatch = (dispatch) => ({
+  sendMessage: (userId, chatId, content) => {
+    dispatch(sentMessage(userId, chatId, content));
+  },
+});
+
+export default connect(mapState, mapDispatch)(ChatInput);
