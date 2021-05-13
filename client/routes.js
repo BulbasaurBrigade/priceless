@@ -1,10 +1,12 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
-import Homepage from "./components/Homepage";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Login, Signup } from './components/AuthForm';
+import Chat from './components/chat/Chat';
+import Homepage from './components/Homepage';
+import Nav from './components/Nav';
 
-import { me } from "./store";
+import { me } from './store';
 
 /**
  * COMPONENT
@@ -18,12 +20,13 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
 
     return (
-      <div>
+      <>
         <Switch>
           <Route path="/home" component={Homepage} />
+          <Route path="/chat/:chatId?" component={Chat} />
           <Redirect to="/home" />
         </Switch>
-      </div>
+      </>
       // <div>
       //   {isLoggedIn ? (
       //     <Switch>
