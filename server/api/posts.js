@@ -49,7 +49,7 @@ router.post("/", async (req, res, next) => {
     // });
     // job.start();
     // console.log(post.__proto__);
-    await post.setPoster(+req.query.userId);
+    // await post.setPoster(+req.query.userId);
     res.send(post);
   } catch (err) {
     next(err);

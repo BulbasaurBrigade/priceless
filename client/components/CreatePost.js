@@ -54,12 +54,14 @@ class CreatePost extends React.Component {
             <label>Latitude</label>
             <input
               name="latitude"
+              type="number"
               value={latitude}
               onChange={this.handleChange}
             />
             <label>Longitude</label>
             <input
               name="longitude"
+              type="number"
               value={longitude}
               onChange={this.handleChange}
             />
