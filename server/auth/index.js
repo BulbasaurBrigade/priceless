@@ -13,14 +13,8 @@ module.exports = router;
 
 router.post('/login', async (req, res, next) => {
   try {
-    const auth = getAuth();
-    res.send({
-      token: await signInWithEmailAndPassword(
-        auth,
-        req.body.email,
-        req.body.password
-      ),
-    });
+    const token = await admin.auth().createCustomToken(req.body.uid);
+    res.send({ token });
   } catch (err) {
     next(err);
   }
@@ -34,8 +28,7 @@ router.post('/signup', async (req, res, next) => {
       email,
       password,
     });
-    // console.log(userRecord);
-    const user = await User.create({ authId: userRecord.uid });
+    await User.create({ authId: userRecord.uid });
     const token = await admin.auth().createCustomToken(userRecord.uid);
     res.send({ token });
   } catch (err) {
@@ -49,10 +42,10 @@ router.post('/signup', async (req, res, next) => {
 
 router.post('/signup/moreinfo', async (req, res, next) => {
   try {
-    const auth = getAuth();
-    const token = req.headers.authorization;
-    const userCredential = await signInWithCustomToken(auth, token);
-    const user = await User.update(
+    const decodedToken = await admin
+      .auth()
+      .verifyIdToken(req.headers.authorization);
+    const [numRows, users] = await User.update(
       {
         displayName: req.body.displayName,
         latitude: req.body.latitude,
@@ -60,12 +53,12 @@ router.post('/signup/moreinfo', async (req, res, next) => {
       },
       {
         where: {
-          authId: userCredential.uid,
+          authId: decodedToken.uid,
         },
         returning: true,
       }
     );
-    res.send(user[1][0]);
+    res.send(users[0]);
   } catch (ex) {
     next(ex);
   }
@@ -73,12 +66,12 @@ router.post('/signup/moreinfo', async (req, res, next) => {
 
 router.get('/me', async (req, res, next) => {
   try {
-    const auth = getAuth();
-    const token = req.headers.authorization;
-    const userCredential = await signInWithCustomToken(auth, token);
+    const decodedToken = await admin
+      .auth()
+      .verifyIdToken(req.headers.authorization);
     const user = await User.findOne({
       where: {
-        authId: userCredential.uid,
+        authId: decodedToken.uid,
       },
     });
     res.send(user);
