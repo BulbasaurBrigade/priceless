@@ -57,13 +57,11 @@ router.post("/", async (req, res, next) => {
       longitude,
       category,
     });
-    console.log("images", images);
 
     await Promise.all(
       images.map(async (image) => {
         const postImage = await PostImage.create({ imageUrl: image });
         await post.addPostImage(postImage);
-        console.log(postImage);
       })
     );
 
@@ -80,7 +78,6 @@ router.post("/", async (req, res, next) => {
     const postWithImage = await Post.findByPk(id, {
       include: PostImage,
     });
-    console.log("postWithImage", postWithImage);
     res.send(postWithImage);
   } catch (err) {
     next(err);

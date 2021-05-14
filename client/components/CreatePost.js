@@ -20,10 +20,10 @@ class CreatePost extends React.Component {
       longitude: "",
       imageToUpload: {},
       images: [],
+      isLoading: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
   }
 
   handleChange(event) {
@@ -38,12 +38,16 @@ class CreatePost extends React.Component {
 
   handleUpload = async (event) => {
     event.preventDefault();
+    this.setState({ isLoading: true });
     const file = this.state.imageToUpload;
-    console.log("file", file);
     const postImageRef = ref(postImagesRef, file.name);
     await uploadBytes(postImageRef, file);
     const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
-    this.setState({ images: [...this.state.images, url], imageToUpload: {} });
+    this.setState({
+      images: [...this.state.images, url],
+      imageToUpload: {},
+      isLoading: false,
+    });
   };
 
   handleSubmit(event) {
@@ -53,7 +57,6 @@ class CreatePost extends React.Component {
 
   render() {
     const { title, description, category, latitude, longitude } = this.state;
-    console.log("state", this.state);
 
     return (
       <div className="form-container">
@@ -113,13 +116,19 @@ class CreatePost extends React.Component {
               id="image_upload"
             ></input>
             {this.state.imageToUpload.name && (
-              <button onClick={this.handleUpload}>Upload</button>
+              <button onClick={this.handleUpload}>Upload Selected File</button>
             )}
+            <br />
+            {this.state.images.length && <label>Preview of photos</label>}
             {this.state.images.map((imageUrl) => (
-              <img src={this.state.images} key={imageUrl} />
+              <img src={imageUrl} key={imageUrl} height={200} />
             ))}
           </div>
-          <button type="submit" className="submit">
+          <button
+            type="submit"
+            className="submit"
+            disabled={this.state.isLoading}
+          >
             Create
           </button>
         </form>
