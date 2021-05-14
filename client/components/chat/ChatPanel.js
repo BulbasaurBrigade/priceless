@@ -38,7 +38,7 @@ class ChatPanel extends React.Component {
 
 const mapState = (state) => ({
   chats: state.chats,
-  userId: 5,
+  userId: state.auth.id,
 });
 
 const mapDispatch = (dispatch) => ({

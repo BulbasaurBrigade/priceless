@@ -1,11 +1,10 @@
-
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
-import Homepage from "./components/Homepage";
-import MainContainer from "./components/MainContainer";
-import CreatePost from "./components/CreatePost";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Login, Signup } from './components/AuthForm';
+import Homepage from './components/Homepage';
+import MainContainer from './components/MainContainer';
+import CreatePost from './components/CreatePost';
 import Chat from './components/chat/Chat';
 
 import { me } from './store';
@@ -24,13 +23,13 @@ class Routes extends Component {
     return (
       <>
         <Switch>
-
           <Route exact path="/" component={Homepage} />
           <Route path="/posts" component={MainContainer} />
           <Route path="/add" component={CreatePost} />
           <Route path="/chat/:chatId?" component={Chat} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
           {/* <Redirect to="/home" /> */}
-
         </Switch>
       </>
       // <div>
