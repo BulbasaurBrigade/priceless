@@ -18,27 +18,36 @@ class CreatePost extends React.Component {
       category: "",
       latitude: "",
       longitude: "",
-      images: "",
+      imageToUpload: {},
+      images: [],
+      isLoading: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUpload = this.handleUpload.bind(this);
   }
 
   handleChange(event) {
     if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
+    } else if (event.target.name === "imageToUpload") {
+      this.setState({ [event.target.name]: event.target.files[0] });
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
   }
 
   handleUpload = async (event) => {
-    const file = event.target.files[0];
+    event.preventDefault();
+    this.setState({ isLoading: true });
+    const file = this.state.imageToUpload;
     const postImageRef = ref(postImagesRef, file.name);
     await uploadBytes(postImageRef, file);
     const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
-    this.setState({ images: url });
+    this.setState({
+      images: [...this.state.images, url],
+      imageToUpload: {},
+      isLoading: false,
+    });
   };
 
   handleSubmit(event) {
@@ -48,7 +57,6 @@ class CreatePost extends React.Component {
 
   render() {
     const { title, description, category, latitude, longitude } = this.state;
-    console.log("state images:", this.state.images);
 
     return (
       <div className="form-container">
@@ -59,7 +67,6 @@ class CreatePost extends React.Component {
               Post Title <span>*</span>
             </label>
             <input name="title" value={title} onChange={this.handleChange} />
-
             <label>Description</label>
             <input
               id="description"
@@ -67,7 +74,6 @@ class CreatePost extends React.Component {
               value={description}
               onChange={this.handleChange}
             />
-
             <label>Latitude</label>
             <input
               name="latitude"
@@ -82,7 +88,6 @@ class CreatePost extends React.Component {
               value={longitude}
               onChange={this.handleChange}
             />
-
             <label>Category</label>
             <select
               name="category"
@@ -103,15 +108,27 @@ class CreatePost extends React.Component {
               <option value="personal care">Personal Care</option>
               <option value="pet supplies">Pet Supplies</option>
             </select>
-
             <label>Add Photos</label>
             <input
               type="file"
-              name="images"
-              onChange={this.handleUpload}
+              name="imageToUpload"
+              onChange={this.handleChange}
+              id="image_upload"
             ></input>
+            {this.state.imageToUpload.name && (
+              <button onClick={this.handleUpload}>Upload Selected File</button>
+            )}
+            <br />
+            {this.state.images.length && <label>Preview of photos</label>}
+            {this.state.images.map((imageUrl) => (
+              <img src={imageUrl} key={imageUrl} height={200} />
+            ))}
           </div>
-          <button type="submit" className="submit">
+          <button
+            type="submit"
+            className="submit"
+            disabled={this.state.isLoading}
+          >
             Create
           </button>
         </form>

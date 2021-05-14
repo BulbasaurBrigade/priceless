@@ -42,8 +42,14 @@ router.get("/:postId", async (req, res, next) => {
 // POST
 router.post("/", async (req, res, next) => {
   try {
-    const { images, title, description, latitude, longitude, category } =
-      req.body;
+    const {
+      images,
+      title,
+      description,
+      latitude,
+      longitude,
+      category,
+    } = req.body;
     const post = await Post.create({
       title,
       description,
@@ -52,9 +58,12 @@ router.post("/", async (req, res, next) => {
       category,
     });
 
-    const postImage = await PostImage.create({ imageUrl: images });
-
-    await post.addPostImage(postImage);
+    await Promise.all(
+      images.map(async (image) => {
+        const postImage = await PostImage.create({ imageUrl: image });
+        await post.addPostImage(postImage);
+      })
+    );
 
     // const date = new Date(Date.now() + 10000);
     // const job = new CronJob(date, function () {
@@ -69,7 +78,6 @@ router.post("/", async (req, res, next) => {
     const postWithImage = await Post.findByPk(id, {
       include: PostImage,
     });
-    console.log("postWithImage", postWithImage);
     res.send(postWithImage);
   } catch (err) {
     next(err);
