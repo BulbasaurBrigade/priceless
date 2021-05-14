@@ -85,12 +85,14 @@ export const logout = () => async (dispatch) => {
 /**
  * REDUCER
  */
+const fakeState = { id: 5 };
 export default function (state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
     case LOG_OUT:
-      return action.auth;
+      // return action.auth;
+      return fakeState;
     default:
-      return state;
+      return fakeState;
   }
 }

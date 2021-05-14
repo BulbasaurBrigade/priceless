@@ -1,4 +1,5 @@
 import axios from 'axios';
+import socket from '../socket';
 
 // Action Types
 const GET_MESSAGES = 'GET_MESSAGE';
@@ -33,6 +34,10 @@ export const sentMessage = (userId, chatId, content) => async (dispatch) => {
       `/api/users/${userId}/chats/${chatId}/messages`,
       { content }
     );
+
+    socket.emit('new message', {
+      message: data,
+    });
     dispatch(_newMessage(data));
   } catch (error) {
     console.error(error);

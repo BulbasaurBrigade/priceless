@@ -4,14 +4,18 @@ import MessageContainer from './MessageContainer';
 import ChatInput from './ChatInput';
 import { getChat } from '../../store/singleChat';
 import { connect } from 'react-redux';
-import { getMessages } from '../../store/messages';
+import { getMessages, _newMessage } from '../../store/messages';
+import socket from '../../socket';
 
 class ChatRoom extends React.Component {
   componentDidMount() {
-    const { selectedChatId, fetchChatInfo, userId } = this.props;
+    const { selectedChatId, fetchChatInfo, userId, recMessage } = this.props;
     if (selectedChatId) {
       fetchChatInfo(userId, selectedChatId);
     }
+    socket.on('new message', ({ message }) => {
+      recMessage(message);
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -19,6 +23,10 @@ class ChatRoom extends React.Component {
     if (prevProps.selectedChatId !== selectedChatId) {
       fetchChatInfo(userId, selectedChatId);
     }
+  }
+
+  componentWillUnmount() {
+    socket.off('new message');
   }
 
   render() {
@@ -45,6 +53,7 @@ const mapDispatch = (dispatch) => ({
     dispatch(getChat(userId, chatId));
     dispatch(getMessages(userId, chatId));
   },
+  recMessage: (message) => dispatch(_newMessage(message)),
 });
 
 export default connect(mapState, mapDispatch)(ChatRoom);
