@@ -37,7 +37,7 @@ class ChatRoom extends React.Component {
 
 const mapState = (state) => ({
   selectedChat: state.singleChat,
-  userId: 5,
+  userId: state.auth.id,
 });
 
 const mapDispatch = (dispatch) => ({

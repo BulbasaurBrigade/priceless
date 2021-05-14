@@ -53,7 +53,7 @@ class ChatInput extends React.Component {
 }
 
 const mapState = (state) => ({
-  userId: 5,
+  userId: state.auth.id,
   selectedChat: state.singleChat,
 });
 
