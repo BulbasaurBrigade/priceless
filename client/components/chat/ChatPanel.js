@@ -1,7 +1,7 @@
-import React from 'react';
-import ChatCard from './ChatCard';
-import { getChats } from '../../store/chats';
-import { connect } from 'react-redux';
+import React from "react";
+import ChatCard from "./ChatCard";
+import { getChats } from "../../store/chats";
+import { connect } from "react-redux";
 
 class ChatPanel extends React.Component {
   componentDidMount() {
@@ -19,15 +19,17 @@ class ChatPanel extends React.Component {
     return (
       <div id="chat-panel">
         <div id="chat-search">
-          <form>
+          <form id="chat-search-form">
             <input type="text" placeholder="Search..." />
-            <button type="submit">Search</button>
+            <button type="submit">
+              <i className="fa fa-search" aria-hidden="true"></i>
+            </button>
           </form>
         </div>
         <div id="chat-card-list">
           {chats.length
             ? chats.map((chat) => <ChatCard chat={chat} key={chat.id} />)
-            : 'You have no chats!'}
+            : "You have no chats!"}
         </div>
       </div>
     );
