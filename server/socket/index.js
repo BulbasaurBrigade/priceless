@@ -8,13 +8,24 @@ module.exports = (io) => {
   //   next();
   // });
 
-  io.on('connection', (socket) => {
-    console.log('A new user has connected: ', socket.id);
+  io.on("connection", (socket) => {
+    console.log("A new user has connected: ", socket.id);
 
-    socket.on('new message', ({ message }) => {
-      socket.broadcast.emit('new message', {
+    socket.on("new message", ({ message }) => {
+      console.log("message", message);
+      socket.to(String(message.chatId)).emit("new message", {
         message,
       });
+    });
+
+    socket.on("leave room", ({ room }) => {
+      console.log("socket.rooms before leave room", socket.rooms);
+      socket.leave(room);
+    });
+
+    socket.on("join room", ({ room }) => {
+      socket.join(room);
+      console.log("socket.rooms in join room", socket.rooms);
     });
   });
 };

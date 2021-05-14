@@ -1,11 +1,11 @@
-import React from 'react';
-import ChatHeader from './ChatHeader';
-import MessageContainer from './MessageContainer';
-import ChatInput from './ChatInput';
-import { getChat } from '../../store/singleChat';
-import { connect } from 'react-redux';
-import { getMessages, _newMessage } from '../../store/messages';
-import socket from '../../socket';
+import React from "react";
+import ChatHeader from "./ChatHeader";
+import MessageContainer from "./MessageContainer";
+import ChatInput from "./ChatInput";
+import { getChat } from "../../store/singleChat";
+import { connect } from "react-redux";
+import { getMessages, _newMessage } from "../../store/messages";
+import socket from "../../socket";
 
 class ChatRoom extends React.Component {
   componentDidMount() {
@@ -13,7 +13,7 @@ class ChatRoom extends React.Component {
     if (selectedChatId) {
       fetchChatInfo(userId, selectedChatId);
     }
-    socket.on('new message', ({ message }) => {
+    socket.on("new message", ({ message }) => {
       recMessage(message);
     });
   }
@@ -22,16 +22,27 @@ class ChatRoom extends React.Component {
     const { selectedChatId, fetchChatInfo, userId } = this.props;
     if (prevProps.selectedChatId !== selectedChatId) {
       fetchChatInfo(userId, selectedChatId);
+      if (prevProps.selectedChatId) {
+        console.log("prevProps.selectedChatId", prevProps.selectedChatId);
+        console.log("we are appropriately leaving a room!");
+        socket.emit("leave room", {
+          room: String(prevProps.selectedChatId),
+        });
+      }
+      console.log("we are in componentDidUpdate");
+      socket.emit("join room", {
+        room: String(selectedChatId),
+      });
     }
   }
 
   componentWillUnmount() {
-    socket.off('new message');
+    socket.off("new message");
   }
 
   render() {
     const { selectedChat, selectedChatId } = this.props;
-    const title = selectedChat.title || '';
+    const title = selectedChat.title || "";
     const postId = selectedChat.id || 0;
     return (
       <div id="chat-room">
