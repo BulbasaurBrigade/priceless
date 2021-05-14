@@ -3,6 +3,7 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0;
+  color: navy;
 }
 
 #app {
@@ -21,19 +22,31 @@ label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
 form div {
   margin: 1em;
   display: inline-block;
 }
 
+/* navbar */
+#logo {
+  width: 30px;
+  margin: 10px 0 0 10px;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+  color: navy;
+  font-family: "DM Serif Display", serif;
+}
+
+nav a:hover {
+  color: lightskyblue;
+}
+
 /* landing page*/
 #landing-page {
-  background-image: url("https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmFja2dyb3VuZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
+  background-image: url("https://images.unsplash.com/photo-1561312929-94cb37efc12e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -50,11 +63,11 @@ form div {
   display: flex;
   justify-content: space-between;
 }
+
 /* map navbar */
 #map-navbar {
   padding: 15px;
-  background-color: rgb(226, 224, 224);
-  margin-bottom: 10px;
+  background-color: lightgray;
 }
 
 #map-navbar select {
@@ -64,24 +77,24 @@ form div {
   width: 250px;
   border: none;
   font-size: 15px;
-  box-shadow: 0 5px 8px rgb(197, 196, 196);
 }
 
 /*map view*/
 #map-view {
   width: 60vw;
-  margin-right: 10px;
-  background-color: rgb(226, 224, 224);
+  margin: 10px 0 10px 0;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
 }
+
 .leaflet-container {
   width: 100%;
   height: 80vh;
 }
 /*list view*/
 #list-view {
+  margin: 10px;
   height: 80vh;
   width: 40vw;
-  background-color: rgb(226, 224, 224);
   overflow: scroll;
 }
 
@@ -91,33 +104,24 @@ form div {
   margin: 10px;
   background-color: white;
   align-items: flex-start;
+  border-radius: 8px;
 }
 
 #post-details {
-  margin: 10px;
+  margin: 15px;
 }
 
-#post-image {
-  display: flex;
+#post-details h1 {
+  font-family: "DM Serif Display", serif;
+  font-size: 15px;
+}
+
+#post-details p {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
 }
 #post-image img {
   width: 140px;
-}
-
-.button {
-  font-size: 1em;
-  padding: 10px;
-  color: #fff;
-  border-radius: 20px/20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  cursor: pointer;
-  background: black;
-  border: none;
-}
-
-.button:hover {
-  box-shadow: none;
 }
 
 /* create post */
@@ -191,6 +195,7 @@ form div {
   display: flex;
   width: 100%;
   height: 100%;
+  color: black;
 }
 
 /* Chat Panel */
@@ -202,7 +207,7 @@ form div {
 #chat-search {
   background-color: lightgray;
   border-bottom: 1px solid darkgray;
-  padding: 5px;
+  padding: 15px;
 }
 
 #chat-search-form {
@@ -256,11 +261,15 @@ form div {
 #chat-header {
   display: flex;
   justify-content: space-between;
-  margin: 10px;
+  padding: 10px 10px 10px 10px;
+  font-size: 30px;
+  background-color: lightgray;
+  border-bottom: 1px darkgray solid;
+  font-weight: bold;
 }
 
 #button-group button {
-  margin: 2px;
+  margin: 5px;
 }
 
 #message-container {
@@ -273,6 +282,7 @@ form div {
 }
 
 #user-msg-input {
+  background-color: lightgray;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -285,7 +295,6 @@ form div {
   border-radius: 4px;
   box-sizing: border-box;
   margin-right: 6px;
-  background-color: lightgray;
 }
 
 #user-msg-input input:focus {
@@ -294,7 +303,7 @@ form div {
 
 /* Messages */
 .msg-box {
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   max-width: 55%;
 }
 
@@ -312,15 +321,33 @@ form div {
 
 .message {
   padding: 0.25rem 1rem;
-  border-radius: 5px;
+  border-radius: 22px;
 }
 
 .message.sent {
-  background-color: #ffe4fa;
+  background-color: lightsteelblue;
   justify-self: right;
 }
 
 .message.received {
-  background-color: #e1dabd;
+  background-color: rgb(224, 174, 209);
   justify-self: left;
+}
+
+/* buttons */
+
+.button {
+  padding: 10px;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  cursor: pointer;
+  background: rgb(136, 136, 136);
+  border: none;
+}
+
+.button:hover {
+  box-shadow: none;
 }
