@@ -21,7 +21,7 @@ const MessageContainer = ({ messages, userId }) => {
 
 const mapState = (state) => ({
   messages: state.messages,
-  userId: 5,
+  userId: state.auth.id,
 });
 
 export default connect(mapState)(MessageContainer);
