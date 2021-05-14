@@ -6,15 +6,17 @@ import { setSinglePost } from "../store/singlePost";
 import L from 'leaflet'
 
 
-const unselectedIcon = new L.Icon({
-  iconUrl: "https://i.postimg.cc/ryBFQZr9/noun-map-pointer-3859353.png",
-  iconSize: [30, 40],
-  iconAnchor: [17, 46]
-})
-const selectedIcon = new L.Icon({
+
+const selectedIcon = new L.icon({
   iconUrl: "https://i.postimg.cc/4N5hZ4Jd/noun-map-pointer-2317847.png",
-  iconSize: [30, 40],
-  iconAnchor: [17, 46]
+  iconSize: [27, 40],
+  iconAnchor: [20, 40]
+})
+
+const unselectedIcon = new L.icon({
+  iconUrl: "https://i.postimg.cc/ryBFQZr9/noun-map-pointer-3859353.png",
+  iconSize: [27, 40],
+  iconAnchor: [20, 40]
 })
 
 class MarkerComponent extends React.Component {
@@ -24,6 +26,9 @@ class MarkerComponent extends React.Component {
       marker: unselectedIcon
     }
     this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      marker: unselectedIcon
+    }
   }
 
   handleClick(id) {
@@ -34,7 +39,6 @@ class MarkerComponent extends React.Component {
      else if (this.state.marker === selectedIcon) {
       this.setState({marker: unselectedIcon})
     }
-      
     this.props.getSinglePost(id);
     
   }
@@ -46,6 +50,7 @@ class MarkerComponent extends React.Component {
     return (
       <div onClick={() => this.handleClick(post.id)}>
         <Marker
+
         icon={this.state.marker}
           position={[lat, long]}
           eventHandlers={{
