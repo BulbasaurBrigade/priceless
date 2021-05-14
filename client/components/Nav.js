@@ -18,7 +18,7 @@ const Nav = ({ handleClick, isLoggedIn }) => (
           </a>
         </div>
       ) : (
-        <div>
+        <div className="menu-content">
           {/* The navbar will show these links before you log in */}
           <Link to="/">Home</Link>
 
@@ -30,7 +30,6 @@ const Nav = ({ handleClick, isLoggedIn }) => (
         </div>
       )}
     </nav>
-    <hr />
   </div>
 );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default class ChatHeader extends React.Component {
   render() {
@@ -6,12 +6,12 @@ export default class ChatHeader extends React.Component {
     console.log(postId);
     return (
       <div id="chat-header">
-        <span>{postTitle}</span>
+        <span>Title Placeholder {postTitle}</span>
         <div id="button-group">
-          <button type="button" disabled={postId === 0}>
+          <button className="button" type="button" disabled={postId === 0}>
             claimed
           </button>
-          <button type="button" disabled={postId === 0}>
+          <button className="button" type="button" disabled={postId === 0}>
             pass
           </button>
         </div>

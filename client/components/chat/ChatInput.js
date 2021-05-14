@@ -1,12 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { sentMessage } from '../../store/messages';
+import React from "react";
+import { connect } from "react-redux";
+import { sentMessage } from "../../store/messages";
 
 class ChatInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: '',
+      content: "",
     };
   }
 
@@ -23,14 +23,14 @@ class ChatInput extends React.Component {
     sendMessage(userId, chatId, evt.target.content.value);
 
     this.setState({
-      content: '',
+      content: "",
     });
   };
 
   render() {
     const { chatId, selectedChat } = this.props;
 
-    if (!chatId) return '';
+    if (!chatId) return "";
 
     return (
       <div id="chatbox">
@@ -43,7 +43,11 @@ class ChatInput extends React.Component {
             value={this.state.content}
             onChange={this.handleChange}
           />
-          <button type="submit" disabled={!selectedChat.isOpen}>
+          <button
+            className="button"
+            type="submit"
+            disabled={!selectedChat.isOpen}
+          >
             Send
           </button>
         </form>
