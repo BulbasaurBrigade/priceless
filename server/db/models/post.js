@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../db");
+const Chat = require("./chat");
 
 const Post = db.define("post", {
   title: {
@@ -44,5 +45,39 @@ const Post = db.define("post", {
     allowNull: false,
   },
 });
+
+Post.prototype.lottery = async function () {
+  try {
+    const requesters = await this.getRequester();
+    const requestersWaiting = requesters.filter((requester) => {
+      return requester.lotteryTicket.isWaiting;
+    });
+    if (!requestersWaiting.length) {
+      this.status = "open";
+      this.save();
+      return;
+    }
+    let winner = requestersWaiting.sort(() => 0.5 - Math.random())[0];
+    winner.lotteryTicket.isWaiting = false;
+    await winner.lotteryTicket.save();
+    await this.setRecipient(winner.id);
+    this.status = "pending";
+    this.save();
+    await this.chat();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+Post.prototype.chat = async function () {
+  try {
+    const chat = await Chat.create();
+    await chat.setPost(this);
+    await chat.setRecipient(this.recipientId);
+    await chat.setPoster(this.posterId);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = Post;

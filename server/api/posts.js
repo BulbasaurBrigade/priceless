@@ -1,14 +1,17 @@
 const router = require("express").Router();
 const {
-  models: { Post, PostImage },
+  models: { Post, PostImage, LotteryTicket },
 } = require("../db");
 module.exports = router;
 const CronJob = require("cron").CronJob;
-
+const { Op } = require("sequelize");
 // GET all posts
 router.get("/", async (req, res, next) => {
   try {
-    const posts = await Post.findAll({ include: PostImage });
+    const posts = await Post.findAll({
+      where: { status: { [Op.ne]: "claimed" } },
+      include: PostImage,
+    });
     res.send(posts);
   } catch (err) {
     next(err);
@@ -33,6 +36,7 @@ router.get("/filtered", async (req, res, next) => {
 router.get("/:postId", async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, { include: PostImage });
+    await post.lottery();
     res.send(post);
   } catch (err) {
     next(err);
@@ -42,14 +46,8 @@ router.get("/:postId", async (req, res, next) => {
 // POST
 router.post("/", async (req, res, next) => {
   try {
-    const {
-      images,
-      title,
-      description,
-      latitude,
-      longitude,
-      category,
-    } = req.body;
+    const { images, title, description, latitude, longitude, category } =
+      req.body;
     const post = await Post.create({
       title,
       description,
