@@ -56,6 +56,7 @@ router.post("/", async (req, res, next) => {
       category,
     });
 
+    await post.setPoster(+req.query.id);
     await Promise.all(
       images.map(async (image) => {
         const postImage = await PostImage.create({ imageUrl: image });
@@ -63,19 +64,21 @@ router.post("/", async (req, res, next) => {
       })
     );
 
-    // const date = new Date(Date.now() + 10000);
-    // const job = new CronJob(date, function () {
-    //   console.log("job ran");
-    //   post.status = "pending";
-    //   post.save();
-    // });
-    // job.start();
-    // console.log(post.__proto__);
-    // await post.setPoster(+req.query.userId);
     const id = post.dataValues.id;
     const postWithImage = await Post.findByPk(id, {
       include: PostImage,
     });
+
+    // cron
+    const date = new Date(Date.now() + 10000);
+    const job = new CronJob(date, function () {
+      post.lottery();
+      console.log("time to check");
+    });
+    job.start();
+    // await post.setPoster(1);
+    // await post.setRequester([2, 3, 4, 5]);
+
     res.send(postWithImage);
   } catch (err) {
     next(err);
