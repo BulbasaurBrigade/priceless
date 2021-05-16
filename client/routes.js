@@ -8,6 +8,7 @@ import CreatePost from "./components/CreatePost";
 import Chat from "./components/chat/Chat";
 import MyAccount from "./components/myAccount/MyAccount";
 import MyPosts from "./components/myAccount/MyPosts";
+import EditPost from "./components/myAccount/EditPost";
 
 import { me } from "./store";
 
@@ -33,6 +34,7 @@ class Routes extends Component {
           <Route path="/signup" component={Signup} />
           <Route path="/myaccount" component={MyAccount} />
           <Route path="/myposts" component={MyPosts} />
+          <Route path="/mypost/:id" component={EditPost} />
 
           {/* <Redirect to="/home" /> */}
         </Switch>

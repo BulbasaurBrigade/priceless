@@ -1,8 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setPosts } from "../../store/posts";
+import { Link } from "react-router-dom";
+import { setPosts, deletePost } from "../../store/posts";
 
 class MyPosts extends React.Component {
+  // handleClick = () => {
+  //   this.props.removePost(post.id);
+  // };
+
   componentDidMount() {
     this.props.getPosts();
   }
@@ -13,10 +18,14 @@ class MyPosts extends React.Component {
     return (
       <div>
         {posts.map((post) => (
-          <div>
+          <div key={post.id}>
             <p>{post.title}</p>
-            <button>edit</button>
-            <button>delete</button>
+            <button>
+              <Link to={`/mypost/${post.id}`}>edit</Link>
+            </button>
+            <button onClick={() => this.props.removePost(post.id)}>
+              delete
+            </button>
           </div>
         ))}
       </div>
@@ -33,6 +42,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: () => dispatch(setPosts()),
+    removePost: (post) => dispatch(deletePost(post)),
   };
 };
 

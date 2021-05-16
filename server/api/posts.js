@@ -42,14 +42,8 @@ router.get("/:postId", async (req, res, next) => {
 // POST
 router.post("/", async (req, res, next) => {
   try {
-    const {
-      images,
-      title,
-      description,
-      latitude,
-      longitude,
-      category,
-    } = req.body;
+    const { images, title, description, latitude, longitude, category } =
+      req.body;
     const post = await Post.create({
       title,
       description,
@@ -81,5 +75,26 @@ router.post("/", async (req, res, next) => {
     res.send(postWithImage);
   } catch (err) {
     next(err);
+  }
+});
+
+// PUT edit single post
+router.put("/:id", async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    res.send(await post.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE edit single post
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    await post.destroy();
+    res.send(post);
+  } catch (error) {
+    next(error);
   }
 });
