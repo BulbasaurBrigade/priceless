@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  refFromURL,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyClMCl_RO_ziIwGDQZRrjEBmP5_gFUcxyA",
@@ -30,4 +37,6 @@ export {
   ref,
   storage,
   getDownloadURL,
+  deleteObject,
+  refFromURL,
 };

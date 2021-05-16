@@ -9,50 +9,87 @@ import {
   storage,
 } from "../firebase";
 
+const initialState = {
+  title: "",
+  description: "",
+  category: "",
+  latitude: "",
+  longitude: "",
+  images: [],
+  isLoading: false,
+};
+
 class CreatePost extends React.Component {
   constructor() {
     super();
-    this.state = {
-      title: "",
-      description: "",
-      category: "",
-      latitude: "",
-      longitude: "",
-      imageToUpload: {},
-      images: [],
-      isLoading: false,
-    };
+    this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.setState(initialState);
   }
 
   handleChange(event) {
     if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
-    } else if (event.target.name === "imageToUpload") {
-      this.setState({ [event.target.name]: event.target.files[0] });
+    } else if (event.target.name === "images") {
+      console.log(event.target.files[0]);
+      const newImagesArray = [...this.state.images, event.target.files[0]];
+      this.setState({ [event.target.name]: newImagesArray });
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
   }
 
-  handleUpload = async (event) => {
+  // handleUpload = async (event) => {
+  //   event.preventDefault();
+  //   this.setState({ isLoading: true });
+  //   const file = this.state.imageToUpload;
+  //   const postImageRef = ref(postImagesRef, file.name);
+  //   await uploadBytes(postImageRef, file);
+  //   const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
+  //   this.setState({
+  //     images: [...this.state.images, url],
+  //     imageToUpload: {},
+  //     isLoading: false,
+  //   });
+  // };
+
+  handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ isLoading: true });
-    const file = this.state.imageToUpload;
-    const postImageRef = ref(postImagesRef, file.name);
-    await uploadBytes(postImageRef, file);
+    console.log("this.state in handleSubmit before photo upload", this.state);
+
+    const file = this.state.images[0];
+    await uploadBytes(postImagesRef, file);
     const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
-    this.setState({
-      images: [...this.state.images, url],
-      imageToUpload: {},
-      isLoading: false,
-    });
+    // const imageUrlsArray = await Promise.all(
+    //   this.state.images.map(async (file) => {
+    //     await uploadBytes(postImagesRef, file);
+    //     const url = await getDownloadURL(
+    //       ref(storage, `postImages/${file.name}`)
+    //     );
+    //     return url;
+    //   })
+    // );
+    // this.setState({
+    //   images: [url],
+    //   isLoading: false,
+    // });
+    console.log(this.state);
+    this.props.addPost({ ...this.state });
   };
 
-  handleSubmit(event) {
+  handleDelete(event) {
     event.preventDefault();
-    this.props.addPost({ ...this.state });
+    const imageToDelete = event.target.value;
+    const newimagesArray = [...this.state.images].filter(
+      (file) => file.name !== imageToDelete
+    );
+    this.setState({ images: [...newimagesArray] });
   }
 
   render() {
@@ -111,24 +148,30 @@ class CreatePost extends React.Component {
             <label>Add Photos</label>
             <input
               type="file"
-              name="imageToUpload"
+              name="images"
               onChange={this.handleChange}
               id="image_upload"
             ></input>
-            {this.state.imageToUpload.name && (
-              <button onClick={this.handleUpload}>Upload Selected File</button>
-            )}
             <br />
-            {this.state.images.length && <label>Preview of photos</label>}
-            {this.state.images.map((imageUrl) => (
-              <img src={imageUrl} key={imageUrl} height={200} />
+            {this.state.images.length ? (
+              <label>Preview of photos</label>
+            ) : (
+              <div />
+            )}
+            {this.state.images.map((file) => (
+              <div className="photo-previw-div" key={file.name}>
+                <img
+                  src={URL.createObjectURL(file)}
+                  height={200}
+                  className="photo-preview"
+                />
+                <button onClick={this.handleDelete} value={file.name}>
+                  x
+                </button>
+              </div>
             ))}
           </div>
-          <button
-            type="submit"
-            className="submit"
-            disabled={this.state.isLoading}
-          >
+          <button type="submit" className="submit">
             Create
           </button>
         </form>
