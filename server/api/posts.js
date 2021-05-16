@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Post, PostImage, LotteryTicket },
+  models: { Post, PostImage, LotteryTicket, Chat },
 } = require("../db");
 module.exports = router;
 const CronJob = require("cron").CronJob;
@@ -80,6 +80,26 @@ router.post("/", async (req, res, next) => {
     // await post.setRequester([2, 3, 4, 5]);
 
     res.send(postWithImage);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// PUT
+router.put("/:id/chats/:chatId", async (req, res, next) => {
+  try {
+    const chat = await Chat.findByPk(req.params.chatId);
+    const post = await Post.findByPk(req.params.id);
+    let message;
+    await chat.close();
+    await chat.reload();
+    const { action } = req.query;
+    if (action === "pass") {
+      message = await post.pass();
+    } else if (action === "claim") {
+      message = await post.claim();
+    }
+    res.send({ chat, message });
   } catch (err) {
     next(err);
   }

@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../db");
 const Chat = require("./chat");
+const Message = require("./message");
 
 const Post = db.define("post", {
   title: {
@@ -80,4 +81,30 @@ Post.prototype.chat = async function () {
   }
 };
 
+Post.prototype.pass = async function (chatId) {
+  try {
+    const message = await Message.create({
+      content: "This exchange was passed on. This chat is now closed.",
+    });
+    await message.setChat(chatId);
+    this.lottery();
+    return message;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+Post.prototype.claim = async function (chatId) {
+  try {
+    const message = await Message.create({
+      content: "This item was successfully claimed. This chat is now closed.",
+    });
+    await message.setChat(chatId);
+    this.status = "claimed";
+    this.save();
+    return message;
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports = Post;
