@@ -84,9 +84,10 @@ Post.prototype.chat = async function () {
 Post.prototype.pass = async function (chatId) {
   try {
     const message = await Message.create({
-      content: "This exchange was passed on. This chat is now closed.",
+      content: "This exchange was passed on.",
     });
     await message.setChat(chatId);
+    await this.setRecipient(null);
     this.lottery();
     return message;
   } catch (err) {
@@ -97,7 +98,7 @@ Post.prototype.pass = async function (chatId) {
 Post.prototype.claim = async function (chatId) {
   try {
     const message = await Message.create({
-      content: "This item was successfully claimed. This chat is now closed.",
+      content: "This item was successfully claimed. This post is now closed.",
     });
     await message.setChat(chatId);
     this.status = "claimed";

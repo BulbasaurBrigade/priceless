@@ -46,8 +46,14 @@ router.get("/:postId", async (req, res, next) => {
 // POST
 router.post("/", async (req, res, next) => {
   try {
-    const { images, title, description, latitude, longitude, category } =
-      req.body;
+    const {
+      images,
+      title,
+      description,
+      latitude,
+      longitude,
+      category,
+    } = req.body;
     const post = await Post.create({
       title,
       description,
@@ -76,8 +82,8 @@ router.post("/", async (req, res, next) => {
       console.log("time to check");
     });
     job.start();
-    // await post.setPoster(1);
-    // await post.setRequester([2, 3, 4, 5]);
+    //await post.setPoster(1);
+    await post.setRequester([2]);
 
     res.send(postWithImage);
   } catch (err) {
@@ -88,16 +94,18 @@ router.post("/", async (req, res, next) => {
 // PUT
 router.put("/:id/chats/:chatId", async (req, res, next) => {
   try {
-    const chat = await Chat.findByPk(req.params.chatId);
+    const chat = await Chat.findByPk(req.params.chatId, {
+      include: { model: Post },
+    });
     const post = await Post.findByPk(req.params.id);
     let message;
     await chat.close();
     await chat.reload();
     const { action } = req.query;
     if (action === "pass") {
-      message = await post.pass();
+      message = await post.pass(req.params.chatId);
     } else if (action === "claim") {
-      message = await post.claim();
+      message = await post.claim(req.params.chatId);
     }
     res.send({ chat, message });
   } catch (err) {
