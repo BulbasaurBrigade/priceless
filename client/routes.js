@@ -1,13 +1,15 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
-import Homepage from './components/Homepage';
-import MainContainer from './components/MainContainer';
-import CreatePost from './components/CreatePost';
-import Chat from './components/chat/Chat';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Login, Signup } from "./components/AuthForm";
+import Homepage from "./components/Homepage";
+import MainContainer from "./components/MainContainer";
+import CreatePost from "./components/CreatePost";
+import Chat from "./components/chat/Chat";
+import MyAccount from "./components/myAccount/MyAccount";
+import MyPosts from "./components/myAccount/MyPosts";
 
-import { me } from './store';
+import { me } from "./store";
 
 /**
  * COMPONENT
@@ -29,6 +31,9 @@ class Routes extends Component {
           <Route path="/chat/:chatId?" component={Chat} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/myaccount" component={MyAccount} />
+          <Route path="/myposts" component={MyPosts} />
+
           {/* <Redirect to="/home" /> */}
         </Switch>
       </>
