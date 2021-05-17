@@ -78,7 +78,7 @@ class CreatePost extends React.Component {
     //   isLoading: false,
     // });
     this.setState({ isLoading: false });
-    this.props.addPost({ ...this.state });
+    this.props.addPost({ ...this.state }, this.props.userId);
   };
 
   handleDelete(event) {
@@ -187,9 +187,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, { userId, history }) => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    addPost: (post) => dispatch(createPost(post, userId, history)),
+    addPost: (post, userId) => dispatch(createPost(post, userId, history)),
   };
 };
 
