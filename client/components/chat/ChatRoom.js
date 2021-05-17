@@ -4,8 +4,10 @@ import MessageContainer from "./MessageContainer";
 import ChatInput from "./ChatInput";
 import { getChat } from "../../store/singleChat";
 import { connect } from "react-redux";
+
 import { getMessages, _newMessage } from "../../store/messages";
 import socket from "../../socket";
+
 
 class ChatRoom extends React.Component {
   componentDidMount() {
@@ -43,7 +45,10 @@ class ChatRoom extends React.Component {
   render() {
     const { selectedChat, selectedChatId } = this.props;
     const title = selectedChat.title || "";
-    const postId = selectedChat.id || 0;
+
+    const postId = selectedChat.post ? selectedChat.post.id : 0;
+    
+
     return (
       <div id="chat-room">
         <ChatHeader postTitle={title} postId={postId} chatId={selectedChatId} />

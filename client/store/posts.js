@@ -1,10 +1,12 @@
-import axios from "axios";
+/* eslint-disable no-underscore-dangle */
+import axios from 'axios';
+import { ADD_REQUESTER } from './singlePost'
 
-//action type
-const SET_POSTS = "SET_POSTS";
-const CREATE_POST = "CREATE_POST";
+// action type
+const SET_POSTS = 'SET_POSTS';
+const CREATE_POST = 'CREATE_POST';
 
-//action creator
+// action creator
 export const _setPosts = (posts) => {
   return {
     type: SET_POSTS,
@@ -19,14 +21,14 @@ export const _createPost = (post) => {
   };
 };
 
-//thunk
+// thunk creators
 export const setPosts = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/posts");
+      const { data } = await axios.get('/api/posts');
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log("error fetching all posts via thunk");
+      console.log('error fetching all posts via thunk');
     }
   };
 };
@@ -39,30 +41,37 @@ export const setFilteredPosts = (category) => {
       );
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log("error in set filtered posts thunk");
+      console.log('error in set filtered posts thunk');
     }
   };
 };
 
-export const createPost = (post, history) => {
+export const createPost = (post, userId, history) => {
   return async (dispatch) => {
-    const { data } = await axios.post("/api/posts", post);
-    dispatch(_createPost(data));
-    history.push("./posts");
     try {
+      const { data } = await axios.post(`/api/posts?id=${userId}`, post);
+      dispatch(_createPost(data));
+      history.push('./posts');
     } catch (err) {
-      console.log("error creating post via thunk");
+      console.log('error creating post via thunk');
     }
   };
 };
 
-//reducer
+// reducer
 export default (state = [], action) => {
   switch (action.type) {
     case SET_POSTS:
       return action.posts;
     case CREATE_POST:
       return [...state, action.post];
+    case ADD_REQUESTER:
+      return state.map(post => {
+        if(post.id === action.post.id) {
+          return action.post 
+        }
+          return post 
+      })
     default:
       return state;
   }
