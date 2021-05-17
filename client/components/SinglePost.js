@@ -13,9 +13,10 @@ class SinglePost extends React.Component {
     this.props.getSinglePost(id);
   }
 
-  handleRequest(){
+  handleRequest(event){
+    event.stopPropagation()
     const { userId, post: { id } } = this.props
-    this.props.addRequester(id, userId)
+    this.props.addNewRequester(id, userId)
   }
 
   render() {
@@ -59,7 +60,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
-    addRequester: (postId, userId) => dispatch(addRequester(postId, userId))
+    addNewRequester: (postId, userId) => dispatch(addRequester(postId, userId))
   };
 };
 

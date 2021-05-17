@@ -39,6 +39,7 @@ export const addRequester = (postId, userId) => {
       console.log("error fetching requester via thunk")
     }
 }
+}
 //reducer
 export default (state = {}, action) => {
   switch (action.type) {

@@ -51,6 +51,7 @@ const Post = db.define('post', {
 // instance method to run the lottery and select a winner
 // or change the post status to open if there are no current requesters
 Post.prototype.lottery = async function () {
+  console.log("running lottery now!")
   try {
     // get all of a post's associated requesters
     const requesters = await this.getRequester();

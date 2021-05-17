@@ -37,7 +37,6 @@ router.get('/filtered', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, { include: PostImage });
-    await post.lottery();
     res.send(post);
   } catch (err) {
     next(err);
@@ -134,8 +133,12 @@ router.put('/:id/chats/:chatId', async (req, res, next) => {
 router.post('/:postId/users/:userId', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId)
-    await post.addRequester(req.params.userId)
+    console.log(post, "post found by api route")
+    const user = await post.addRequester(req.params.userId)
+    console.log(user, "new requester???")
     if(post.status === 'open') {
+      console.log(post.status, "if post.status === open")
+      console.log(post)
       await post.lottery() // post.reload()???
     }
     res.send(post).status(201)
