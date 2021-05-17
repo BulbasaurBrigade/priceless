@@ -1,15 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setSinglePost } from "../store/singlePost";
+import { setSinglePost, addRequester } from "../store/singlePost";
 
 class SinglePost extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
+    this.handleRequest = this.handleRequest.bind(this)
   }
 
   handleClick(id) {
     this.props.getSinglePost(id);
+  }
+
+  handleRequest(event){
+    event.stopPropagation()
+    const { userId, post: { id } } = this.props
+    this.props.addNewRequester(id, userId)
   }
 
   render() {
@@ -34,7 +41,7 @@ class SinglePost extends React.Component {
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
               </p>
-              <button className="button">Request</button>
+              <button className="button" onClick={this.handleRequest}>Request</button>
             </div>
           )}
         </div>
@@ -46,12 +53,14 @@ class SinglePost extends React.Component {
 const mapStateToProps = (state) => {
   return {
     singlePost: state.singlePost,
+    userId: state.auth.id
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
+    addNewRequester: (postId, userId) => dispatch(addRequester(postId, userId))
   };
 };
 

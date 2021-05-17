@@ -27,6 +27,7 @@ const Nav = ({ handleClick, isLoggedIn }) => (
           <Link to="/add">Create Post</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <Link to="/myaccount">My Account</Link>
         </div>
       )}
     </nav>
