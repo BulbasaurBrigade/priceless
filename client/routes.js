@@ -10,7 +10,10 @@ import MyAccount from "./components/myAccount/MyAccount";
 import MyPosts from "./components/myAccount/MyPosts";
 import EditPost from "./components/myAccount/EditPost";
 
-import { me } from "./store";
+
+import { me } from './store';
+import socket from './socket';
+
 
 /**
  * COMPONENT
@@ -18,6 +21,7 @@ import { me } from "./store";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    // socket.connect();
   }
 
   render() {

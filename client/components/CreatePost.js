@@ -137,10 +137,17 @@ class CreatePost extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { history }) => {
+const mapStateToProps = (state) => {
   return {
-    addPost: (post) => dispatch(createPost(post, history)),
+    userId: 1,
+    // userId: state.auth.id,
   };
 };
 
-export default connect(null, mapDispatchToProps)(CreatePost);
+const mapDispatchToProps = (dispatch, { userId, history }) => {
+  return {
+    addPost: (post) => dispatch(createPost(post, userId, history)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);
