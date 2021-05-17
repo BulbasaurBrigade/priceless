@@ -1,4 +1,6 @@
+const socketIo = require('socket.io');
 const admin = require('firebase-admin');
+const mySocket = require('./socket');
 const { db } = require('./db');
 
 const PORT = process.env.PORT || 8080;
@@ -9,7 +11,12 @@ const init = async () => {
     await db.sync();
 
     // start listening (and create a 'server' object representing our server)
-    app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
+    const server = app.listen(PORT, () =>
+      console.log(`Mixing it up on port ${PORT}`)
+    );
+
+    const io = socketIo(server);
+    mySocket(io);
 
     if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
       admin.initializeApp({
