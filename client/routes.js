@@ -8,6 +8,7 @@ import CreatePost from './components/CreatePost';
 import Chat from './components/chat/Chat';
 
 import { me } from './store';
+import socket from './socket';
 
 /**
  * COMPONENT
@@ -15,6 +16,7 @@ import { me } from './store';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    // socket.connect();
   }
 
   render() {
