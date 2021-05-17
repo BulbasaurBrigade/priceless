@@ -9,7 +9,7 @@ import chats from "./chats";
 import messages from "./messages";
 import singlePost from "./singlePost";
 import singleChat from './singleChat';
-import map from './map'
+
 
 
 const reducer = combineReducers({
@@ -18,8 +18,7 @@ const reducer = combineReducers({
   chats,
   messages,
   singlePost,
-  singleChat,
-  map
+  singleChat
 });
 
 const middleware = composeWithDevTools(
