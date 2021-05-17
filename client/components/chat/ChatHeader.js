@@ -1,6 +1,6 @@
-import React from "react";
-import { closeChat } from "../../store/singleChat";
-import { connect } from "react-redux";
+import React from 'react';
+import { closeChat } from '../../store/singleChat';
+import { connect } from 'react-redux';
 
 class ChatHeader extends React.Component {
   handleClick = (e) => {
@@ -11,29 +11,35 @@ class ChatHeader extends React.Component {
 
   render() {
     const { postTitle, postId, chatId } = this.props;
-    console.log(postId);
+
     return (
       <div id="chat-header">
-        <span>Title Placeholder {postTitle}</span>
+        <span>{postTitle}</span>
         <div id="button-group">
-          <button
-            className="button"
-            type="button"
-            disabled={postId === 0}
-            name="claim"
-            onClick={this.handleClick}
-          >
-            claimed
-          </button>
-          <button
-            className="button"
-            type="button"
-            disabled={postId === 0}
-            name="pass"
-            onClick={this.handleClick}
-          >
-            pass
-          </button>
+          {postId ? (
+            <>
+              <button
+                className="button"
+                type="button"
+                disabled={postId === 0}
+                name="claim"
+                onClick={this.handleClick}
+              >
+                claimed
+              </button>
+              <button
+                className="button"
+                type="button"
+                disabled={postId === 0}
+                name="pass"
+                onClick={this.handleClick}
+              >
+                pass
+              </button>
+            </>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );
