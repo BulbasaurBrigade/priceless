@@ -130,3 +130,17 @@ router.put('/:id/chats/:chatId', async (req, res, next) => {
     next(err);
   }
 });
+
+router.post('/:postId/users/:userId', async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.postId)
+    await post.addRequester(req.params.userId)
+    if(post.status === 'open') {
+      await post.lottery() // post.reload()???
+    }
+    res.send(post).status(201)
+  } catch(err) {
+    next(err)
+  }
+})
+

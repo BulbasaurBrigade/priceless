@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+import { ADD_REQUESTER } from './singlePost'
 
 // action type
 const SET_POSTS = 'SET_POSTS';
@@ -64,6 +65,13 @@ export default (state = [], action) => {
       return action.posts;
     case CREATE_POST:
       return [...state, action.post];
+    case ADD_REQUESTER:
+      return state.map(post => {
+        if(post.id === action.post.id) {
+          return action.post 
+        }
+          return post 
+      })
     default:
       return state;
   }
