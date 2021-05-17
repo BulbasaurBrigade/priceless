@@ -48,8 +48,7 @@ router.post('/', async (req, res, next) => {
   try {
     const { images, title, description, latitude, longitude, category } =
       req.body;
-
-    // Create a new post
+    
     const post = await Post.create({
       title,
       description,
@@ -100,6 +99,28 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+
+// PUT edit single post
+router.put("/:id", async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    res.send(await post.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE edit single post
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    await post.destroy();
+    res.send(post);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // PUT to either pass on or claim a post
 router.put('/:id/chats/:chatId', async (req, res, next) => {
   try {
@@ -133,12 +154,10 @@ router.put('/:id/chats/:chatId', async (req, res, next) => {
 router.post('/:postId/users/:userId', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId)
-    console.log(post, "post found by api route")
+    
     const user = await post.addRequester(req.params.userId)
-    console.log(user, "new requester???")
     if(post.status === 'open') {
-      console.log(post.status, "if post.status === open")
-      console.log(post)
+      
       await post.lottery() // post.reload()???
     }
     res.send(post).status(201)
@@ -146,4 +165,5 @@ router.post('/:postId/users/:userId', async (req, res, next) => {
     next(err)
   }
 })
+
 
