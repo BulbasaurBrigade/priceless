@@ -16,6 +16,8 @@ const initialState = {
   latitude: "",
   longitude: "",
   images: [],
+  imageRefs: [],
+  imageUrls: [],
   isLoading: false,
 };
 
@@ -28,9 +30,9 @@ class CreatePost extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  componentWillUnmount() {
-    this.setState(initialState);
-  }
+  // componentWillUnmount() {
+  //   this.setState(initialState);
+  // }
 
   handleChange(event) {
     if (event.target.name === "latitude" || event.target.name === "longitude") {
@@ -44,28 +46,24 @@ class CreatePost extends React.Component {
     }
   }
 
-  // handleUpload = async (event) => {
-  //   event.preventDefault();
-  //   this.setState({ isLoading: true });
-  //   const file = this.state.imageToUpload;
-  //   const postImageRef = ref(postImagesRef, file.name);
-  //   await uploadBytes(postImageRef, file);
-  //   const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
-  //   this.setState({
-  //     images: [...this.state.images, url],
-  //     imageToUpload: {},
-  //     isLoading: false,
-  //   });
-  // };
-
   handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ isLoading: true });
-    console.log("this.state in handleSubmit before photo upload", this.state);
+    // console.log("this.state in handleSubmit before photo upload", this.state);
 
-    const file = this.state.images[0];
-    await uploadBytes(postImagesRef, file);
-    const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
+    for (let i = 0; i < this.state.images.length; i++) {
+      const file = this.state.images[i];
+      const newFileName =
+        file.name + `user${this.props.userId}post${this.state.title}image${i}`;
+      const imageRef = ref(postImagesRef, newFileName);
+      await uploadBytes(imageRef, file);
+      this.setState({ imageRefs: [...this.state.imageRefs, imageRef] });
+      const url = await getDownloadURL(
+        ref(storage, `postImages/${newFileName}`)
+      );
+      this.setState({ imageUrls: [...this.state.imageUrls, url] });
+    }
+
     // const imageUrlsArray = await Promise.all(
     //   this.state.images.map(async (file) => {
     //     await uploadBytes(postImagesRef, file);
@@ -79,7 +77,7 @@ class CreatePost extends React.Component {
     //   images: [url],
     //   isLoading: false,
     // });
-    console.log(this.state);
+    this.setState({ isLoading: false });
     this.props.addPost({ ...this.state });
   };
 
@@ -94,6 +92,8 @@ class CreatePost extends React.Component {
 
   render() {
     const { title, description, category, latitude, longitude } = this.state;
+    console.log("state.images:", this.state.images);
+    console.log("state.imageUrls:", this.state.imageUrls);
 
     return (
       <div className="form-container">
