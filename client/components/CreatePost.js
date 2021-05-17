@@ -1,23 +1,23 @@
-import React from "react";
-import { connect } from "react-redux";
-import { createPost } from "../store/posts";
+import React from 'react';
+import { connect } from 'react-redux';
+import { createPost } from '../store/posts';
 import {
   postImagesRef,
   uploadBytes,
   ref,
   getDownloadURL,
   storage,
-} from "../firebase";
+} from '../firebase';
 
 class CreatePost extends React.Component {
   constructor() {
     super();
     this.state = {
-      title: "",
-      description: "",
-      category: "",
-      latitude: "",
-      longitude: "",
+      title: '',
+      description: '',
+      category: '',
+      latitude: '',
+      longitude: '',
       imageToUpload: {},
       images: [],
       isLoading: false,
@@ -27,9 +27,9 @@ class CreatePost extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === "latitude" || event.target.name === "longitude") {
+    if (event.target.name === 'latitude' || event.target.name === 'longitude') {
       this.setState({ [event.target.name]: +event.target.value });
-    } else if (event.target.name === "imageToUpload") {
+    } else if (event.target.name === 'imageToUpload') {
       this.setState({ [event.target.name]: event.target.files[0] });
     } else {
       this.setState({ [event.target.name]: event.target.value });
@@ -95,7 +95,7 @@ class CreatePost extends React.Component {
               onChange={this.handleChange}
             >
               <option value="" disabled>
-                {""}
+                {''}
               </option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
@@ -139,8 +139,7 @@ class CreatePost extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userId: 1,
-    // userId: state.auth.id,
+    userId: state.auth.id,
   };
 };
 
