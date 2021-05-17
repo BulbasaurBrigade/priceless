@@ -1,7 +1,8 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+/* eslint-disable func-names */
+const Sequelize = require('sequelize');
+const db = require('../db');
 
-const Chat = db.define("chat", {
+const Chat = db.define('chat', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -13,6 +14,7 @@ const Chat = db.define("chat", {
   },
 });
 
+// closes a chat
 Chat.prototype.close = async function () {
   try {
     this.isOpen = false;

@@ -1,9 +1,10 @@
-import axios from "axios";
-import { _newMessage } from "./messages";
+/* eslint-disable no-underscore-dangle */
+import axios from 'axios';
+import { _newMessage } from './messages';
 
 // Action Type
-const GET_CHAT = "GET_CHAT";
-export const CLOSE_CHAT = "CLOSE_CHAT";
+const GET_CHAT = 'GET_CHAT';
+export const CLOSE_CHAT = 'CLOSE_CHAT';
 
 // Action Creators
 const _getChat = (chat) => ({
@@ -28,6 +29,7 @@ export const getChat = (userId, chatId) => {
   };
 };
 
+// Closes the current chat and marks post as passed or claimed
 export const closeChat = (claimOrPass, chatId, postId) => {
   return async (dispatch) => {
     try {
@@ -52,5 +54,3 @@ export default (state = {}, action) => {
       return state;
   }
 };
-
-// This is actually a post with its current chat's status
