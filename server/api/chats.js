@@ -8,19 +8,6 @@ module.exports = router;
 // GET /api/users/:userId/chats
 router.get('/', async (req, res, next) => {
   try {
-    // const chats = await Post.findAll({
-    //   include: { model: User, as: 'recipient', required: true },
-    //   where: {
-    //     [Op.or]: [
-    //       {
-    //         posterId: req.params.userId,
-    //       },
-    //       {
-    //         '$recipient.id$': req.params.userId,
-    //       },
-    //     ],
-    //   },
-    // });
     const chats = await Chat.findAll({
       where: {
         [Op.or]: [
