@@ -51,16 +51,18 @@ export const setPosts = () => {
   };
 };
 
-export const setLocalPosts = (north, east, south, west) => async (dispatch) => {
-  try {
-    const { data } = await axios.get(
-      `/api/posts/bounds?n=${north}&e=${east}&s=${south}&w=${west}`
-    );
-    dispatch(_setPosts(data));
-  } catch (err) {
-    console.log('error fetching all posts via thunk');
-  }
-};
+export const setLocalPosts =
+  (north, east, south, west) => async (dispatch, getState) => {
+    try {
+      console.log(getState());
+      const { data } = await axios.get(
+        `/api/posts/bounds?n=${north}&e=${east}&s=${south}&w=${west}`
+      );
+      dispatch(_setPosts(data));
+    } catch (err) {
+      console.log('error fetching all posts via thunk');
+    }
+  };
 
 export const setFilteredPosts = (category) => {
   return async (dispatch) => {

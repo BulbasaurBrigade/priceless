@@ -80,18 +80,16 @@ router.post('/', async (req, res, next) => {
       },
       location,
     } = req.body;
-    let {
-      post: { latitude },
-    } = req.body;
-    let {
-      post: { longitude },
-    } = req.body;
+    // let {
+    //   post: { latitude },
+    // } = req.body;
+    // let {
+    //   post: { longitude },
+    // } = req.body;
 
-    if (latitude === null || longitude === null) {
-      const geocode = await getGeocode(location);
-      latitude = geocode.lat;
-      longitude = geocode.lng;
-    }
+    const geocode = await getGeocode(location);
+    const latitude = geocode.lat;
+    const longitude = geocode.lng;
 
     const post = await Post.create({
       title,
