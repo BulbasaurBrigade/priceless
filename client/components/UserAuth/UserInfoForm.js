@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class UserInfoForm extends Component {
+class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +19,8 @@ export default class UserInfoForm extends Component {
 
   handleSubmit = (evt) => {
     evt.preventDefault();
+    const { submit, userId } = this.props;
+    submit({ ...this.state, id: userId });
   };
 
   render() {
@@ -61,3 +64,9 @@ export default class UserInfoForm extends Component {
     );
   }
 }
+
+const mapState = (state) => ({
+  userId: state.auth.id,
+});
+
+export default connect(mapState)(UserInfoForm);

@@ -10,6 +10,7 @@ const AuthForm = (props) => {
 
   return (
     <div className="form-container">
+      <h2>{displayName}</h2>
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
