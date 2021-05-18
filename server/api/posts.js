@@ -54,6 +54,7 @@ router.post("/", async (req, res, next) => {
       longitude,
       category,
       imageRefs,
+      pickupDetails,
     } = req.body;
 
     const post = await Post.create({
@@ -62,6 +63,7 @@ router.post("/", async (req, res, next) => {
       latitude,
       longitude,
       category,
+      pickupDetails,
     });
 
     // Set the user as the poster

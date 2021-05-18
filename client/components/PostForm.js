@@ -14,6 +14,7 @@ const initialState = {
   latitude: "",
   longitude: "",
   images: [],
+  pickupDetails: "",
   imageRefs: [],
   imageUrls: [],
   isLoading: false,
@@ -83,6 +84,7 @@ class PostForm extends React.Component {
       longitude,
       imageUrls,
       imageRefs,
+      pickupDetails,
     } = this.state;
 
     //pass necessary items from state to addPost
@@ -95,6 +97,7 @@ class PostForm extends React.Component {
         longitude,
         imageUrls,
         imageRefs,
+        pickupDetails,
       },
       userId
     );
@@ -110,7 +113,8 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const { title, description, category, latitude, longitude } = this.state;
+    const { title, description, category, latitude, longitude, pickupDetails } =
+      this.state;
 
     return (
       <div className="form-container">
@@ -126,6 +130,13 @@ class PostForm extends React.Component {
               id="description"
               name="description"
               value={description}
+              onChange={this.handleChange}
+            />
+            <label>Pickup Details</label>
+            <input
+              id="pickup details"
+              name="pickupDetails"
+              value={pickupDetails}
               onChange={this.handleChange}
             />
             <label>Latitude</label>
