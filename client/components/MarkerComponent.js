@@ -51,7 +51,6 @@ class MarkerComponent extends React.Component {
     const lat = this.props.post.latitude;
     const long = this.props.post.longitude;
     const post = this.props.post;
-    console.log("post", post);
 
     return (
       <div onClick={() => this.handleClick(post.id)}>
