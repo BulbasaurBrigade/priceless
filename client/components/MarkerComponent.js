@@ -40,7 +40,13 @@ class MarkerComponent extends React.Component {
 
   handleClick(id) {
     this.props.getSinglePost(id); 
-    this.setState({marker: viewedIcon})
+    //this.setState({marker: viewedIcon})
+  }
+
+  componentDidUpdate() {
+    if(this.props.singlePost.id === this.props.post.id && this.state.marker === unselectedIcon) {
+      this.setState({marker: viewedIcon})
+    }
   }
 
   render() {
