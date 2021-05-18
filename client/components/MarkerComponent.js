@@ -35,30 +35,25 @@ class MarkerComponent extends React.Component {
     this.state = {
       marker: unselectedIcon
     }
-    
+  this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(id) {
-    this.props.getSinglePost(id);
+    this.props.getSinglePost(id); 
+    this.setState({marker: viewedIcon})
   }
 
   render() {
     const lat = this.props.post.latitude;
     const long = this.props.post.longitude;
     const post = this.props.post;
-    const icon = () => {
-      if(this.props.singlePost.id === post.id) {
-        this.state.marker = viewedIcon
-        return selectedIcon
-      }
-      return this.state.marker
-    }
+    
     
     
     return (
       <div onClick={() => this.handleClick(post.id)}>
         <Marker
-        icon={icon()}
+        icon={this.props.singlePost.id === post.id ? selectedIcon : this.state.marker}
           position={[lat, long]}
           eventHandlers={{
             click: (e) => {
@@ -81,7 +76,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
-    setMarker: (id) => dispatch(setMarker(id))
+    //setMarker: (id) => dispatch(setMarker(id))
   };
 };
 
