@@ -1,23 +1,27 @@
-import React from "react";
-import { postImagesRef, storage } from "../firebase";
+import React from 'react';
+import { postImagesRef, storage } from '../firebase';
 import {
   uploadBytes,
   ref,
   getDownloadURL,
   deleteObject,
-} from "firebase/storage";
+} from 'firebase/storage';
+import axios from 'axios';
+import { getGeocode } from '../store/location';
+import { connect } from 'react-redux';
 
 const initialState = {
-  title: "",
-  description: "",
-  category: "",
-  latitude: 0,
-  longitude: 0,
+  title: '',
+  description: '',
+  category: '',
+  latitude: null,
+  longitude: null,
   images: [],
-  pickupDetails: "",
+  pickupDetails: '',
   imageRefs: [],
   imageUrls: [],
   isLoading: false,
+  location: '',
 };
 
 class PostForm extends React.Component {
@@ -34,12 +38,18 @@ class PostForm extends React.Component {
         this.setState({ ...this.props.post });
       }
     }
+    if (this.props.latitude !== prevProps.latitude) {
+      this.setState({
+        latitude: this.props.latitude,
+        longitude: this.props.longitude,
+      });
+    }
   }
 
   handleChange(event) {
-    if (event.target.name === "latitude" || event.target.name === "longitude") {
+    if (event.target.name === 'latitude' || event.target.name === 'longitude') {
       this.setState({ [event.target.name]: +event.target.value });
-    } else if (event.target.name === "images") {
+    } else if (event.target.name === 'images') {
       const newImagesArray = [...this.state.images, event.target.files[0]];
       this.setState({ [event.target.name]: newImagesArray });
     } else {
@@ -88,7 +98,7 @@ class PostForm extends React.Component {
     } = this.state;
 
     //pass necessary items from state to either updatePost or addPost (which is passed from wrapper components)
-    if (type === "create") {
+    if (type === 'create') {
       submit(
         {
           title,
@@ -102,7 +112,7 @@ class PostForm extends React.Component {
         },
         userId
       );
-    } else if (type === "edit") {
+    } else if (type === 'edit') {
       submit({ ...this.state });
     }
   };
@@ -116,16 +126,32 @@ class PostForm extends React.Component {
     this.setState({ images: [...newimagesArray] });
   }
 
+  handlePreviewLocation = async (address) => {
+    // const parameters = [];
+    // const urlAddress = address.split(' ').join('%20');
+    // parameters.push(`address=${urlAddress}`);
+    // parameters.push(`key=${process.env.GEOCODE_API}`);
+    // const res = await axios.get(
+    //   `https://maps.googleapis.com/maps/api/geocode/json?${parameters.join(
+    //     '&'
+    //   )}`
+    // );
+    // console.log(res.data);
+    const { prevGeocode } = this.props;
+    prevGeocode(address);
+  };
+
   render() {
     const { post } = this.props;
-    const title = this.state.title || "";
-    const description = this.state.description || "";
-    const category = this.state.category || "";
-    const latitude = this.state.latitude || 0;
-    const longitude = this.state.longitude || 0;
+    const title = this.state.title || '';
+    const description = this.state.description || '';
+    const category = this.state.category || '';
+    const latitude = this.state.latitude || null;
+    const longitude = this.state.longitude || null;
     const images = this.state.images || [];
-    const pickupDetails = this.state.pickupDetails || "";
-    console.log("this.state", this.state);
+    const pickupDetails = this.state.pickupDetails || '';
+    const location = this.state.location || '';
+    console.log('this.state', this.state);
 
     return (
       <div className="form-container">
@@ -149,7 +175,7 @@ class PostForm extends React.Component {
               value={pickupDetails}
               onChange={this.handleChange}
             />
-            <label>Latitude</label>
+            {/* <label>Latitude</label>
             <input
               name="latitude"
               type="number"
@@ -162,7 +188,30 @@ class PostForm extends React.Component {
               type="number"
               value={longitude}
               onChange={this.handleChange}
+            /> */}
+            <label>Location</label>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              value={location}
+              onChange={this.handleChange}
             />
+            <button
+              type="button"
+              onClick={() => this.handlePreviewLocation(location)}
+            >
+              Preview Marker Location
+            </button>
+            {latitude === null ? (
+              ''
+            ) : (
+              <>
+                <br />
+                <p>Latitude: {latitude}</p>
+                <p>Longitude: {longitude}</p>
+              </>
+            )}
             <label>Category</label>
             <select
               name="category"
@@ -170,7 +219,7 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             >
               <option value="" disabled>
-                {""}
+                {''}
               </option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
@@ -218,4 +267,13 @@ class PostForm extends React.Component {
   }
 }
 
-export default PostForm;
+const mapState = (state) => ({
+  latitude: state.location.lat,
+  longitude: state.location.lng,
+});
+
+const mapDispatch = (dispatch) => ({
+  prevGeocode: (location) => dispatch(getGeocode(location)),
+});
+
+export default connect(mapState, mapDispatch)(PostForm);
