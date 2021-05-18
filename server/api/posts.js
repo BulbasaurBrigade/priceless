@@ -46,8 +46,15 @@ router.get("/:postId", async (req, res, next) => {
 // POST a new post
 router.post("/", async (req, res, next) => {
   try {
-    const { imageUrls, title, description, latitude, longitude, category } =
-      req.body;
+    const {
+      imageUrls,
+      title,
+      description,
+      latitude,
+      longitude,
+      category,
+      imageRefs,
+    } = req.body;
 
     const post = await Post.create({
       title,
@@ -63,13 +70,11 @@ router.post("/", async (req, res, next) => {
     //iterate over imageUrls provided
     //create a PostImage for each url, and associate that postImage to the Post
     for (let i = 0; i < imageUrls.length; i++) {
-      let curr = imageUrls[i];
-      const postImage = await PostImage.create({ imageUrl: curr });
+      let currUrl = imageUrls[i];
+      let currRef = imageRefs[i];
+      const postImage = await PostImage.create({ imageUrl: currUrl });
       await post.addPostImage(postImage);
     }
-
-    // Promise.all([ Promise, Promise, Promise])
-    // Promise.all([undefined, undefined, undefined]) -- what SZ thinks is happening above
 
     // Re-fetch the post with its just added images
     const { id } = post.dataValues;

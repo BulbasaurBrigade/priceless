@@ -5,7 +5,6 @@ import {
   uploadBytes,
   getDownloadURL,
   deleteObject,
-  refFromURL,
 } from "firebase/storage";
 
 const firebaseConfig = {
@@ -21,15 +20,10 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 const storage = getStorage(firebaseApp);
-const storageRef = ref(storage);
 
 const postImagesRef = ref(storage, "postImages");
 const userImagesRef = ref(storage, "userImages");
 
-// const path = postImagesRef.fullPath;
-// const name = postImagesRef.name;
-// console.log("path", path);
-// console.log("name", name);
 export {
   postImagesRef,
   userImagesRef,
@@ -38,5 +32,4 @@ export {
   storage,
   getDownloadURL,
   deleteObject,
-  refFromURL,
 };

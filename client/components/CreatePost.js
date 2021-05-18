@@ -26,19 +26,13 @@ class CreatePost extends React.Component {
     super();
     this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
-
-  // componentWillUnmount() {
-  //   this.setState(initialState);
-  // }
 
   handleChange(event) {
     if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
     } else if (event.target.name === "images") {
-      console.log(event.target.files[0]);
       const newImagesArray = [...this.state.images, event.target.files[0]];
       this.setState({ [event.target.name]: newImagesArray });
     } else {
@@ -49,12 +43,12 @@ class CreatePost extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     this.setState({ isLoading: true });
-    // console.log("this.state in handleSubmit before photo upload", this.state);
+    const { userId } = this.props;
 
     for (let i = 0; i < this.state.images.length; i++) {
       const file = this.state.images[i];
       const newFileName =
-        file.name + `user${this.props.userId}post${this.state.title}image${i}`;
+        file.name + `user${userId}post${this.state.title}image${i}`;
       const imageRef = ref(postImagesRef, newFileName);
       await uploadBytes(imageRef, file);
       this.setState({ imageRefs: [...this.state.imageRefs, imageRef] });
@@ -64,21 +58,29 @@ class CreatePost extends React.Component {
       this.setState({ imageUrls: [...this.state.imageUrls, url] });
     }
 
-    // const imageUrlsArray = await Promise.all(
-    //   this.state.images.map(async (file) => {
-    //     await uploadBytes(postImagesRef, file);
-    //     const url = await getDownloadURL(
-    //       ref(storage, `postImages/${file.name}`)
-    //     );
-    //     return url;
-    //   })
-    // );
-    // this.setState({
-    //   images: [url],
-    //   isLoading: false,
-    // });
     this.setState({ isLoading: false });
-    this.props.addPost({ ...this.state }, this.props.userId);
+    const {
+      title,
+      description,
+      category,
+      latitude,
+      longitude,
+      imageUrls,
+      imageRefs,
+    } = this.state;
+
+    this.props.addPost(
+      {
+        title,
+        description,
+        category,
+        latitude,
+        longitude,
+        imageUrls,
+        imageRefs,
+      },
+      userId
+    );
   };
 
   handleDelete(event) {
@@ -92,8 +94,6 @@ class CreatePost extends React.Component {
 
   render() {
     const { title, description, category, latitude, longitude } = this.state;
-    console.log("state.images:", this.state.images);
-    console.log("state.imageUrls:", this.state.imageUrls);
 
     return (
       <div className="form-container">
