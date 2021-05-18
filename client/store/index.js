@@ -9,6 +9,7 @@ import messages from "./messages";
 import singlePost from "./singlePost";
 import singleChat from "./singleChat";
 import location from "./location";
+import userPosts from "./userPosts";
 
 const reducer = combineReducers({
   auth,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   singlePost,
   singleChat,
   location,
+  userPosts,
 });
 
 const middleware = composeWithDevTools(
