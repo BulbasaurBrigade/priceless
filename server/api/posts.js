@@ -186,7 +186,7 @@ router.post('/:postId/users/:userId', async (req, res, next) => {
         model: PostImage,
       },
     });
-
+    
     await post.addRequester(req.params.userId);
     if (post.status === 'open') {
       await post.lottery(); // post.reload()???

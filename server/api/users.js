@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const getGeocode = require('../middleware/getGeocode');
 const {
-  models: { User },
+  models: { User, Post },
 } = require('../db');
 module.exports = router;
+const { Op } = require('sequelize')
 
 router.use('/:userId/chats', require('./chats'));
 
@@ -46,3 +47,20 @@ router.put('/:id', async (req, res, next) => {
     next(error);
   }
 });
+
+router.get('/:id/lotteryTickets', async (req, res, next) => {
+  try {
+    const lottery = await Post.findAll({where: {
+      status: {[Op.ne]: 'claimed'}},
+      include: { model: User, as: 'requester', where: {
+        id: req.params.id
+      }, required: true,
+      attributes: [] }, 
+      attributes: ['id'],
+      }
+    )
+    res.send(lottery)   
+  } catch(err) {
+    next(err)
+  }
+})

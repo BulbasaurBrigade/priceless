@@ -35,7 +35,8 @@ export const addRequester = (postId, userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`/api/posts/${postId}/users/${userId}`);
-      dispatch(_addRequester(data));
+      
+        dispatch(_addRequester(data));
     } catch (err) {
       console.log("error fetching requester via thunk");
     }
