@@ -36,7 +36,6 @@ class MarkerComponent extends React.Component {
 
   handleClick(id) {
     this.props.getSinglePost(id);
-    //this.setState({marker: viewedIcon})
   }
 
   componentDidUpdate() {
@@ -51,8 +50,8 @@ class MarkerComponent extends React.Component {
   render() {
     const lat = this.props.post.latitude;
     const long = this.props.post.longitude;
-    const title = this.props.post.title;
     const post = this.props.post;
+    console.log("post", post);
 
     return (
       <div onClick={() => this.handleClick(post.id)}>
@@ -69,8 +68,8 @@ class MarkerComponent extends React.Component {
             },
           }}
         />
-        <Popup position={[lat, long]}>
-          <p>{title}</p>
+        <Popup>
+          <p>{this.props.singlePost.title}</p>
         </Popup>
       </div>
     );
@@ -86,7 +85,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
-    //setMarker: (id) => dispatch(setMarker(id))
   };
 };
 
