@@ -1,58 +1,106 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { createPost } from '../store/posts';
+import React from "react";
+import { connect } from "react-redux";
+import { createPost } from "../store/posts";
+import { postImagesRef, storage } from "../firebase";
 import {
-  postImagesRef,
   uploadBytes,
   ref,
   getDownloadURL,
-  storage,
-} from '../firebase';
+  deleteObject,
+} from "firebase/storage";
+
+const initialState = {
+  title: "",
+  description: "",
+  category: "",
+  latitude: "",
+  longitude: "",
+  images: [],
+  imageRefs: [],
+  imageUrls: [],
+  isLoading: false,
+};
 
 class CreatePost extends React.Component {
   constructor() {
     super();
-    this.state = {
-      title: '',
-      description: '',
-      category: '',
-      latitude: '',
-      longitude: '',
-      imageToUpload: {},
-      images: [],
-      isLoading: false,
-    };
+    this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleChange(event) {
     if (event.target.name === 'latitude' || event.target.name === 'longitude') {
       this.setState({ [event.target.name]: +event.target.value });
-    } else if (event.target.name === 'imageToUpload') {
-      this.setState({ [event.target.name]: event.target.files[0] });
+    } else if (event.target.name === "images") {
+      const newImagesArray = [...this.state.images, event.target.files[0]];
+      this.setState({ [event.target.name]: newImagesArray });
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
   }
 
-  handleUpload = async (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
+    //in case we want to add a loading message, setState to isLoading
     this.setState({ isLoading: true });
-    const file = this.state.imageToUpload;
-    const postImageRef = ref(postImagesRef, file.name);
-    await uploadBytes(postImageRef, file);
-    const url = await getDownloadURL(ref(storage, `postImages/${file.name}`));
-    this.setState({
-      images: [...this.state.images, url],
-      imageToUpload: {},
-      isLoading: false,
-    });
+    const { userId } = this.props;
+
+    //iterate over images in this.state.images
+    for (let i = 0; i < this.state.images.length; i++) {
+      //grab a file
+      const file = this.state.images[i];
+      //create a unique file name to prevent it from being overwritten in cloud
+      const newFileName =
+        file.name + `user${userId}post${this.state.title}image${i}`;
+      //create imageRef in the cloud - this is where it will be saved
+      const imageRef = ref(postImagesRef, newFileName);
+      //upload the file to the imageRef
+      await uploadBytes(imageRef, file);
+      //add the imageRef to this.state.imageRefs
+      this.setState({ imageRefs: [...this.state.imageRefs, imageRef] });
+      //generate url for this image
+      const url = await getDownloadURL(
+        ref(storage, `postImages/${newFileName}`)
+      );
+      //add this url to this.state.imageUrls
+      this.setState({ imageUrls: [...this.state.imageUrls, url] });
+    }
+
+    this.setState({ isLoading: false });
+    //deconstruct necessary items from state
+    const {
+      title,
+      description,
+      category,
+      latitude,
+      longitude,
+      imageUrls,
+      imageRefs,
+    } = this.state;
+
+    //pass necessary items from state to addPost
+    this.props.addPost(
+      {
+        title,
+        description,
+        category,
+        latitude,
+        longitude,
+        imageUrls,
+        imageRefs,
+      },
+      userId
+    );
   };
 
-  handleSubmit(event) {
+  handleDelete(event) {
     event.preventDefault();
-    this.props.addPost({ ...this.state });
+    const imageToDelete = event.target.value;
+    const newimagesArray = [...this.state.images].filter(
+      (file) => file.name !== imageToDelete
+    );
+    this.setState({ images: [...newimagesArray] });
   }
 
   render() {
@@ -111,24 +159,30 @@ class CreatePost extends React.Component {
             <label>Add Photos</label>
             <input
               type="file"
-              name="imageToUpload"
+              name="images"
               onChange={this.handleChange}
               id="image_upload"
             ></input>
-            {this.state.imageToUpload.name && (
-              <button onClick={this.handleUpload}>Upload Selected File</button>
-            )}
             <br />
-            {this.state.images.length && <label>Preview of photos</label>}
-            {this.state.images.map((imageUrl) => (
-              <img src={imageUrl} key={imageUrl} height={200} />
+            {this.state.images.length ? (
+              <label>Preview of photos</label>
+            ) : (
+              <div />
+            )}
+            {this.state.images.map((file) => (
+              <div className="photo-previw-div" key={file.name}>
+                <img
+                  src={URL.createObjectURL(file)}
+                  height={200}
+                  className="photo-preview"
+                />
+                <button onClick={this.handleDelete} value={file.name}>
+                  x
+                </button>
+              </div>
             ))}
           </div>
-          <button
-            type="submit"
-            className="submit"
-            disabled={this.state.isLoading}
-          >
+          <button type="submit" className="submit">
             Create
           </button>
         </form>
@@ -143,9 +197,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, { userId, history }) => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    addPost: (post) => dispatch(createPost(post, userId, history)),
+    addPost: (post, userId) => dispatch(createPost(post, userId, history)),
   };
 };
 

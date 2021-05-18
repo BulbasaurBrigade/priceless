@@ -1,16 +1,16 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { Post, PostImage, LotteryTicket, Chat },
-} = require('../db');
+} = require("../db");
 module.exports = router;
-const { CronJob } = require('cron');
-const { Op } = require('sequelize');
+const { CronJob } = require("cron");
+const { Op } = require("sequelize");
 
 // GET all posts
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const posts = await Post.findAll({
-      where: { status: { [Op.ne]: 'claimed' } },
+      where: { status: { [Op.ne]: "claimed" } },
       include: PostImage,
     });
     res.send(posts);
@@ -42,7 +42,7 @@ router.get('/bounds', async (req, res, next) => {
 });
 
 // GET all posts filtered by category
-router.get('/filtered', async (req, res, next) => {
+router.get("/filtered", async (req, res, next) => {
   try {
     const { filter } = req.query;
     const posts = await Post.findAll({
@@ -56,7 +56,7 @@ router.get('/filtered', async (req, res, next) => {
 });
 
 // GET a single post by ID
-router.get('/:postId', async (req, res, next) => {
+router.get("/:postId", async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, { include: PostImage });
     res.send(post);
@@ -66,10 +66,17 @@ router.get('/:postId', async (req, res, next) => {
 });
 
 // POST a new post
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const { images, title, description, latitude, longitude, category } =
-      req.body;
+    const {
+      imageUrls,
+      title,
+      description,
+      latitude,
+      longitude,
+      category,
+      imageRefs,
+    } = req.body;
 
     const post = await Post.create({
       title,
@@ -82,16 +89,14 @@ router.post('/', async (req, res, next) => {
     // Set the user as the poster
     await post.setPoster(+req.query.id);
 
-    // Create post images and associate with the post
-    await Promise.all(
-      images.map(async (image) => {
-        const postImage = await PostImage.create({ imageUrl: image });
-        await post.addPostImage(postImage);
-      })
-    );
-
-    // Promise.all([ Promise, Promise, Promise])
-    // Promise.all([undefined, undefined, undefined]) -- what SZ thinks is happening above
+    //iterate over imageUrls provided
+    //create a PostImage for each url, and associate that postImage to the Post
+    for (let i = 0; i < imageUrls.length; i++) {
+      let currUrl = imageUrls[i];
+      let currRef = imageRefs[i];
+      const postImage = await PostImage.create({ imageUrl: currUrl });
+      await post.addPostImage(postImage);
+    }
 
     // Re-fetch the post with its just added images
     const { id } = post.dataValues;
@@ -106,7 +111,7 @@ router.post('/', async (req, res, next) => {
     // create and schedule the Cron Job to run the lottery
     const job = new CronJob(date, () => {
       post.lottery();
-      console.log('time to check');
+      console.log("time to check");
     });
 
     // start the job
@@ -143,7 +148,7 @@ router.delete('/:id', async (req, res, next) => {
 });
 
 // PUT to either pass on or claim a post
-router.put('/:id/chats/:chatId', async (req, res, next) => {
+router.put("/:id/chats/:chatId", async (req, res, next) => {
   try {
     // find the relevant chat and post
     const chat = await Chat.findByPk(req.params.chatId, {
@@ -159,9 +164,9 @@ router.put('/:id/chats/:chatId', async (req, res, next) => {
 
     // call the correct method based on which action was sent
     const { action } = req.query;
-    if (action === 'pass') {
+    if (action === "pass") {
       message = await post.pass(req.params.chatId);
-    } else if (action === 'claim') {
+    } else if (action === "claim") {
       message = await post.claim(req.params.chatId);
     }
 
@@ -172,7 +177,7 @@ router.put('/:id/chats/:chatId', async (req, res, next) => {
   }
 });
 
-router.post('/:postId/users/:userId', async (req, res, next) => {
+router.post("/:postId/users/:userId", async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, {
       include: {
