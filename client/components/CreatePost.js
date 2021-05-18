@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createPost } from "../store/posts";
+import { postImagesRef, storage } from "../firebase";
 import {
-  postImagesRef,
   uploadBytes,
   ref,
   getDownloadURL,
-  storage,
-} from "../firebase";
+  deleteObject,
+} from "firebase/storage";
 
 const initialState = {
   title: "",
@@ -42,23 +42,33 @@ class CreatePost extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    //in case we want to add a loading message, setState to isLoading
     this.setState({ isLoading: true });
     const { userId } = this.props;
 
+    //iterate over images in this.state.images
     for (let i = 0; i < this.state.images.length; i++) {
+      //grab a file
       const file = this.state.images[i];
+      //create a unique file name to prevent it from being overwritten in cloud
       const newFileName =
         file.name + `user${userId}post${this.state.title}image${i}`;
+      //create imageRef in the cloud - this is where it will be saved
       const imageRef = ref(postImagesRef, newFileName);
+      //upload the file to the imageRef
       await uploadBytes(imageRef, file);
+      //add the imageRef to this.state.imageRefs
       this.setState({ imageRefs: [...this.state.imageRefs, imageRef] });
+      //generate url for this image
       const url = await getDownloadURL(
         ref(storage, `postImages/${newFileName}`)
       );
+      //add this url to this.state.imageUrls
       this.setState({ imageUrls: [...this.state.imageUrls, url] });
     }
 
     this.setState({ isLoading: false });
+    //deconstruct necessary items from state
     const {
       title,
       description,
@@ -69,6 +79,7 @@ class CreatePost extends React.Component {
       imageRefs,
     } = this.state;
 
+    //pass necessary items from state to addPost
     this.props.addPost(
       {
         title,

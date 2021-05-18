@@ -1,11 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
+import { getStorage, ref } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyClMCl_RO_ziIwGDQZRrjEBmP5_gFUcxyA",
@@ -19,17 +13,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
+//Grab storage
 const storage = getStorage(firebaseApp);
 
+//create references to postImages and userImages folder in storage
 const postImagesRef = ref(storage, "postImages");
 const userImagesRef = ref(storage, "userImages");
 
-export {
-  postImagesRef,
-  userImagesRef,
-  uploadBytes,
-  ref,
-  storage,
-  getDownloadURL,
-  deleteObject,
-};
+export { postImagesRef, userImagesRef, storage };
