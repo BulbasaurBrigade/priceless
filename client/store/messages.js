@@ -4,6 +4,7 @@ import socket from '../socket';
 // Action Types
 const GET_MESSAGES = 'GET_MESSAGE';
 const NEW_MESSAGE = 'NEW_MESSAGE';
+export const CLEAR_CHAT = 'CLEAR_CHAT';
 
 // Action Creators
 export const _getMessages = (messages) => ({
@@ -47,6 +48,8 @@ export const sentMessage = (userId, chatId, content) => async (dispatch) => {
 // Reducer
 export default (state = [], action) => {
   switch (action.type) {
+    case CLEAR_CHAT:
+      return [];
     case GET_MESSAGES:
       return action.messages;
     case NEW_MESSAGE:

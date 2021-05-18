@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-import { _newMessage } from './messages';
+import { _newMessage, CLEAR_CHAT } from './messages';
 
 // Action Type
 const GET_CHAT = 'GET_CHAT';
@@ -15,6 +15,11 @@ const _getChat = (chat) => ({
 const _closeChat = (chat) => ({
   type: CLOSE_CHAT,
   chat,
+});
+
+// Clears the chat info when no chat is selected
+export const _clearChat = () => ({
+  type: CLEAR_CHAT,
 });
 
 // Thunk Creator
@@ -47,6 +52,8 @@ export const closeChat = (claimOrPass, chatId, postId) => {
 // Reducer
 export default (state = {}, action) => {
   switch (action.type) {
+    case CLEAR_CHAT:
+      return {};
     case CLOSE_CHAT:
     case GET_CHAT:
       return action.chat;

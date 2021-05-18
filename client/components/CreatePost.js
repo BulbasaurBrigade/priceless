@@ -30,7 +30,7 @@ class CreatePost extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === "latitude" || event.target.name === "longitude") {
+    if (event.target.name === 'latitude' || event.target.name === 'longitude') {
       this.setState({ [event.target.name]: +event.target.value });
     } else if (event.target.name === "images") {
       const newImagesArray = [...this.state.images, event.target.files[0]];
@@ -143,7 +143,7 @@ class CreatePost extends React.Component {
               onChange={this.handleChange}
             >
               <option value="" disabled>
-                {""}
+                {''}
               </option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
@@ -193,8 +193,7 @@ class CreatePost extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userId: 1,
-    // userId: state.auth.id,
+    userId: state.auth.id,
   };
 };
 
