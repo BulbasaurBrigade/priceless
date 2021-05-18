@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { createPost } from "../store/posts";
-import PostForm from "./PostForm";
+import React from 'react';
+import { connect } from 'react-redux';
+import { createPost } from '../store/posts';
+import PostForm from './PostForm';
 
 const CreatePost = (props) => {
   return (
@@ -20,7 +20,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    addPost: (post, userId) => dispatch(createPost(post, userId, history)),
+    addPost: (post, userId, location) =>
+      dispatch(createPost(post, userId, location, history)),
   };
 };
 
