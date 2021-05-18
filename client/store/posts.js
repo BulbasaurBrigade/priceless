@@ -124,7 +124,7 @@ export default (state = [], action) => {
         post.id === action.post.id ? action.post : post
       );
     case DELETE_POST:
-      return state.filter((post) => post.id !== post.robot.id);
+      return state.filter((post) => post.id !== action.post.id);
 
     case ADD_REQUESTER:
       return state.map((post) => {

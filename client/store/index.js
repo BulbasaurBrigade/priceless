@@ -1,15 +1,14 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
-import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import auth from './auth';
-import posts from './posts';
-import chats from './chats';
-import messages from './messages';
-import singlePost from './singlePost';
-import singleChat from './singleChat';
-import map from './map';
-import location from './location';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
+import thunkMiddleware from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import auth from "./auth";
+import posts from "./posts";
+import chats from "./chats";
+import messages from "./messages";
+import singlePost from "./singlePost";
+import singleChat from "./singleChat";
+import location from "./location";
 
 const reducer = combineReducers({
   auth,
@@ -18,7 +17,6 @@ const reducer = combineReducers({
   messages,
   singlePost,
   singleChat,
-  map,
   location,
 });
 
@@ -28,4 +26,4 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware);
 
 export default store;
-export * from './auth';
+export * from "./auth";
