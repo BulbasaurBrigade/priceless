@@ -6,17 +6,20 @@ class SinglePost extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
-    this.handleRequest = this.handleRequest.bind(this)
+    this.handleRequest = this.handleRequest.bind(this);
   }
 
   handleClick(id) {
     this.props.getSinglePost(id);
   }
 
-  handleRequest(event){
-    event.stopPropagation()
-    const { userId, post: { id } } = this.props
-    this.props.addNewRequester(id, userId)
+  handleRequest(event) {
+    event.stopPropagation();
+    const {
+      userId,
+      post: { id },
+    } = this.props;
+    this.props.addNewRequester(id, userId);
   }
 
   render() {
@@ -24,7 +27,11 @@ class SinglePost extends React.Component {
     const images = post.postImages || [];
 
     return (
-      <div id="single-post" onClick={() => this.handleClick(post.id)}>
+      <div
+        id="single-post"
+        onClick={() => this.handleClick(post.id)}
+        className={post.id === this.props.singlePost.id ? "selected" : ""}
+      >
         <div id="post-image">
           {images.map((image) => (
             <img src={image.imageUrl} key={image.id} />
@@ -41,7 +48,9 @@ class SinglePost extends React.Component {
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
               </p>
-              <button className="button" onClick={this.handleRequest}>Request</button>
+              <button className="button" onClick={this.handleRequest}>
+                Request
+              </button>
             </div>
           )}
         </div>
@@ -53,14 +62,14 @@ class SinglePost extends React.Component {
 const mapStateToProps = (state) => {
   return {
     singlePost: state.singlePost,
-    userId: state.auth.id
+    userId: state.auth.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
-    addNewRequester: (postId, userId) => dispatch(addRequester(postId, userId))
+    addNewRequester: (postId, userId) => dispatch(addRequester(postId, userId)),
   };
 };
 
