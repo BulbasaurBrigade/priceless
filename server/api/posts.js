@@ -1,10 +1,11 @@
 const router = require('express').Router();
+const { CronJob } = require('cron');
+const { Op } = require('sequelize');
+const getGeocode = require('../middleware/getGeocode');
 const {
   models: { Post, PostImage, LotteryTicket, Chat },
 } = require('../db');
 module.exports = router;
-const { CronJob } = require('cron');
-const { Op } = require('sequelize');
 
 // GET all posts
 router.get('/', async (req, res, next) => {
@@ -69,15 +70,28 @@ router.get('/:postId', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const {
-      imageUrls,
-      title,
-      description,
-      latitude,
-      longitude,
-      category,
-      imageRefs,
-      pickupDetails,
+      post: {
+        imageUrls,
+        title,
+        description,
+        category,
+        imageRefs,
+        pickupDetails,
+      },
+      location,
     } = req.body;
+    let {
+      post: { latitude },
+    } = req.body;
+    let {
+      post: { longitude },
+    } = req.body;
+
+    if (latitude === null || longitude === null) {
+      const geocode = await getGeocode(location);
+      latitude = geocode.lat;
+      longitude = geocode.lng;
+    }
 
     const post = await Post.create({
       title,

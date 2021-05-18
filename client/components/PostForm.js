@@ -95,6 +95,7 @@ class PostForm extends React.Component {
       imageUrls,
       imageRefs,
       pickupDetails,
+      location,
     } = this.state;
 
     //pass necessary items from state to either updatePost or addPost (which is passed from wrapper components)
@@ -110,7 +111,8 @@ class PostForm extends React.Component {
           imageRefs,
           pickupDetails,
         },
-        userId
+        userId,
+        location
       );
     } else if (type === 'edit') {
       submit({ ...this.state });
@@ -127,16 +129,6 @@ class PostForm extends React.Component {
   }
 
   handlePreviewLocation = async (address) => {
-    // const parameters = [];
-    // const urlAddress = address.split(' ').join('%20');
-    // parameters.push(`address=${urlAddress}`);
-    // parameters.push(`key=${process.env.GEOCODE_API}`);
-    // const res = await axios.get(
-    //   `https://maps.googleapis.com/maps/api/geocode/json?${parameters.join(
-    //     '&'
-    //   )}`
-    // );
-    // console.log(res.data);
     const { prevGeocode } = this.props;
     prevGeocode(address);
   };
