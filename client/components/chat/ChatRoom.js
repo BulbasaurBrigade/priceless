@@ -1,53 +1,60 @@
-import React from "react";
-import ChatHeader from "./ChatHeader";
-import MessageContainer from "./MessageContainer";
-import ChatInput from "./ChatInput";
-import { getChat } from "../../store/singleChat";
-import { connect } from "react-redux";
+import React from 'react';
+import ChatHeader from './ChatHeader';
+import MessageContainer from './MessageContainer';
+import ChatInput from './ChatInput';
+import { getChat, _clearChat } from '../../store/singleChat';
+import { connect } from 'react-redux';
 
-import { getMessages, _newMessage } from "../../store/messages";
-import socket from "../../socket";
-
+import { getMessages, _newMessage } from '../../store/messages';
+import socket from '../../socket';
 
 class ChatRoom extends React.Component {
   componentDidMount() {
-    const { selectedChatId, fetchChatInfo, userId, recMessage } = this.props;
+    const { selectedChatId, fetchChatInfo, clearChatInfo, userId, recMessage } =
+      this.props;
     if (selectedChatId) {
       fetchChatInfo(userId, selectedChatId);
+    } else {
+      clearChatInfo();
     }
-    socket.on("new message", ({ message }) => {
+    socket.on('new message', ({ message }) => {
       recMessage(message);
     });
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedChatId, fetchChatInfo, userId } = this.props;
-    if (prevProps.selectedChatId !== selectedChatId) {
+    const { selectedChatId, fetchChatInfo, clearChatInfo, userId } = this.props;
+    if (
+      prevProps.selectedChatId !== selectedChatId &&
+      selectedChatId !== undefined
+    ) {
       fetchChatInfo(userId, selectedChatId);
       if (prevProps.selectedChatId) {
-        console.log("prevProps.selectedChatId", prevProps.selectedChatId);
-        console.log("we are appropriately leaving a room!");
-        socket.emit("leave room", {
+        socket.emit('leave room', {
           room: String(prevProps.selectedChatId),
         });
       }
-      console.log("we are in componentDidUpdate");
-      socket.emit("join room", {
+      socket.emit('join room', {
         room: String(selectedChatId),
       });
+    } else if (
+      prevProps.selectedChatId !== selectedChatId &&
+      selectedChatId === undefined
+    ) {
+      clearChatInfo();
     }
   }
 
   componentWillUnmount() {
-    socket.off("new message");
+    socket.off('new message');
+    this.props.clearChatInfo();
   }
 
   render() {
     const { selectedChat, selectedChatId } = this.props;
-    const title = selectedChat.title || "";
+    const title = selectedChat.post ? selectedChat.post.title : '';
 
     const postId = selectedChat.post ? selectedChat.post.id : 0;
-    
 
     return (
       <div id="chat-room">
@@ -69,6 +76,7 @@ const mapDispatch = (dispatch) => ({
     dispatch(getChat(userId, chatId));
     dispatch(getMessages(userId, chatId));
   },
+  clearChatInfo: () => dispatch(_clearChat()),
   recMessage: (message) => dispatch(_newMessage(message)),
 });
 

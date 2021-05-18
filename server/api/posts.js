@@ -107,7 +107,7 @@ router.post("/", async (req, res, next) => {
 });
 
 // PUT edit single post
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id);
     res.send(await post.update(req.body));
@@ -117,7 +117,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // DELETE edit single post
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id);
     await post.destroy();
@@ -159,10 +159,14 @@ router.put("/:id/chats/:chatId", async (req, res, next) => {
 
 router.post("/:postId/users/:userId", async (req, res, next) => {
   try {
-    const post = await Post.findByPk(req.params.postId);
+    const post = await Post.findByPk(req.params.postId, {
+      include: {
+        model: PostImage,
+      },
+    });
 
-    const user = await post.addRequester(req.params.userId);
-    if (post.status === "open") {
+    await post.addRequester(req.params.userId);
+    if (post.status === 'open') {
       await post.lottery(); // post.reload()???
     }
     res.send(post).status(201);
