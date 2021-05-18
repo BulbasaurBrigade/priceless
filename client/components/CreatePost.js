@@ -5,8 +5,9 @@ import PostForm from "./PostForm";
 
 const CreatePost = (props) => {
   return (
-    <div>
-      <PostForm submit={props.addPost} userId={props.userId} />
+    <div className="form-container">
+      <h2>please fill out the form to create a new post</h2>
+      <PostForm submit={props.addPost} userId={props.userId} type="create" />
     </div>
   );
 };

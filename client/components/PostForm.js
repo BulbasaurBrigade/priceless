@@ -11,8 +11,8 @@ const initialState = {
   title: "",
   description: "",
   category: "",
-  latitude: "",
-  longitude: "",
+  latitude: 0,
+  longitude: 0,
   images: [],
   pickupDetails: "",
   imageRefs: [],
@@ -25,7 +25,7 @@ class PostForm extends React.Component {
     super(props);
     this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -51,7 +51,7 @@ class PostForm extends React.Component {
     event.preventDefault();
     //in case we want to add a loading message, setState to isLoading
     this.setState({ isLoading: true });
-    const { userId } = this.props;
+    const { userId, submit, type } = this.props;
 
     //iterate over images in this.state.images
     for (let i = 0; i < this.state.images.length; i++) {
@@ -87,23 +87,27 @@ class PostForm extends React.Component {
       pickupDetails,
     } = this.state;
 
-    //pass necessary items from state to addPost
-    this.props.submit(
-      {
-        title,
-        description,
-        category,
-        latitude,
-        longitude,
-        imageUrls,
-        imageRefs,
-        pickupDetails,
-      },
-      userId
-    );
+    //pass necessary items from state to either updatePost or addPost (which is passed from wrapper components)
+    if (type === "create") {
+      submit(
+        {
+          title,
+          description,
+          category,
+          latitude,
+          longitude,
+          imageUrls,
+          imageRefs,
+          pickupDetails,
+        },
+        userId
+      );
+    } else if (type === "edit") {
+      submit({ ...this.state });
+    }
   };
 
-  handleDelete(event) {
+  handleDeletePhoto(event) {
     event.preventDefault();
     const imageToDelete = event.target.value;
     const newimagesArray = [...this.state.images].filter(
@@ -113,12 +117,18 @@ class PostForm extends React.Component {
   }
 
   render() {
-    const { title, description, category, latitude, longitude, pickupDetails } =
-      this.state;
+    const { post } = this.props;
+    const title = this.state.title || "";
+    const description = this.state.description || "";
+    const category = this.state.category || "";
+    const latitude = this.state.latitude || 0;
+    const longitude = this.state.longitude || 0;
+    const images = this.state.images || [];
+    const pickupDetails = this.state.pickupDetails || "";
+    console.log("this.state", this.state);
 
     return (
       <div className="form-container">
-        <h2>please fill out the form to create a new post</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>
@@ -193,14 +203,14 @@ class PostForm extends React.Component {
                   height={200}
                   className="photo-preview"
                 />
-                <button onClick={this.handleDelete} value={file.name}>
+                <button onClick={this.handleDeletePhoto} value={file.name}>
                   x
                 </button>
               </div>
             ))}
           </div>
           <button type="submit" className="submit">
-            Create
+            Submit
           </button>
         </form>
       </div>
