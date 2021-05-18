@@ -19,6 +19,7 @@ function MapView(props) {
     [40.774, -73.125],
   ];
 
+  // gets the map's current bounds and fetch posts within those bounds
   function fetchPosts(map) {
     const currBounds = map.getBounds();
     getPosts(
@@ -29,6 +30,7 @@ function MapView(props) {
     );
   }
 
+  // a functional component with access to the map instance
   function PostsGetter() {
     const map = useMapEvents({
       dragend() {
@@ -38,7 +40,6 @@ function MapView(props) {
         fetchPosts(map);
       },
     });
-
     return null;
   }
 
