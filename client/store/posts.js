@@ -1,14 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
-import { ADD_REQUESTER } from './singlePost'
-
+import { ADD_REQUESTER } from './singlePost';
 
 //action type
-const SET_POSTS = "SET_POSTS";
-const CREATE_POST = "CREATE_POST";
-const EDIT_POST = "EDIT_POST";
-const DELETE_POST = "DELETE_POST";
-
+const SET_POSTS = 'SET_POSTS';
+const CREATE_POST = 'CREATE_POST';
+const EDIT_POST = 'EDIT_POST';
+const DELETE_POST = 'DELETE_POST';
 
 // action creator
 export const _setPosts = (posts) => {
@@ -25,7 +23,6 @@ export const _createPost = (post) => {
   };
 };
 
-
 export const _editPost = (post) => {
   return {
     type: EDIT_POST,
@@ -40,7 +37,6 @@ export const _deletePost = (post) => {
   };
 };
 
-
 // thunk creators
 
 export const setPosts = () => {
@@ -52,6 +48,17 @@ export const setPosts = () => {
       console.log('error fetching all posts via thunk');
     }
   };
+};
+
+export const setLocalPosts = (north, east, south, west) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `/api/posts/bounds?n=${north}&e=${east}&s=${south}&w=${west}`
+    );
+    dispatch(_setPosts(data));
+  } catch (err) {
+    console.log('error fetching all posts via thunk');
+  }
 };
 
 export const setFilteredPosts = (category) => {
@@ -79,14 +86,13 @@ export const createPost = (post, userId, history) => {
   };
 };
 
-
 export const editPost = (post) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`/api/posts/${post.id}`, post);
       dispatch(_editPost(data));
     } catch (err) {
-      console.log("error editing post via thunk");
+      console.log('error editing post via thunk');
     }
   };
 };
@@ -97,12 +103,10 @@ export const deletePost = (id) => {
       const { data } = await axios.delete(`/api/posts/${id}`);
       dispatch(_deletePost(data));
     } catch (err) {
-      console.log("error deleting post via thunk");
+      console.log('error deleting post via thunk');
     }
   };
 };
-
-
 
 // reducer
 
@@ -120,14 +124,13 @@ export default (state = [], action) => {
     case DELETE_POST:
       return state.filter((post) => post.id !== post.robot.id);
 
-
     case ADD_REQUESTER:
-      return state.map(post => {
-        if(post.id === action.post.id) {
-          return action.post 
+      return state.map((post) => {
+        if (post.id === action.post.id) {
+          return action.post;
         }
-          return post 
-      })
+        return post;
+      });
 
     default:
       return state;
