@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export const LandingPage = (props) => {
+const LandingPage = (props) => {
   return (
     <div id="landing-page">
       <h1>Priceless</h1>

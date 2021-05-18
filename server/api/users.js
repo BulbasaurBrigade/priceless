@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const getGeocode = require('../middleware/getGeocode');
 const {
   models: { User },
 } = require('../db');
@@ -18,5 +19,30 @@ router.get('/', async (req, res, next) => {
     res.json(users);
   } catch (err) {
     next(err);
+  }
+});
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { displayName, location, imageURL } = req.body;
+
+    // Find user
+    const user = await User.findByPk(req.params.id);
+
+    // Change displayName
+    user.displayName = displayName;
+
+    // Change location string to GeoCode
+    const geocode = await getGeocode(location);
+    user.latitude = geocode.lat;
+    user.longitude = geocode.lng;
+
+    // Proper Photo Stuff will happen here at some point
+    user.imageURL = imageURL;
+    await user.save();
+
+    res.send(user);
+  } catch (error) {
+    next(error);
   }
 });

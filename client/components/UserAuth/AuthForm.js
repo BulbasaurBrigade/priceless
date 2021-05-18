@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authenticate } from '../store';
+import { authenticate } from '../../store';
 
 /**
  * COMPONENT
@@ -9,7 +9,8 @@ const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
-    <div>
+    <div className="form-container">
+      <h2>{displayName}</h2>
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
@@ -24,7 +25,9 @@ const AuthForm = (props) => {
           <input name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button type="submit" className="submit">
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
