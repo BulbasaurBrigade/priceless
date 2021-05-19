@@ -67,9 +67,9 @@ class MarkerComponent extends React.Component {
             },
           }}
         />
-        <Popup>
+        {/* <Popup>
           <p>{this.props.singlePost.title}</p>
-        </Popup>
+        </Popup> */}
       </div>
     );
   }

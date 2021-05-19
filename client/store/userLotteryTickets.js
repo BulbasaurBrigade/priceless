@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ADD_REQUESTER } from "./singlePost";
 
 //action type
 const GET_USER_LOTTERYTICKETS = "SET_USER_LOTTERYTICKETS";
@@ -25,6 +26,8 @@ export const getUserLotteryTickets = (userId) => {
 
 export default (state = [], action) => {
   switch (action.type) {
+    case ADD_REQUESTER:
+      return [...state, { id: action.post.id }];
     case GET_USER_LOTTERYTICKETS:
       return action.tickets;
     default:
