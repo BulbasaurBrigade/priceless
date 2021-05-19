@@ -112,7 +112,8 @@ class PostForm extends React.Component {
           pickupDetails,
           location,
         },
-        userId
+        userId,
+        location
       );
     } else if (type === "edit") {
       submit({ ...this.state });

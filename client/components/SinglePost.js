@@ -47,10 +47,9 @@ class SinglePost extends React.Component {
               <p>
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
-              </p>
-              <button className="button" onClick={this.handleRequest}>
+              </p>{this.props.singlePost.posterId !== this.props.userId && <button className="button" onClick={this.handleRequest}>
                 Request
-              </button>
+              </button>}
             </div>
           )}
         </div>
