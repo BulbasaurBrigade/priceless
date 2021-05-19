@@ -1,8 +1,8 @@
-import axios from "axios";
-import { CLOSE_CHAT } from "./singleChat";
+import axios from 'axios';
+import { CLOSE_CHAT, UPDATE_CHAT } from './singleChat';
 
 // Action Type
-const GET_CHATS = "GET_CHATS";
+const GET_CHATS = 'GET_CHATS';
 
 // Action Creators
 export const _getChats = (chats) => ({
@@ -16,7 +16,7 @@ export const getChats = (id) => async (dispatch) => {
     const { data } = await axios.get(`/api/users/${id}/chats`);
     dispatch(_getChats(data));
   } catch (err) {
-    console.log("error in chats thunk");
+    console.log('error in chats thunk');
   }
 };
 
@@ -26,6 +26,7 @@ export default (state = [], action) => {
     case GET_CHATS:
       return action.chats;
     case CLOSE_CHAT:
+    case UPDATE_CHAT:
       return state.map((chat) => {
         if (chat.id === action.chat.id) return action.chat;
         return chat;
@@ -34,19 +35,3 @@ export default (state = [], action) => {
       return state;
   }
 };
-
-// THE FORMAT OF CHATS
-
-// const chats = [
-//   {
-//     POST Object,
-//     recipient: [
-//       {
-//         recipientObject,
-//         chat: {
-//           chat object,
-//         }
-//       }
-//     ]
-//   }
-// ]
