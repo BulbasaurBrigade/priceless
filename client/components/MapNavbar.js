@@ -44,6 +44,7 @@ class MapNavBar extends React.Component {
             <option value="kitchen">Kitchen</option>
             <option value="personal care">Personal Care</option>
             <option value="pet supplies">Pet Supplies</option>
+            <option value="other">Other</option>
           </select>
         </div>
       </div>

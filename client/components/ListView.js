@@ -7,9 +7,14 @@ class ListView extends React.Component {
     const posts = this.props.posts;
     return (
       <div id="list-view">
-        {posts.map((post) => (
-          <SinglePost key={post.id} post={post} />
-        ))}
+        {posts.length ? (
+          posts.map((post) => <SinglePost key={post.id} post={post} />)
+        ) : (
+          <div id="no-posts">
+            There are no posts in your immediate area. Scroll to a different
+            area to see posts.
+          </div>
+        )}
       </div>
     );
   }
