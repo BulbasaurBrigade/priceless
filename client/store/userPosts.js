@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DELETE_POST } from "./posts";
 
 //action type
 const GET_USER_POSTS = "GET_USER_POSTS";
@@ -28,6 +29,8 @@ export default (state = [], action) => {
   switch (action.type) {
     case GET_USER_POSTS:
       return action.userPosts;
+    case DELETE_POST:
+      return state.filter((userPost) => userPost.id !== action.post.id);
     default:
       return state;
   }

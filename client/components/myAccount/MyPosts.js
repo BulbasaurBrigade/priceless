@@ -6,7 +6,7 @@ import { getUserPosts } from "../../store/userPosts";
 
 class MyPosts extends React.Component {
   handleClick = () => {
-    this.props.removePost(post.id);
+    this.props.removePost();
   };
 
   componentDidMount() {
@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchUserPosts: (userId) => dispatch(getUserPosts(userId)),
-    removePost: (post) => dispatch(deletePost(post)),
+    removePost: (postId) => dispatch(deletePost(postId)),
   };
 };
 
