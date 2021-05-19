@@ -17,7 +17,6 @@ class MapNavBar extends React.Component {
   }
 
   render() {
-    console.log('category:', this.state.category);
     return (
       <div id="map-navbar">
         <div className="select">

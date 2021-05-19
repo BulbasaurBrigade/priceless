@@ -15,7 +15,7 @@ const Post = db.define("post", {
   pickupDetails: {
     type: Sequelize.TEXT,
   },
-  address: {
+  location: {
     type: Sequelize.TEXT,
   },
   latitude: {
