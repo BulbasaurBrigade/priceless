@@ -1,21 +1,21 @@
-const router = require('express').Router();
-const getGeocode = require('../middleware/getGeocode');
+const router = require("express").Router();
+const getGeocode = require("../middleware/getGeocode");
 const {
-  models: { User, Post },
-} = require('../db');
+  models: { User, Post, PostImage },
+} = require("../db");
 module.exports = router;
-const { Op } = require('sequelize')
+const { Op } = require("sequelize");
 
-router.use('/:userId/chats', require('./chats'));
+router.use("/:userId/chats", require("./chats"));
 
 // GET all users
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username'],
+      attributes: ["id", "username"],
     });
     res.json(users);
   } catch (err) {
@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const { displayName, location, imageURL } = req.body;
 
@@ -48,19 +48,41 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-router.get('/:id/lotteryTickets', async (req, res, next) => {
+router.get("/:id/posts", async (req, res, next) => {
   try {
-    const lottery = await Post.findAll({where: {
-      status: {[Op.ne]: 'claimed'}},
-      include: { model: User, as: 'requester', where: {
-        id: req.params.id
-      }, required: true,
-      attributes: [] }, 
-      attributes: ['id'],
-      }
-    )
-    res.send(lottery)   
-  } catch(err) {
-    next(err)
+    //grab all posts associated with a particular user and include postImages
+    const posts = await Post.findAll({
+      where: {
+        posterId: req.params.id,
+      },
+      include: {
+        model: PostImage,
+      },
+    });
+    res.send(posts);
+  } catch (error) {
+    next(error);
   }
-})
+});
+router.get("/:id/lotteryTickets", async (req, res, next) => {
+  try {
+    const lottery = await Post.findAll({
+      where: {
+        status: { [Op.ne]: "claimed" },
+      },
+      include: {
+        model: User,
+        as: "requester",
+        where: {
+          id: req.params.id,
+        },
+        required: true,
+        attributes: [],
+      },
+      attributes: ["id"],
+    });
+    res.send(lottery);
+  } catch (err) {
+    next(err);
+  }
+});

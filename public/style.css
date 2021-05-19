@@ -134,6 +134,7 @@ nav a:hover {
 }
 
 /* create post */
+/* create post && sign Up*/
 .form-container {
   text-align: center;
   padding: 10px;
@@ -197,6 +198,14 @@ nav a:hover {
 
 .submit:hover {
   box-shadow: none;
+}
+
+.signup-map {
+  height: 35vh;
+  width: 35vw;
+  align-items: center;
+  border: 2px solid black;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Chat Styles */

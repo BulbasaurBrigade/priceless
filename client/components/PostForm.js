@@ -110,6 +110,7 @@ class PostForm extends React.Component {
           imageUrls,
           imageRefs,
           pickupDetails,
+          location,
         },
         userId,
         location
@@ -128,9 +129,9 @@ class PostForm extends React.Component {
     this.setState({ images: [...newimagesArray] });
   }
 
-  handlePreviewLocation = async (address) => {
+  handlePreviewLocation = async (location) => {
     const { prevGeocode } = this.props;
-    prevGeocode(address);
+    prevGeocode(location);
   };
 
   render() {
@@ -143,7 +144,6 @@ class PostForm extends React.Component {
     const images = this.state.images || [];
     const pickupDetails = this.state.pickupDetails || "";
     const location = this.state.location || "";
-    console.log("this.state", this.state);
 
     return (
       <div className="form-container">
@@ -167,20 +167,6 @@ class PostForm extends React.Component {
               value={pickupDetails}
               onChange={this.handleChange}
             />
-            {/* <label>Latitude</label>
-            <input
-              name="latitude"
-              type="number"
-              value={latitude}
-              onChange={this.handleChange}
-            />
-            <label>Longitude</label>
-            <input
-              name="longitude"
-              type="number"
-              value={longitude}
-              onChange={this.handleChange}
-            /> */}
             <label>Location</label>
             <input
               id="location"

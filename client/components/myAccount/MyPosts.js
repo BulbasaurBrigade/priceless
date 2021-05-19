@@ -2,22 +2,23 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { setPosts, deletePost } from "../../store/posts";
+import { getUserPosts } from "../../store/userPosts";
 
 class MyPosts extends React.Component {
-  // handleClick = () => {
-  //   this.props.removePost(post.id);
-  // };
+  handleClick = () => {
+    this.props.removePost();
+  };
 
   componentDidMount() {
-    this.props.getPosts();
+    const { userId } = this.props;
+    this.props.fetchUserPosts(userId);
   }
 
   render() {
-    const posts = this.props.posts;
-    console.log(posts);
+    const { userPosts } = this.props;
     return (
       <div>
-        {posts.map((post) => (
+        {userPosts.map((post) => (
           <div key={post.id}>
             <p>{post.title}</p>
             <button>
@@ -35,14 +36,15 @@ class MyPosts extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts,
+    userPosts: state.userPosts,
+    userId: state.auth.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPosts: () => dispatch(setPosts()),
-    removePost: (post) => dispatch(deletePost(post)),
+    fetchUserPosts: (userId) => dispatch(getUserPosts(userId)),
+    removePost: (postId) => dispatch(deletePost(postId)),
   };
 };
 
