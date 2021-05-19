@@ -47,9 +47,15 @@ class SinglePost extends React.Component {
               <p>
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
-              </p>{this.props.singlePost.posterId !== this.props.userId && <button className="button" onClick={this.handleRequest}>
-                Request
-              </button>}
+              </p>
+              {this.props.singlePost.posterId !== this.props.userId && (
+                <button className="button" onClick={this.handleRequest}>
+                  Request
+                </button>
+              )}
+              {this.props.singlePost.posterId === this.props.userId && (
+                <p>This is your post!</p>
+              )}
             </div>
           )}
         </div>
@@ -62,6 +68,7 @@ const mapStateToProps = (state) => {
   return {
     singlePost: state.singlePost,
     userId: state.auth.id,
+    userLotteryTickets: state.userLotteryTickets,
   };
 };
 

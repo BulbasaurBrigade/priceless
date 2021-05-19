@@ -9,6 +9,7 @@ import messages from "./messages";
 import singlePost from "./singlePost";
 import singleChat from "./singleChat";
 import location from "./location";
+import userLotteryTickets from "./userLotteryTickets";
 
 const reducer = combineReducers({
   auth,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   singlePost,
   singleChat,
   location,
+  userLotteryTickets,
 });
 
 const middleware = composeWithDevTools(
