@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-
 import axios from 'axios';
 import { ADD_REQUESTER } from './singlePost';
+import { _setCategory, _setBounds } from './postFilters';
 
-//action type
+// action type
 const SET_POSTS = 'SET_POSTS';
 export const CREATE_POST = 'CREATE_POST';
 const EDIT_POST = 'EDIT_POST';
@@ -54,9 +54,12 @@ export const setPosts = () => {
 export const setLocalPosts =
   (north, east, south, west) => async (dispatch, getState) => {
     try {
-      console.log(getState());
+      dispatch(_setBounds(north, east, south, west));
+      const {
+        postFilters: { filter },
+      } = getState();
       const { data } = await axios.get(
-        `/api/posts/bounds?n=${north}&e=${east}&s=${south}&w=${west}`
+        `/api/posts/filtered?filter=${filter}&n=${north}&e=${east}&s=${south}&w=${west}`
       );
       dispatch(_setPosts(data));
     } catch (err) {
@@ -65,10 +68,16 @@ export const setLocalPosts =
   };
 
 export const setFilteredPosts = (category) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
+      dispatch(_setCategory(category));
+      const {
+        postFilters: {
+          bounds: { north, east, south, west },
+        },
+      } = getState();
       const { data } = await axios.get(
-        `/api/posts/filtered?filter=${category}`
+        `/api/posts/filtered?filter=${category}&n=${north}&e=${east}&s=${south}&w=${west}`
       );
       dispatch(_setPosts(data));
     } catch (err) {
