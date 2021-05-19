@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+import socket from '../socket';
 import { _newMessage, CLEAR_CHAT } from './messages';
 
 // Action Type
@@ -42,6 +43,12 @@ export const closeChat = (claimOrPass, chatId, postId) => {
         `/api/posts/${postId}/chats/${chatId}?action=${claimOrPass}`
       );
       dispatch(_closeChat(data.chat));
+      socket.emit('new message', {
+        message: data.message,
+      });
+      socket.emit('updated chat', {
+        chat: data.chat,
+      });
       dispatch(_newMessage(data.message));
     } catch (error) {
       console.log(error);
