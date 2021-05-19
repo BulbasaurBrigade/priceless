@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const getGeocode = require("../middleware/getGeocode");
 const {
-  models: { User, Post },
+  models: { User, Post, PostImage },
 } = require("../db");
 module.exports = router;
 const { Op } = require("sequelize");

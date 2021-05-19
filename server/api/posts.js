@@ -69,12 +69,11 @@ router.get("/:postId", async (req, res, next) => {
 // POST a new post
 router.post("/", async (req, res, next) => {
   try {
+    console.log("REQ.BODY", req.body);
     const {
       imageUrls,
       title,
       description,
-      latitude,
-      longitude,
       category,
       imageRefs,
       pickupDetails,

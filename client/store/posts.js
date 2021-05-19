@@ -75,13 +75,10 @@ export const setFilteredPosts = (category) => {
   };
 };
 
-export const createPost = (post, userId, location, history) => {
+export const createPost = (post, userId, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/posts?id=${userId}`, {
-        post,
-        location,
-      });
+      const { data } = await axios.post(`/api/posts?id=${userId}`, post);
       dispatch(_createPost(data));
       history.push("./posts");
     } catch (err) {
