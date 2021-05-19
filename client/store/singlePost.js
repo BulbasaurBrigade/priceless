@@ -26,7 +26,7 @@ export const setSinglePost = (postId) => {
       dispatch(_setSinglePost(data));
       document.getElementsByClassName("selected")[0].scrollIntoView();
     } catch (err) {
-      console.log("error fetching single post via thunk");
+      console.log("error fetching single post via thunk", err);
     }
   };
 };
@@ -37,7 +37,7 @@ export const addRequester = (postId, userId) => {
       const { data } = await axios.post(`/api/posts/${postId}/users/${userId}`);
       dispatch(_addRequester(data));
     } catch (err) {
-      console.log("error fetching requester via thunk");
+      console.log("error fetching requester via thunk", err);
     }
   };
 };

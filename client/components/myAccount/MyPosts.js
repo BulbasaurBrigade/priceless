@@ -16,7 +16,6 @@ class MyPosts extends React.Component {
 
   render() {
     const { userPosts } = this.props;
-    console.log(userPosts);
     return (
       <div>
         {userPosts.map((post) => (

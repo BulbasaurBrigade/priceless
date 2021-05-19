@@ -1,27 +1,27 @@
-import React from 'react';
-import { postImagesRef, storage } from '../firebase';
+import React from "react";
+import { postImagesRef, storage } from "../firebase";
 import {
   uploadBytes,
   ref,
   getDownloadURL,
   deleteObject,
-} from 'firebase/storage';
-import axios from 'axios';
-import { getGeocode } from '../store/location';
-import { connect } from 'react-redux';
+} from "firebase/storage";
+import axios from "axios";
+import { getGeocode } from "../store/location";
+import { connect } from "react-redux";
 
 const initialState = {
-  title: '',
-  description: '',
-  category: '',
+  title: "",
+  description: "",
+  category: "",
   latitude: null,
   longitude: null,
   images: [],
-  pickupDetails: '',
+  pickupDetails: "",
   imageRefs: [],
   imageUrls: [],
   isLoading: false,
-  location: '',
+  location: "",
 };
 
 class PostForm extends React.Component {
@@ -47,9 +47,9 @@ class PostForm extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === 'latitude' || event.target.name === 'longitude') {
+    if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
-    } else if (event.target.name === 'images') {
+    } else if (event.target.name === "images") {
       const newImagesArray = [...this.state.images, event.target.files[0]];
       this.setState({ [event.target.name]: newImagesArray });
     } else {
@@ -95,10 +95,11 @@ class PostForm extends React.Component {
       imageUrls,
       imageRefs,
       pickupDetails,
+      location,
     } = this.state;
 
     //pass necessary items from state to either updatePost or addPost (which is passed from wrapper components)
-    if (type === 'create') {
+    if (type === "create") {
       submit(
         {
           title,
@@ -109,10 +110,11 @@ class PostForm extends React.Component {
           imageUrls,
           imageRefs,
           pickupDetails,
+          location,
         },
         userId
       );
-    } else if (type === 'edit') {
+    } else if (type === "edit") {
       submit({ ...this.state });
     }
   };
@@ -126,7 +128,7 @@ class PostForm extends React.Component {
     this.setState({ images: [...newimagesArray] });
   }
 
-  handlePreviewLocation = async (address) => {
+  handlePreviewLocation = async (location) => {
     // const parameters = [];
     // const urlAddress = address.split(' ').join('%20');
     // parameters.push(`address=${urlAddress}`);
@@ -138,20 +140,20 @@ class PostForm extends React.Component {
     // );
     // console.log(res.data);
     const { prevGeocode } = this.props;
-    prevGeocode(address);
+    prevGeocode(location);
   };
 
   render() {
     const { post } = this.props;
-    const title = this.state.title || '';
-    const description = this.state.description || '';
-    const category = this.state.category || '';
+    const title = this.state.title || "";
+    const description = this.state.description || "";
+    const category = this.state.category || "";
     const latitude = this.state.latitude || null;
     const longitude = this.state.longitude || null;
     const images = this.state.images || [];
-    const pickupDetails = this.state.pickupDetails || '';
-    const location = this.state.location || '';
-    console.log('this.state', this.state);
+    const pickupDetails = this.state.pickupDetails || "";
+    const location = this.state.location || "";
+    console.log("this.state", this.state);
 
     return (
       <div className="form-container">
@@ -204,7 +206,7 @@ class PostForm extends React.Component {
               Preview Marker Location
             </button>
             {latitude === null ? (
-              ''
+              ""
             ) : (
               <>
                 <br />
@@ -219,7 +221,7 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             >
               <option value="" disabled>
-                {''}
+                {""}
               </option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
