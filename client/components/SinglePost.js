@@ -25,12 +25,15 @@ class SinglePost extends React.Component {
   render() {
     const post = this.props.post;
     const images = post.postImages || [];
+    const userLotteryTickets = this.props.userLotteryTickets || [];
+    const ticketsArray = userLotteryTickets.map((ticket) => ticket.id);
+    console.log("ticketsArray", ticketsArray);
 
     return (
       <div
         id="single-post"
         onClick={() => this.handleClick(post.id)}
-        className={post.id === this.props.singlePost.id ? "selected" : ""}
+        className={post.id === this.props.selectedPost.id ? "selected" : ""}
       >
         <div id="post-image">
           {images.map((image) => (
@@ -41,20 +44,32 @@ class SinglePost extends React.Component {
           <h1>{post.title}</h1>
           <p>Location</p>
           <p>Status: {post.status}</p>
-          {post.id === this.props.singlePost.id && (
+          {/* if the post is selected, show more information */}
+          {post.id === this.props.selectedPost.id && (
             <div>
               <p>Description: {post.description}</p>
               <p>
                 Pick Up Details: pick up on Monday or Wednesday between 10am and
                 4:30pm
               </p>
-              {this.props.singlePost.posterId !== this.props.userId && (
-                <button className="button" onClick={this.handleRequest}>
-                  Request
-                </button>
+              {/* if user doesn't own the post, show the request button AND they haven't requested it*/}
+              {this.props.selectedPost.posterId !== this.props.userId &&
+                !ticketsArray.includes(this.props.selectedPost.id) && (
+                  <button className="button" onClick={this.handleRequest}>
+                    Request
+                  </button>
+                )}
+              {/*if user owns the post, display a note that says so*/}
+              {this.props.selectedPost.posterId === this.props.userId && (
+                <p>
+                  <b>This is your post!</b>
+                </p>
               )}
-              {this.props.singlePost.posterId === this.props.userId && (
-                <p>This is your post!</p>
+              {/*if user has already entered lottery, display a note that says so*/}
+              {ticketsArray.includes(this.props.selectedPost.id) && (
+                <p>
+                  <b>You've already entered this lottery!</b>
+                </p>
               )}
             </div>
           )}
@@ -66,7 +81,7 @@ class SinglePost extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    singlePost: state.singlePost,
+    selectedPost: state.singlePost,
     userId: state.auth.id,
     userLotteryTickets: state.userLotteryTickets,
   };
