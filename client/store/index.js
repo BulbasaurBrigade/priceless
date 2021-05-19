@@ -9,6 +9,7 @@ import messages from "./messages";
 import singlePost from "./singlePost";
 import singleChat from "./singleChat";
 import location from "./location";
+import userLotteryTickets from "./userLotteryTickets";
 import userPosts from "./userPosts";
 import postFilters from './postFilters';
 import loading from './loading';
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   singlePost,
   singleChat,
   location,
+  userLotteryTickets,
   userPosts,
   postFilters,
   loading,

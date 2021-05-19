@@ -4,10 +4,12 @@ import MapNavbar from "./MapNavbar";
 import MapView from "./MapView";
 import ListView from "./ListView";
 import { setPosts } from "../store/posts";
+import { getUserLotteryTickets } from "../store/userLotteryTickets";
 
 class MainContainer extends React.Component {
   componentDidMount() {
     // this.props.getPosts();
+    this.props.fetchMyLotteryTickets(this.props.userId);
   }
   render() {
     let userLocation;
@@ -30,12 +32,14 @@ const mapStateToProps = (state) => {
   return {
     userLat: state.auth.latitude,
     userLng: state.auth.longitude,
+    userId: state.auth.id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: () => dispatch(setPosts()),
+    fetchMyLotteryTickets: (userId) => dispatch(getUserLotteryTickets(userId)),
   };
 };
 
