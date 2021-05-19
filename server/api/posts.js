@@ -20,34 +20,27 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// GET all posts in a location
-router.get('/bounds', async (req, res, next) => {
-  try {
-    const { n, e, s, w } = req.query;
-    const posts = await Post.findAll({
-      where: {
-        status: { [Op.ne]: 'claimed' },
-        [Op.and]: [
-          { latitude: { [Op.gte]: +s } },
-          { latitude: { [Op.lte]: +n } },
-          { longitude: { [Op.gte]: +w } },
-          { longitude: { [Op.lte]: +e } },
-        ],
-      },
-      include: PostImage,
-    });
-    res.send(posts);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// GET all posts filtered by category
+// GET all posts filtered by category and map bounds
 router.get('/filtered', async (req, res, next) => {
   try {
-    const { filter } = req.query;
+    const { filter, n, e, s, w } = req.query;
+    const whereStatement = { status: { [Op.ne]: 'claimed' } };
+
+    if (filter) {
+      whereStatement.category = filter;
+    }
+
+    if (n) {
+      whereStatement[Op.and] = [
+        { latitude: { [Op.gte]: +s } },
+        { latitude: { [Op.lte]: +n } },
+        { longitude: { [Op.gte]: +w } },
+        { longitude: { [Op.lte]: +e } },
+      ];
+    }
+
     const posts = await Post.findAll({
-      where: { category: filter },
+      where: whereStatement,
       include: PostImage,
     });
     res.send(posts);
@@ -98,6 +91,7 @@ router.post('/', async (req, res, next) => {
       longitude,
       category,
       pickupDetails,
+      address: location,
     });
 
     // Set the user as the poster
@@ -198,7 +192,7 @@ router.post('/:postId/users/:userId', async (req, res, next) => {
         model: PostImage,
       },
     });
-    
+
     await post.addRequester(req.params.userId);
     if (post.status === 'open') {
       await post.lottery(); // post.reload()???

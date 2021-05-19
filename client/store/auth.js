@@ -14,7 +14,7 @@ const TOKEN = 'token';
 /**
  * ACTION TYPES
  */
-const SET_AUTH = 'SET_AUTH';
+export const SET_AUTH = 'SET_AUTH';
 const LOG_OUT = 'LOG_OUT';
 
 /**
@@ -27,21 +27,27 @@ const logOut = () => ({ type: LOG_OUT, auth: {} });
  * THUNK CREATORS
  */
 export const me = () => async (dispatch) => {
-  const token = window.localStorage.getItem(TOKEN);
-  if (token) {
-    const auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const fbToken = await user.getIdToken();
-        const res = await axios.get('/auth/me', {
-          headers: {
-            authorization: fbToken,
-          },
-        });
-        return dispatch(setAuth(res.data));
-      }
-      return dispatch(logOut({}));
-    });
+  try {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token) {
+      const auth = getAuth();
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const fbToken = await user.getIdToken();
+          const res = await axios.get('/auth/me', {
+            headers: {
+              authorization: fbToken,
+            },
+          });
+          return dispatch(setAuth(res.data));
+        }
+        return dispatch(logOut({}));
+      });
+    } else {
+      dispatch(setAuth({}));
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
