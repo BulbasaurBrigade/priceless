@@ -1,21 +1,22 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   getAuth,
   signInWithEmailAndPassword,
   signInWithCustomToken,
   signOut,
   onAuthStateChanged,
-} from 'firebase/auth';
+} from "firebase/auth";
 
-import history from '../history';
+import history from "../history";
+import { _isLoading } from "./loading";
 
-const TOKEN = 'token';
+const TOKEN = "token";
 
 /**
  * ACTION TYPES
  */
-export const SET_AUTH = 'SET_AUTH';
-const LOG_OUT = 'LOG_OUT';
+export const SET_AUTH = "SET_AUTH";
+const LOG_OUT = "LOG_OUT";
 
 /**
  * ACTION CREATORS
@@ -34,7 +35,7 @@ export const me = () => async (dispatch) => {
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const fbToken = await user.getIdToken();
-          const res = await axios.get('/auth/me', {
+          const res = await axios.get("/auth/me", {
             headers: {
               authorization: fbToken,
             },
@@ -53,8 +54,9 @@ export const me = () => async (dispatch) => {
 
 export const authenticate = (email, password, method) => async (dispatch) => {
   try {
+    dispatch(_isLoading());
     const auth = getAuth();
-    if (method === 'login') {
+    if (method === "login") {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -78,9 +80,10 @@ export const authenticate = (email, password, method) => async (dispatch) => {
 
 export const updateUserInfo = (user) => async (dispatch) => {
   try {
+    dispatch(_isLoading());
     const { data } = await axios.put(`/api/users/${user.id}`, user);
     dispatch(setAuth(data));
-    history.push('/');
+    history.push("/");
   } catch (error) {
     console.error(error);
   }
@@ -92,7 +95,7 @@ export const logout = () => async (dispatch) => {
     const auth = getAuth();
     await signOut(auth);
     // dispatch(logOut());
-    history.push('/login');
+    history.push("/login");
   } catch (error) {
     console.error(error);
   }
