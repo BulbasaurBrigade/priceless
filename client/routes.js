@@ -10,7 +10,6 @@ import MyAccount from './components/myAccount/MyAccount';
 import MyPosts from './components/myAccount/MyPosts';
 import EditPost from './components/myAccount/EditPost';
 
-import { me } from './store';
 import socket from './socket';
 import MoreInfo from './components/UserAuth/MoreInfo';
 
@@ -18,11 +17,6 @@ import MoreInfo from './components/UserAuth/MoreInfo';
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData();
-    // socket.connect();
-  }
-
   render() {
     const { isLoggedIn, hasDisplayName } = this.props;
 
@@ -81,14 +75,6 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    loadInitialData() {
-      dispatch(me());
-    },
-  };
-};
-
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes));
+export default withRouter(connect(mapState)(Routes));
