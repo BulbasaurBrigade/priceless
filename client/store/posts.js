@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import axios from "axios";
 import { ADD_REQUESTER } from "./singlePost";
-import { _setCategory, _setBounds } from './postFilters';
+import { _setCategory, _setBounds } from "./postFilters";
+import { _isLoading } from "./loading";
 
 //action type
 const SET_POSTS = "SET_POSTS";
@@ -63,7 +64,7 @@ export const setLocalPosts =
       );
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log('error fetching all posts via thunk');
+      console.log("error fetching all posts via thunk");
     }
   };
 
@@ -89,6 +90,7 @@ export const setFilteredPosts = (category) => {
 export const createPost = (post, userId, history) => {
   return async (dispatch) => {
     try {
+      dispatch(_isLoading());
       const { data } = await axios.post(`/api/posts?id=${userId}`, post);
       dispatch(_createPost(data));
       history.push("./posts");

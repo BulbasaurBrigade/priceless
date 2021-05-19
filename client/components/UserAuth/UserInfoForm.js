@@ -36,11 +36,11 @@ class UserInfoForm extends Component {
 
   render() {
     const { displayName, location, imageURL } = this.state;
+
     let userLocation;
     if (this.state.lat) {
       userLocation = [this.state.lat, this.state.lng];
     }
-    console.log(this.state, 'render');
 
     return (
       <div className="form-container">
