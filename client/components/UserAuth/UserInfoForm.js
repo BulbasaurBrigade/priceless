@@ -3,12 +3,6 @@ import { connect } from 'react-redux';
 import UserInfoMap from "./UserInfoMap"
 import { getGeocode } from "../../store/location"
 
-const defaultLocation = [-40.6804298,-73.9729723];
-const unselectedIcon = new L.icon({
-    iconUrl: "https://i.postimg.cc/fyhRyqqx/placeholder-2.png",
-    iconSize: [40, 40],
-    iconAnchor: [1, 1],
-  });
 
 class UserInfoForm extends Component {
   constructor(props) {

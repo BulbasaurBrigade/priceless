@@ -2,12 +2,13 @@ import React from "react"
 import { MapContainer, TileLayer, Marker } from "react-leaflet"
 
 
-const defaultLocation = [40.4,-73.9729723];
+const defaultLocation = [40.6679209,-73.9558908];
 const unselectedIcon = new L.icon({
     iconUrl: "https://i.postimg.cc/fyhRyqqx/placeholder-2.png",
     iconSize: [40, 40],
     iconAnchor: [1, 1],
   });
+
 export default class UserInfoMap extends React.Component {
 
     render() {
@@ -19,7 +20,8 @@ export default class UserInfoMap extends React.Component {
                 className="signup-map"
                 scrollWheelZoom={true}
                 touchZoom={true}
-                zoom={15}
+                zoom={13}
+                setView={true}
                 center={this.props.userLocation ? this.props.userLocation : defaultLocation}
                 >
                     <TileLayer

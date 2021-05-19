@@ -193,7 +193,8 @@ nav a:hover {
 .signup-map {
   height: 35vh;
   width: 35vw;
-  align-self: center;
+  align-items: center;
+  border: 2px solid black;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
