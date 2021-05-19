@@ -10,6 +10,8 @@ import singlePost from "./singlePost";
 import singleChat from "./singleChat";
 import location from "./location";
 import userPosts from "./userPosts";
+import postFilters from './postFilters';
+import loading from './loading';
 
 const reducer = combineReducers({
   auth,
@@ -20,6 +22,8 @@ const reducer = combineReducers({
   singleChat,
   location,
   userPosts,
+  postFilters,
+  loading,
 });
 
 const middleware = composeWithDevTools(
@@ -28,4 +32,4 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware);
 
 export default store;
-export * from "./auth";
+export * from './auth';

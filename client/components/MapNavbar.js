@@ -1,23 +1,19 @@
-import React from "react";
-import { setPosts, setFilteredPosts } from "../store/posts";
-import { connect } from "react-redux";
+import React from 'react';
+import { setPosts, setFilteredPosts } from '../store/posts';
+import { connect } from 'react-redux';
 
 class MapNavBar extends React.Component {
   constructor() {
     super();
     this.state = {
-      category: "",
+      category: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({ category: event.target.value });
-    if (event.target.value === "all") {
-      this.props.getPosts();
-    } else {
-      this.props.getFilteredPosts(event.target.value);
-    }
+    this.props.getFilteredPosts(event.target.value);
   }
 
   render() {
@@ -32,7 +28,7 @@ class MapNavBar extends React.Component {
             <option value="" disabled>
               Filter
             </option>
-            <option value="all">All</option>
+            <option value="">All</option>
             <option value="books">Books</option>
             <option value="children's items">Children's Items</option>
             <option value="clothing">Clothing</option>
