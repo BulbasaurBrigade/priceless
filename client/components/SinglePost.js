@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setSinglePost, addRequester } from "../store/singlePost";
+import { Link } from "react-router-dom";
 
 class SinglePost extends React.Component {
   constructor() {
@@ -43,16 +44,31 @@ class SinglePost extends React.Component {
         </div>
         <div id="post-details">
           <h1>{post.title}</h1>
-          <p>Location</p>
-          <p>Status: {post.status}</p>
+          {post.location && (
+            <p>
+              <b>Location: </b>
+              <br />
+              {post.location}
+            </p>
+          )}
+          <p>
+            <b>Status: </b>
+            {post.status}
+          </p>
           {/* if the post is selected, show more information */}
           {post.id === selectedPost.id && (
             <div>
-              <p>Description: {post.description}</p>
               <p>
-                Pick Up Details: pick up on Monday or Wednesday between 10am and
-                4:30pm
+                <b>Description:</b>
+                <br /> {post.description}
               </p>
+              {post.pickupDetails && (
+                <p>
+                  <b>Pick Up Details: </b>
+                  <br />
+                  {post.pickupDetails}
+                </p>
+              )}
               {/* if user doesn't own the post, show the request button AND they haven't requested it*/}
               {selectedPost.posterId !== userId &&
                 !ticketsArray.includes(selectedPost.id) && (
@@ -62,15 +78,19 @@ class SinglePost extends React.Component {
                 )}
               {/*if user owns the post, display a note that says so*/}
               {selectedPost.posterId === userId && (
-                <p>
+                <h2>
                   <b>This is your post!</b>
-                </p>
+                  <br />
+                  <button className="button">
+                    <Link to={`/mypost/${post.id}`}>edit details</Link>
+                  </button>
+                </h2>
               )}
-              {/*if user has already entered lottery, display a note that says so*/}
+              {/*if user has entered lottery, display a note that says so*/}
               {ticketsArray.includes(selectedPost.id) && (
-                <p>
-                  <b>You've already entered this lottery!</b>
-                </p>
+                <h2>
+                  <b>You've entered this lottery!</b>
+                </h2>
               )}
             </div>
           )}
