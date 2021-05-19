@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 const initialState = {
   title: "",
   description: "",
-  category: "",
+  category: "other",
   latitude: null,
   longitude: null,
   images: [],
@@ -150,10 +150,16 @@ class PostForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>
-              Post Title <span>*</span>
+              Post Title <span style={{ color: "red" }}>*</span>
             </label>
             <input name="title" value={title} onChange={this.handleChange} />
             <label>Description</label>
+            <p className="form-instructions">
+              You are encouraged to include as many relevant details as you can
+              to help your neighbors know whether they should request your item.
+              Some suggestions include: size, dimensions, and any noticeable
+              wear/tear.
+            </p>
             <input
               id="description"
               name="description"
@@ -161,13 +167,30 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             />
             <label>Pickup Details</label>
+            <p className="form-instructions">
+              What days/times are you generally available for the handoff? Do
+              you have a specific time at which you would ideally like to meet?
+              Include it here!
+            </p>
             <input
               id="pickup details"
               name="pickupDetails"
               value={pickupDetails}
               onChange={this.handleChange}
             />
-            <label>Location</label>
+            <label>
+              Location <span style={{ color: "red" }}>*</span>
+            </label>
+
+            <p className="form-instructions">
+              Include an address, intersection, neighborhood, or zip code in
+              which you'd like to do your handoff. You can use the "Preview
+              Marker" button below to see where your item's marker will be on
+              the map! <br />
+              PLEASE NOTE: The location you list here will be visible to all
+              Priceless users, so it's best to list a location that is not your
+              home address.
+            </p>
             <input
               id="location"
               name="location"
@@ -211,7 +234,9 @@ class PostForm extends React.Component {
               <option value="pet supplies">Pet Supplies</option>
               <option value="other">Other</option>
             </select>
-            <label>Add Photos</label>
+            <label>
+              Add Photos <span style={{ color: "red" }}>*</span>
+            </label>
             <input
               type="file"
               name="images"
@@ -237,7 +262,11 @@ class PostForm extends React.Component {
               </div>
             ))}
           </div>
-          <button type="submit" className="submit">
+          <button
+            type="submit"
+            className="submit"
+            disabled={!title || !location || !images.length}
+          >
             Submit
           </button>
         </form>

@@ -183,6 +183,13 @@ nav a:hover {
   box-sizing: border-box;
 }
 
+.form-instructions {
+  font-size: 13px;
+  text-align: left;
+  padding-top: 0px;
+  margin: 0px;
+}
+
 .submit {
   font-size: 1em;
   padding: 10px;

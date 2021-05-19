@@ -1,10 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+import socket from '../socket';
 import { _newMessage, CLEAR_CHAT } from './messages';
 
 // Action Type
 const GET_CHAT = 'GET_CHAT';
 export const CLOSE_CHAT = 'CLOSE_CHAT';
+export const UPDATE_CHAT = 'UPDATE_CHAT';
 
 // Action Creators
 const _getChat = (chat) => ({
@@ -14,6 +16,11 @@ const _getChat = (chat) => ({
 
 const _closeChat = (chat) => ({
   type: CLOSE_CHAT,
+  chat,
+});
+
+export const _updateChat = (chat) => ({
+  type: UPDATE_CHAT,
   chat,
 });
 
@@ -42,6 +49,12 @@ export const closeChat = (claimOrPass, chatId, postId) => {
         `/api/posts/${postId}/chats/${chatId}?action=${claimOrPass}`
       );
       dispatch(_closeChat(data.chat));
+      socket.emit('new message', {
+        message: data.message,
+      });
+      socket.emit('updated chat', {
+        chat: data.chat,
+      });
       dispatch(_newMessage(data.message));
     } catch (error) {
       console.log(error);
@@ -54,6 +67,7 @@ export default (state = {}, action) => {
   switch (action.type) {
     case CLEAR_CHAT:
       return {};
+    case UPDATE_CHAT:
     case CLOSE_CHAT:
     case GET_CHAT:
       return action.chat;

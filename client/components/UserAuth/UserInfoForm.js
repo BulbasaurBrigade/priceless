@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import UserInfoMap from "./UserInfoMap";
-import { getGeocode } from "../../store/location";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import UserInfoMap from './UserInfoMap';
+import { getGeocode } from '../../store/location';
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: "",
-      location: "",
-      imageURL: "",
+      displayName: '',
+      location: '',
+      imageURL: '',
       lat: null,
       lng: null,
     };
@@ -41,7 +41,6 @@ class UserInfoForm extends Component {
     if (this.state.lat) {
       userLocation = [this.state.lat, this.state.lng];
     }
-    console.log(this.state, "render");
 
     return (
       <div className="form-container">
@@ -55,6 +54,7 @@ class UserInfoForm extends Component {
             name="displayName"
             value={displayName}
             onChange={this.handleChange}
+            required
           />
           <label htmlFor="location">
             Address or Search Location <span>*</span>
@@ -65,6 +65,7 @@ class UserInfoForm extends Component {
             name="location"
             value={location}
             onChange={this.handleChange}
+            required
           />
           <button
             type="button"
