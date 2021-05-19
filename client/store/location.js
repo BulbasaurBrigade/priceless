@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { CREATE_POST } from './posts';
 
+
 // action type
 const GET_GEOCODE = 'GET_GEOCODE';
 
