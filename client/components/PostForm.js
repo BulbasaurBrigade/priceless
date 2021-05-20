@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import { getGeocode } from "../store/location";
 import { connect } from "react-redux";
+import EditImageForm from "./myAccount/EditImageForm";
 
 const initialState = {
   title: "",
@@ -16,10 +17,10 @@ const initialState = {
   category: "other",
   latitude: null,
   longitude: null,
-  images: [],
-  pickupDetails: "",
-  imageRefs: [],
+  imagesToUpload: [],
   imageUrls: [],
+  postImages: [],
+  pickupDetails: "",
   isLoading: false,
   location: "",
 };
@@ -49,8 +50,11 @@ class PostForm extends React.Component {
   handleChange(event) {
     if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
-    } else if (event.target.name === "images") {
-      const newImagesArray = [...this.state.images, event.target.files[0]];
+    } else if (event.target.name === "imagesToUpload") {
+      const newImagesArray = [
+        ...this.state.imagesToUpload,
+        event.target.files[0],
+      ];
       this.setState({ [event.target.name]: newImagesArray });
     } else {
       this.setState({ [event.target.name]: event.target.value });
@@ -64,9 +68,9 @@ class PostForm extends React.Component {
     const { userId, submit, type } = this.props;
 
     //iterate over images in this.state.images
-    for (let i = 0; i < this.state.images.length; i++) {
+    for (let i = 0; i < this.state.imagesToUpload.length; i++) {
       //grab a file
-      const file = this.state.images[i];
+      const file = this.state.imagesToUpload[i];
       //create a unique file name to prevent it from being overwritten in cloud
       const newFileName =
         file.name + `user${userId}post${this.state.title}image${i}`;
@@ -119,14 +123,14 @@ class PostForm extends React.Component {
       submit({ ...this.state });
     }
   };
-
+  //delete photos from imagesToUpload in local state
   handleDeletePhoto(event) {
     event.preventDefault();
     const imageToDelete = event.target.value;
-    const newimagesArray = [...this.state.images].filter(
+    const newimagesArray = [...this.state.imagesToUpload].filter(
       (file) => file.name !== imageToDelete
     );
-    this.setState({ images: [...newimagesArray] });
+    this.setState({ imagesToUpload: [...newimagesArray] });
   }
 
   handlePreviewLocation = async (location) => {
@@ -136,12 +140,14 @@ class PostForm extends React.Component {
 
   render() {
     const { post } = this.props;
+    console.log("post", post);
     const title = this.state.title || "";
     const description = this.state.description || "";
     const category = this.state.category || "";
     const latitude = this.state.latitude || null;
     const longitude = this.state.longitude || null;
-    const images = this.state.images || [];
+    const imagesToUpload = this.state.imagesToUpload || [];
+    const postImages = this.state.postImages || [];
     const pickupDetails = this.state.pickupDetails || "";
     const location = this.state.location || "";
 
@@ -152,7 +158,12 @@ class PostForm extends React.Component {
             <label>
               Post Title <span style={{ color: "red" }}>*</span>
             </label>
-            <input name="title" value={title} onChange={this.handleChange} />
+            <input
+              name="title"
+              value={title}
+              onChange={this.handleChange}
+              required
+            />
             <label>Description</label>
             <p className="form-instructions">
               You are encouraged to include as many relevant details as you can
@@ -197,6 +208,7 @@ class PostForm extends React.Component {
               type="text"
               value={location}
               onChange={this.handleChange}
+              required
             />
             <button
               type="button"
@@ -234,23 +246,29 @@ class PostForm extends React.Component {
               <option value="pet supplies">Pet Supplies</option>
               <option value="other">Other</option>
             </select>
+            {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
+            {this.state.postImages.length ? (
+              <EditImageForm postImages={postImages} postId={post.id} />
+            ) : (
+              ""
+            )}
             <label>
               Add Photos <span style={{ color: "red" }}>*</span>
             </label>
             <input
               type="file"
-              name="images"
+              name="imagesToUpload"
               onChange={this.handleChange}
               id="image_upload"
             ></input>
             <br />
-            {this.state.images.length ? (
+            {this.state.imagesToUpload.length ? (
               <label>Preview of photos</label>
             ) : (
               <div />
             )}
-            {this.state.images.map((file) => (
-              <div className="photo-previw-div" key={file.name}>
+            {this.state.imagesToUpload.map((file) => (
+              <div className="photo-preview-div" key={file.name}>
                 <img
                   src={URL.createObjectURL(file)}
                   height={200}
@@ -262,11 +280,7 @@ class PostForm extends React.Component {
               </div>
             ))}
           </div>
-          <button
-            type="submit"
-            className="submit"
-            disabled={!title || !location || !images.length}
-          >
+          <button type="submit" className="submit">
             Submit
           </button>
         </form>
