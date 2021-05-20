@@ -1,5 +1,5 @@
 body {
-  font-family: "Tajawal", sans-serif;
+  font-family: 'Tajawal', sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -25,6 +25,10 @@ label {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+p {
+  white-space: pre-wrap;
 }
 
 /* navbar */
@@ -88,7 +92,7 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-  background-image: url("https://images.unsplash.com/photo-1561312929-94cb37efc12e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80");
+  background-image: url('https://images.unsplash.com/photo-1561312929-94cb37efc12e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -186,12 +190,12 @@ nav ul ul li:hover {
 }
 
 #post-details h1 {
-  font-family: "DM Serif Display", serif;
+  font-family: 'DM Serif Display', serif;
   font-size: 15px;
 }
 
 #post-details p {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 13px;
 }
 #post-image img {
@@ -516,7 +520,7 @@ nav ul ul li:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 5px;
   text-align: center;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;
