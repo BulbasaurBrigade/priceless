@@ -51,10 +51,35 @@ const Nav = ({ handleClick, isLoggedIn }) => (
     ) : (
       <nav className="menu-content">
         {/* The navbar will show these links before you log in */}
-        <Link to="/">Home</Link>
-        <Link to="/posts">Posts</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Sign Up</Link>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a>Posts</a>
+            <ul>
+              <li>
+                <Link to="/posts">View Posts</Link>
+              </li>
+              <li>
+                <Link to="/add">Create Post</Link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a>Sign In</a>
+            <ul>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Sign Up</Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </nav>
     )}
   </div>
