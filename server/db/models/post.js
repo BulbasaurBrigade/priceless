@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../db');
@@ -75,8 +76,21 @@ Post.prototype.lottery = async function () {
       return;
     }
 
+    // helper function to randomly sort the winners
+    const randomizeRequesters = (arr) => {
+      for (let i = 0; i < arr.length; i++) {
+        // get a random index from 0 to one less than arr length
+        const randIdx = Math.floor(Math.random() * arr.length);
+        // switch the current index with the random one
+        const temp = arr[i];
+        arr[i] = arr[randIdx];
+        arr[randIdx] = temp;
+      }
+      return arr;
+    };
+
     // randomly sort the waiting requesters and pick the first one as winner
-    const winner = requestersWaiting.sort(() => 0.5 - Math.random())[0];
+    const winner = randomizeRequesters(requestersWaiting)[0];
     winner.lotteryTicket.isWaiting = false;
     await winner.lotteryTicket.save();
     await this.setRecipient(winner.id);
