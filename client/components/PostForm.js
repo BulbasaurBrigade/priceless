@@ -11,6 +11,7 @@ import { getGeocode } from "../store/location";
 import PostFormMap from "./PostFormMap"
 import { connect } from "react-redux";
 
+
 const initialState = {
   title: "",
   description: "",
