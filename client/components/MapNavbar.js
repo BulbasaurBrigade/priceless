@@ -1,12 +1,13 @@
-import React from 'react';
-import { setPosts, setFilteredPosts } from '../store/posts';
-import { connect } from 'react-redux';
+import React from "react";
+import { setPosts, setFilteredPosts } from "../store/posts";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class MapNavBar extends React.Component {
   constructor() {
     super();
     this.state = {
-      category: '',
+      category: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -41,6 +42,14 @@ class MapNavBar extends React.Component {
             <option value="pet supplies">Pet Supplies</option>
             <option value="other">Other</option>
           </select>
+        </div>
+        <div className="tooltip-wrap">
+          <Link to="/add">
+            <img src="https://static.thenounproject.com/png/214735-200.png" />
+          </Link>
+          <div className="tooltip-content">
+            <p>tip: create a post</p>
+          </div>
         </div>
       </div>
     );

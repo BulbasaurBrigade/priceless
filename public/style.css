@@ -33,15 +33,57 @@ form div {
   margin: 10px 0 0 10px;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-  color: navy;
-  font-family: "DM Serif Display", serif;
+nav {
+  background-color: #1c5285;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
 }
 
-nav a:hover {
-  color: lightskyblue;
+nav ul {
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  background-color: #1c5285;
+  position: relative;
+  list-style: none;
+  display: inline-block;
+}
+
+nav ul li:hover {
+  background-color: #315e88;
+}
+
+nav ul li a {
+  display: block;
+  padding: 0 15px;
+  color: white;
+  text-decoration: none;
+  line-height: 60px;
+  font-size: 20px;
+}
+
+nav ul ul {
+  position: absolute;
+  top: 60px;
+  display: none;
+}
+
+nav ul li:hover > ul {
+  display: block;
+}
+
+nav ul ul li {
+  width: 150px;
+  float: none;
+  display: list-item;
+  position: relative;
+}
+
+nav ul ul li:hover {
+  background-color: #315e88;
 }
 
 /* landing page*/
@@ -58,16 +100,29 @@ nav a:hover {
   margin-bottom: 10px;
 }
 
+#landing-page h1 {
+  font-size: 100px;
+}
+
+/* footer */
+
 /* main container */
 #main-container-bottom {
   display: flex;
   justify-content: space-between;
 }
 
+.chat-icon {
+  position: absolute;
+  right: 0px;
+}
+
 /* map navbar */
 #map-navbar {
   padding: 15px;
   background-color: lightgray;
+  display: flex;
+  justify-content: space-between;
 }
 
 #map-navbar select {
@@ -77,6 +132,10 @@ nav a:hover {
   width: 250px;
   border: none;
   font-size: 15px;
+}
+
+#map-navbar img {
+  width: 50px;
 }
 
 /*map view*/
@@ -386,4 +445,47 @@ nav a:hover {
 
 .button:hover {
   box-shadow: none;
+}
+
+/* MY ACCOUNT */
+/* my posts */
+#my-posts {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+#my-post {
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  border-radius: 8px;
+  flex-basis: 33%;
+}
+
+#my-post div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*tool tips*/
+.tooltip-wrap {
+  position: relative;
+}
+.tooltip-wrap .tooltip-content {
+  display: none;
+  position: absolute;
+  /* bottom: 5%;
+  left: 5%; */
+  right: 5%;
+  width: 200px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+}
+.tooltip-wrap:hover .tooltip-content {
+  display: block;
 }
