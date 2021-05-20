@@ -16,7 +16,7 @@ const Nav = ({ handleClick, isLoggedIn }) => (
 
         <ul>
           <li>
-            <a>Posts</a>
+            <Link to="/posts">Posts</Link>
             <ul>
               <li>
                 <Link to="/posts">View Posts</Link>
@@ -46,6 +46,9 @@ const Nav = ({ handleClick, isLoggedIn }) => (
               </li>
             </ul>
           </li>
+          <li>
+            <Link to="/faq">FAQ</Link>
+          </li>
         </ul>
       </nav>
     ) : (
@@ -58,7 +61,7 @@ const Nav = ({ handleClick, isLoggedIn }) => (
         </ul>
         <ul>
           <li>
-            <a>Posts</a>
+            <Link to="/posts">Posts</Link>
             <ul>
               <li>
                 <Link to="/posts">View Posts</Link>
