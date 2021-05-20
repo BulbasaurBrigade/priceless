@@ -24,14 +24,6 @@ class MainContainer extends React.Component {
           <MapView userLocation={userLocation} />
           <ListView />
         </div>
-        <div className="tooltip-wrap">
-          <Link to="/chat">
-            <img className="chat-icon" src="chat-i.png" />
-          </Link>
-          <div className="tooltip-content">
-            <p>tip: see your chats</p>
-          </div>
-        </div>
       </div>
     );
   }

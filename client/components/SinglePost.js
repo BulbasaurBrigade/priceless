@@ -46,8 +46,7 @@ class SinglePost extends React.Component {
           <h1>{post.title}</h1>
           {post.location && (
             <p>
-              <b>Location: </b>
-              <br />
+              <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
               {post.location}
             </p>
           )}
