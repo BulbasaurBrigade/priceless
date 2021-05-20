@@ -76,21 +76,11 @@ Post.prototype.lottery = async function () {
       return;
     }
 
-    // helper function to randomly sort the winners
-    const randomizeRequesters = (arr) => {
-      for (let i = 0; i < arr.length; i++) {
-        // get a random index from 0 to one less than arr length
-        const randIdx = Math.floor(Math.random() * arr.length);
-        // switch the current index with the random one
-        const temp = arr[i];
-        arr[i] = arr[randIdx];
-        arr[randIdx] = temp;
-      }
-      return arr;
-    };
+    // chooses a random integer between 0 and the array's length exclusive
+    const randIdx = Math.floor(Math.random() * requestersWaiting.length);
 
-    // randomly sort the waiting requesters and pick the first one as winner
-    const winner = randomizeRequesters(requestersWaiting)[0];
+    // uses that number as an index to pick the winner
+    const winner = requestersWaiting[randIdx];
     winner.lotteryTicket.isWaiting = false;
     await winner.lotteryTicket.save();
     await this.setRecipient(winner.id);
