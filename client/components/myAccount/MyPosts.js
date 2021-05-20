@@ -16,15 +16,21 @@ class MyPosts extends React.Component {
 
   render() {
     const { userPosts } = this.props;
+    console.log("post", userPosts);
     return (
-      <div>
+      <div id="my-posts">
         {userPosts.map((post) => (
-          <div key={post.id}>
-            <p>{post.title}</p>
-            <button>
-              <Link to={`/mypost/${post.id}`}>edit</Link>
-            </button>
-            <button onClick={() => this.props.removePost(post.id)}>
+          <div id="my-post" key={post.id}>
+            <div>
+              <Link to={`/mypost/${post.id}`}>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </Link>
+              <p>{post.title}</p>
+            </div>
+            <button
+              className="delete"
+              onClick={() => this.props.removePost(post.id)}
+            >
               delete
             </button>
           </div>

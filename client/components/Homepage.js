@@ -1,14 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import LandingPage from './LandingPage';
-import MainContainer from './MainContainer';
+import React from "react";
+import LandingPage from "./LandingPage";
+import Footer from "./Footer";
 
 const Homepage = (props) => {
   return (
     <div id="home-container">
-      <section>
-        <LandingPage />
-      </section>
+      <LandingPage />
+      <Footer />
     </div>
   );
 };
