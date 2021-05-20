@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const router = require('express').Router();
 const { CronJob } = require('cron');
 const { Op } = require('sequelize');
@@ -59,6 +60,9 @@ router.get('/:postId', async (req, res, next) => {
   }
 });
 
+let currConnections = 0;
+const waitingForLottery = [];
+
 // POST a new post
 router.post('/', async (req, res, next) => {
   try {
@@ -72,12 +76,6 @@ router.post('/', async (req, res, next) => {
       pickupDetails,
       location,
     } = req.body;
-    // let {
-    //   post: { latitude },
-    // } = req.body;
-    // let {
-    //   post: { longitude },
-    // } = req.body;
 
     const geocode = await getGeocode(location);
     const latitude = geocode.lat;
@@ -112,13 +110,26 @@ router.post('/', async (req, res, next) => {
     });
 
     // Create a date object for when the job should run
-    // Currently set for 1 minute
-    const date = new Date(Date.now() + 60 * 1000);
+    // Currently set for 30 seconds
+    const date = new Date(Date.now() + 30 * 1000);
 
     // create and schedule the Cron Job to run the lottery
-    const job = new CronJob(date, () => {
-      post.lottery();
-      console.log('time to check');
+    const job = new CronJob(date, async () => {
+      currConnections += 1;
+      try {
+        if (currConnections < 4) {
+          await post.lottery();
+          while (waitingForLottery.length) {
+            const waitingPost = waitingForLottery.shift();
+            await waitingPost.lottery();
+          }
+        } else {
+          waitingForLottery.push(post);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+      currConnections -= 1;
     });
 
     // start the job
