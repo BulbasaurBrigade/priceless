@@ -116,20 +116,30 @@ router.post('/', async (req, res, next) => {
     // create and schedule the Cron Job to run the lottery
     const job = new CronJob(date, async () => {
       currConnections += 1;
+      console.log('current Cron Job connections: ', currConnections);
       try {
         if (currConnections < 4) {
+          console.log('few enough connections, running the lottery');
           await post.lottery();
           while (waitingForLottery.length) {
+            console.log('running waiting lotteries: ', waitingForLottery);
             const waitingPost = waitingForLottery.shift();
+            console.log('running lottery for: ', waitingPost.title);
             await waitingPost.lottery();
           }
         } else {
+          console.log('too many connections');
           waitingForLottery.push(post);
+          console.log('adding a post to queue: ', waitingForLottery);
         }
       } catch (error) {
         console.error(error);
       }
       currConnections -= 1;
+      console.log(
+        'ending process. Current cron job connections: ',
+        currConnections
+      );
     });
 
     // start the job
