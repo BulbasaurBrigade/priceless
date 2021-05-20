@@ -21,17 +21,18 @@ class MyPosts extends React.Component {
       <div id="my-posts">
         {userPosts.map((post) => (
           <div id="my-post" key={post.id}>
-            <p>{post.title}</p>
             <div>
-              <button>
-                <Link to={`/mypost/${post.id}`}>
-                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                </Link>
-              </button>
-              <button onClick={() => this.props.removePost(post.id)}>
-                <i className="fa fa-trash" aria-hidden="true"></i>
-              </button>
+              <Link to={`/mypost/${post.id}`}>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </Link>
+              <p>{post.title}</p>
             </div>
+            <button
+              className="delete"
+              onClick={() => this.props.removePost(post.id)}
+            >
+              delete
+            </button>
           </div>
         ))}
       </div>
