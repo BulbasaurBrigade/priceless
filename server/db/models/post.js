@@ -101,10 +101,13 @@ Post.prototype.chat = async function () {
     const recipient = await this.getRecipient();
     console.log({ poster });
     console.log({ recipient });
+    let content = `Congrats! You have connected on the post: ${this.title}.\nThe poster is: ${poster.displayName}.\nThe recipient is: ${recipient.displayName}.`;
+    if (this.pickupDetails)
+      content += `\nTo get you started, here are the pick up details that ${poster.displayName} left for the listing:\n${this.pickupDetails}`;
     const [chat, message] = await Promise.all([
       Chat.create(),
       Message.create({
-        content: `Congrats! You have connected on the post: ${this.title}.`,
+        content,
       }),
     ]);
 
