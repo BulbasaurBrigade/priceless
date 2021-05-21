@@ -154,7 +154,8 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id/images/:imageId", async (req, res, next) => {
+//DELETE /posts/:postId/images/:imageId
+router.delete("/:postId/images/:imageId", async (req, res, next) => {
   try {
     const image = await PostImage.findByPk(req.params.imageId);
     console.log(image);

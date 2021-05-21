@@ -54,7 +54,7 @@ export const addRequester = (postId, userId) => {
 export const destroyImage = (postId, imageId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(
+      const { data } = await axios.delete(
         `/api/posts/${postId}/images/${imageId}`
       );
       dispatch(_destroyImage(data));
