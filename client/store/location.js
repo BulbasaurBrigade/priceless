@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 import { CREATE_POST } from './posts';
-
+import { setPreviewLocationError } from './error';
 
 // action type
 const GET_GEOCODE = 'GET_GEOCODE';
@@ -17,7 +18,7 @@ export const getGeocode = (location) => async (dispatch) => {
     const res = await axios.get(`/api/location?address=${location}`);
     dispatch(_getGeocode(res.data));
   } catch (error) {
-    console.error(error);
+    dispatch(setPreviewLocationError(error.response.data));
   }
 };
 

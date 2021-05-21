@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
-import Nav from "./components/Nav";
-import Routes from "./routes";
-import LoadingPage from "./components/LoadingPage";
-import { me } from "./store";
+import Nav from './components/Nav';
+import Routes from './routes';
+import LoadingPage from './components/LoadingPage';
+import { me } from './store';
 
 class App extends React.Component {
   componentDidMount() {
@@ -26,7 +26,7 @@ class App extends React.Component {
 }
 
 const mapState = (state) => ({
-  loading: state.loading,
+  loading: state.loading.general,
 });
 
 const mapDispatch = (dispatch) => {
