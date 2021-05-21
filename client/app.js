@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import Nav from "./components/Nav";
 import Routes from "./routes";
+import LoadingPage from "./components/LoadingPage";
 import { me } from "./store";
 
 class App extends React.Component {
@@ -12,7 +13,8 @@ class App extends React.Component {
 
   render() {
     const { loading } = this.props;
-    if (loading) return <span style={{ placeSelf: "center" }}>Loading</span>;
+    if (loading) return <LoadingPage />;
+    // if (loading) return <span style={{ placeSelf: "center" }}>Loading</span>;
 
     return (
       <>

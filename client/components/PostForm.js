@@ -153,7 +153,7 @@ class PostForm extends React.Component {
               Post Title <span style={{ color: "red" }}>*</span>
             </label>
             <input name="title" value={title} onChange={this.handleChange} />
-            <label>Description</label>
+            <label>Description </label>
             <p className="form-instructions">
               You are encouraged to include as many relevant details as you can
               to help your neighbors know whether they should request your item.
