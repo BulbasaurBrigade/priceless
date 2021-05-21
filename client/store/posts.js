@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { ADD_REQUESTER } from './singlePost';
 import { _setCategory, _setBounds } from './postFilters';
-import { _isLoading } from './loading';
+import { _isLoading, _formLoading } from './loading';
 import { setErrorMsg } from './error';
 
 //action type
@@ -91,7 +91,7 @@ export const setFilteredPosts = (category) => {
 export const createPost = (post, userId, history) => {
   return async (dispatch) => {
     try {
-      dispatch(_isLoading());
+      dispatch(_formLoading());
       const { data } = await axios.post(`/api/posts?id=${userId}`, post);
       dispatch(_createPost(data));
       history.push('./posts');

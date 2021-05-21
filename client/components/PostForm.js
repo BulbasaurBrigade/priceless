@@ -10,6 +10,7 @@ import axios from 'axios';
 import { getGeocode } from '../store/location';
 import PostFormMap from './PostFormMap';
 import { connect } from 'react-redux';
+import LoadingPage from './LoadingPage';
 
 const initialState = {
   title: '',
@@ -136,7 +137,7 @@ class PostForm extends React.Component {
   };
 
   render() {
-    const { post, error } = this.props;
+    const { post, error, loading } = this.props;
     const title = this.state.title || '';
     const description = this.state.description || '';
     const category = this.state.category || '';
@@ -150,6 +151,11 @@ class PostForm extends React.Component {
       userLocation = [latitude, longitude];
     }
     console.log(userLocation);
+
+    if (loading) {
+      console.log('we are rendering something new in post form');
+      return <LoadingPage />;
+    }
 
     return (
       <div className="form-container">
@@ -279,6 +285,7 @@ const mapState = (state) => ({
   latitude: state.location.lat,
   longitude: state.location.lng,
   error: state.error,
+  loading: state.loading.submit,
 });
 
 const mapDispatch = (dispatch) => ({
