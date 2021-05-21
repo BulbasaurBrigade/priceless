@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../db');
@@ -75,8 +76,11 @@ Post.prototype.lottery = async function () {
       return;
     }
 
-    // randomly sort the waiting requesters and pick the first one as winner
-    const winner = requestersWaiting.sort(() => 0.5 - Math.random())[0];
+    // chooses a random integer between 0 and the array's length exclusive
+    const randIdx = Math.floor(Math.random() * requestersWaiting.length);
+
+    // uses that number as an index to pick the winner
+    const winner = requestersWaiting[randIdx];
     winner.lotteryTicket.isWaiting = false;
     await winner.lotteryTicket.save();
     await this.setRecipient(winner.id);
@@ -97,10 +101,13 @@ Post.prototype.chat = async function () {
     const recipient = await this.getRecipient();
     console.log({ poster });
     console.log({ recipient });
+    let content = `Congrats! You have connected on the post: ${this.title}.\nThe poster is: ${poster.displayName}.\nThe recipient is: ${recipient.displayName}.`;
+    if (this.pickupDetails)
+      content += `\nTo get you started, here are the pick up details that ${poster.displayName} left for the listing:\n${this.pickupDetails}`;
     const [chat, message] = await Promise.all([
       Chat.create(),
       Message.create({
-        content: `Congrats! You have connected on the post: ${this.title}.`,
+        content,
       }),
     ]);
 

@@ -8,6 +8,7 @@ import {
 } from "firebase/storage";
 import axios from "axios";
 import { getGeocode } from "../store/location";
+import PostFormMap from "./PostFormMap";
 import { connect } from "react-redux";
 import EditImageForm from "./myAccount/EditImageForm";
 
@@ -150,6 +151,11 @@ class PostForm extends React.Component {
     const postImages = this.state.postImages || [];
     const pickupDetails = this.state.pickupDetails || "";
     const location = this.state.location || "";
+    let userLocation;
+    if (latitude) {
+      userLocation = [latitude, longitude];
+    }
+    console.log(userLocation);
 
     return (
       <div className="form-container">
@@ -214,17 +220,10 @@ class PostForm extends React.Component {
               type="button"
               onClick={() => this.handlePreviewLocation(location)}
             >
-              Preview Marker Location
+              Preview Location
             </button>
-            {latitude === null ? (
-              ""
-            ) : (
-              <>
-                <br />
-                <p>Latitude: {latitude}</p>
-                <p>Longitude: {longitude}</p>
-              </>
-            )}
+
+            <PostFormMap userLocation={userLocation} />
             <label>Category</label>
             <select
               name="category"

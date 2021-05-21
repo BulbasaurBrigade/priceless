@@ -43,6 +43,7 @@ class MapNavBar extends React.Component {
             <option value="other">Other</option>
           </select>
         </div>
+
         <div className="tooltip-wrap">
           <Link to="/add">
             <img src="https://static.thenounproject.com/png/214735-200.png" />

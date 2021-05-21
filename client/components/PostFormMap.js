@@ -9,12 +9,11 @@ const unselectedIcon = new L.icon({
     iconAnchor: [1, 1],
   });
 
-export default class UserInfoMap extends React.Component {
+  export default class PostFormMap extends React.Component {
 
-    render() {
-      
-       
-            return (
+    render(){
+        console.log(this.props, "map props")
+        return(
             <div>
                 <MapContainer 
                 className="signup-map"
@@ -33,7 +32,7 @@ export default class UserInfoMap extends React.Component {
                 </MapContainer>
           
           </div>
-            
         )
+
     }
-}
+  }
