@@ -27,10 +27,6 @@ const Nav = ({ handleClick, isLoggedIn }) => (
             </ul>
           </li>
           <li>
-            <Link to="/chat">Chat</Link>
-          </li>
-
-          <li>
             <a>My Account</a>
             <ul>
               <li>
@@ -45,6 +41,13 @@ const Nav = ({ handleClick, isLoggedIn }) => (
                 </a>
               </li>
             </ul>
+          </li>
+          <li>
+            <Link to="/chat">
+              <Link to="/chat">
+                <i className="fa fa-comments" aria-hidden="true"></i>
+              </Link>
+            </Link>
           </li>
         </ul>
       </nav>
