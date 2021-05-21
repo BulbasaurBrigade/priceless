@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/UserAuth/AuthForm";
+import socket from "./socket";
+
 import Homepage from "./components/Homepage";
 import MainContainer from "./components/MainContainer";
 import CreatePost from "./components/CreatePost";
@@ -10,8 +12,7 @@ import MyAccount from "./components/myAccount/MyAccount";
 import MyPosts from "./components/myAccount/MyPosts";
 import EditPost from "./components/myAccount/EditPost";
 import EditProfile from "./components/myAccount/EditProfile";
-
-import socket from "./socket";
+import FAQ from "./components/FAQ";
 import MoreInfo from "./components/UserAuth/MoreInfo";
 
 /**
@@ -35,6 +36,7 @@ class Routes extends Component {
             <Route path="/myposts" component={MyPosts} />
             <Route path="/mypost/:id" component={EditPost} />
             <Route path="/profile" component={EditProfile} />
+            <Route path="/faq" component={FAQ} />
             <Redirect to="/" />
           </Switch>
         ) : (
