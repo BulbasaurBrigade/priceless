@@ -40,14 +40,14 @@ class SinglePost extends React.Component {
         <div id="post-image">
           {images.map((image) => (
             <div key={image.id}>
-              <a href="#popup">
+              <a href={`#popup${image.id}`}>
                 <img src={image.imageUrl} />
               </a>
 
-              <div id="popup" className="overlay">
+              <div id={`popup${image.id}`} className="overlay">
                 <div className="popup">
                   <img src={image.imageUrl} />
-                  <a className="close" href="#">
+                  <a className="close" href="">
                     &times;
                   </a>
                 </div>
