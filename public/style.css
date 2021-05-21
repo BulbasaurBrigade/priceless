@@ -201,7 +201,6 @@ nav ul ul li:hover {
 }
 
 #post-image {
-  background-color: black;
   width: 300px;
   height: 120px;
   overflow: hidden;
@@ -225,6 +224,46 @@ nav ul ul li:hover {
   padding: 10px;
   width: 60%;
   font-size: 28px;
+}
+
+/* image popup on click */
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  right: 25px;
+  margin-top: 25px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: absolute;
+  transition: all 5s ease-in-out;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  color: #333;
+}
+.popup .close:hover {
+  font-size: 40px;
 }
 
 /* create post */
