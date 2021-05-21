@@ -217,6 +217,7 @@ class PostForm extends React.Component {
               required
             />
             <button
+              className="preview-button"
               type="button"
               onClick={() => this.handlePreviewLocation(location)}
             >

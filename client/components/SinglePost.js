@@ -47,7 +47,7 @@ class SinglePost extends React.Component {
               <div id={`popup${image.id}`} className="overlay">
                 <div className="popup">
                   <img src={image.imageUrl} />
-                  <a className="close" href="">
+                  <a className="close" href="#">
                     &times;
                   </a>
                 </div>

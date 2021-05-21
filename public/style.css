@@ -372,7 +372,6 @@ nav ul ul li:hover {
   height: 35vh;
   width: 35vw;
   align-items: center;
-  border: 2px solid black;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -592,6 +591,13 @@ summary {
   box-shadow: none;
 }
 
+.preview-button {
+  padding: 5px;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
 /* MY ACCOUNT */
 /* my posts */
 #my-posts {
@@ -620,9 +626,11 @@ summary {
 /* loading page */
 
 #loading-page {
-  font-size: 80px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 60px;
   text-align: center;
   color: green;
+  margin-top: 30vh;
 }
 @keyframes blink {
   0% {
