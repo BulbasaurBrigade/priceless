@@ -43,15 +43,12 @@ const Nav = ({ handleClick, isLoggedIn }) => (
             </ul>
           </li>
           <li>
-
             <Link to="/faq">FAQ</Link>
-
+          </li>
+          <li>
             <Link to="/chat">
-              <Link to="/chat">
-                <i className="fa fa-comments" aria-hidden="true"></i>
-              </Link>
+              <i className="fa fa-comments" aria-hidden="true"></i>
             </Link>
-
           </li>
         </ul>
       </nav>
