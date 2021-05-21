@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import { SET_AUTH } from './auth';
 import { CREATE_POST } from './posts';
-import { SET_ERROR } from './error';
+import { SET_POSTFORM_ERROR } from './error';
 
 // Action Types
 const IS_LOADING = 'IS_LOADING';
@@ -31,13 +31,8 @@ export default (state = loadingState, action) => {
     case FORM_LOADING:
       return { ...state, submit: true };
     case CREATE_POST:
+    case SET_POSTFORM_ERROR:
       return { ...state, submit: false };
-    case SET_ERROR:
-      const copyState = { ...state };
-      Object.keys(copyState).forEach((err) => {
-        copyState[err] = false;
-      });
-      return copyState;
     default:
       return state;
   }

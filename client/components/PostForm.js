@@ -137,7 +137,7 @@ class PostForm extends React.Component {
   };
 
   render() {
-    const { post, error, loading } = this.props;
+    const { post, postError, previewError, loading } = this.props;
     const title = this.state.title || '';
     const description = this.state.description || '';
     const category = this.state.category || '';
@@ -160,7 +160,7 @@ class PostForm extends React.Component {
     return (
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
-          {error ? <span>{error}</span> : ''}
+          {postError ? <span className="error">{postError}</span> : ''}
           <div>
             <label>
               Post Title <span style={{ color: 'red' }}>*</span>
@@ -217,6 +217,8 @@ class PostForm extends React.Component {
             >
               Preview Location
             </button>
+
+            {previewError ? <span className="error">{previewError}</span> : ''}
 
             <PostFormMap userLocation={userLocation} />
             <label>Category</label>
@@ -284,7 +286,8 @@ class PostForm extends React.Component {
 const mapState = (state) => ({
   latitude: state.location.lat,
   longitude: state.location.lng,
-  error: state.error,
+  postError: state.error.postForm,
+  previewError: state.error.previewLocation,
   loading: state.loading.submit,
 });
 

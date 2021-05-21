@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ADD_REQUESTER } from './singlePost';
 import { _setCategory, _setBounds } from './postFilters';
 import { _isLoading, _formLoading } from './loading';
-import { setErrorMsg } from './error';
+import { setPostFormErrorMsg } from './error';
 
 //action type
 const SET_POSTS = 'SET_POSTS';
@@ -96,7 +96,7 @@ export const createPost = (post, userId, history) => {
       dispatch(_createPost(data));
       history.push('./posts');
     } catch (err) {
-      dispatch(setErrorMsg(err.response.data));
+      dispatch(setPostFormErrorMsg(err.response.data));
     }
   };
 };
