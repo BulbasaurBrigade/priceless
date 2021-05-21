@@ -136,8 +136,16 @@ router.post("/", async (req, res, next) => {
 // PUT edit single post
 router.put("/:id", async (req, res, next) => {
   try {
-    const post = await Post.findByPk(req.params.id);
-    res.send(await post.update(req.body));
+    const { imageUrls } = req.body;
+    const post = await Post.findByPk(req.params.id, { include: PostImage });
+    for (let i = 0; i < imageUrls.length; i++) {
+      let currUrl = imageUrls[i];
+      //let currRef = imageRefs[i];
+      const postImage = await PostImage.create({ imageUrl: currUrl });
+      await post.addPostImage(postImage);
+    }
+    const updatedPost = await post.update(req.body);
+    res.send(updatedPost);
   } catch (error) {
     next(error);
   }

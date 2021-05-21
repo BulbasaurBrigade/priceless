@@ -1,5 +1,5 @@
 body {
-  font-family: 'Tajawal', sans-serif;
+  font-family: "Tajawal", sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -92,7 +92,6 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("nycBrownstones.jpg");
   background-size: cover;
@@ -213,12 +212,12 @@ nav ul ul li:hover {
 }
 
 #post-details h1 {
-  font-family: 'DM Serif Display', serif;
+  font-family: "DM Serif Display", serif;
   font-size: 15px;
 }
 
 #post-details p {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 13px;
 }
 
@@ -339,6 +338,10 @@ nav ul ul li:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+#image_upload {
+  color: transparent;
 }
 
 .form-instructions {

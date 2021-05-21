@@ -80,7 +80,7 @@ class PostForm extends React.Component {
       //upload the file to the imageRef
       await uploadBytes(imageRef, file);
       //add the imageRef to this.state.imageRefs
-      this.setState({ imageRefs: [...this.state.imageRefs, imageRef] });
+      //this.setState({ imageRefs: [...this.state.imageRefs, imageRef] });
       //generate url for this image
       const url = await getDownloadURL(
         ref(storage, `postImages/${newFileName}`)
@@ -98,7 +98,7 @@ class PostForm extends React.Component {
       latitude,
       longitude,
       imageUrls,
-      imageRefs,
+      //imageRefs,
       pickupDetails,
       location,
     } = this.state;
@@ -113,7 +113,7 @@ class PostForm extends React.Component {
           latitude,
           longitude,
           imageUrls,
-          imageRefs,
+          //imageRefs,
           pickupDetails,
           location,
         },
