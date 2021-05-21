@@ -100,7 +100,7 @@ router.post('/', async (req, res, next) => {
     // create a PostImage for each url, and associate that postImage to the Post
     for (let i = 0; i < imageUrls.length; i++) {
       let currUrl = imageUrls[i];
-      let currRef = imageRefs[i];
+      // let currRef = imageRefs[i];
       const postImage = await PostImage.create({ imageUrl: currUrl });
       await post.addPostImage(postImage);
     }
