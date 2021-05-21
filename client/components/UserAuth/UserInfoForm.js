@@ -71,17 +71,8 @@ class UserInfoForm extends Component {
             type="button"
             onClick={() => this.handlePreviewLocation(location)}
           >
-            show Location
+            Preview Location
           </button>
-          {this.state.lat === null ? (
-            <p>got nothing</p>
-          ) : (
-            <>
-              <br />
-              <p>Latitude: {this.state.lat}</p>
-              <p>Longitude: {this.state.lng}</p>
-            </>
-          )}
           <UserInfoMap userLocation={userLocation} />
           <label htmlFor="imageURL">Profile Photo</label>
           <input

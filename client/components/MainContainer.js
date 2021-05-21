@@ -1,16 +1,16 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import MapNavbar from "./MapNavbar";
-import MapView from "./MapView";
-import ListView from "./ListView";
-import { setPosts } from "../store/posts";
-import { getUserLotteryTickets } from "../store/userLotteryTickets";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import MapNavbar from './MapNavbar';
+import MapView from './MapView';
+import ListView from './ListView';
+import { setPosts } from '../store/posts';
+import { getUserLotteryTickets } from '../store/userLotteryTickets';
 
 class MainContainer extends React.Component {
   componentDidMount() {
-    // this.props.getPosts();
-    this.props.fetchMyLotteryTickets(this.props.userId);
+    const { userId, fetchMyLotteryTickets } = this.props;
+    if (userId !== undefined) fetchMyLotteryTickets(this.props.userId);
   }
   render() {
     let userLocation;
@@ -23,14 +23,6 @@ class MainContainer extends React.Component {
         <div id="main-container-bottom">
           <MapView userLocation={userLocation} />
           <ListView />
-        </div>
-        <div className="tooltip-wrap">
-          <Link to="/chat">
-            <img className="chat-icon" src="chat-i.png" />
-          </Link>
-          <div className="tooltip-content">
-            <p>tip: see your chats</p>
-          </div>
         </div>
       </div>
     );
