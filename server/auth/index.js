@@ -1,9 +1,4 @@
 const router = require('express').Router();
-const {
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithCustomToken,
-} = require('firebase/auth');
 const admin = require('firebase-admin');
 const {
   models: { User },
