@@ -11,6 +11,7 @@ import { getGeocode } from '../store/location';
 import PostFormMap from './PostFormMap';
 import { connect } from 'react-redux';
 import LoadingPage from './LoadingPage';
+import { _clearErrors } from '../store/error';
 
 const initialState = {
   title: '',
@@ -135,6 +136,10 @@ class PostForm extends React.Component {
     const { prevGeocode } = this.props;
     prevGeocode(location);
   };
+
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
 
   render() {
     const { post, postError, previewError, loading } = this.props;
@@ -293,6 +298,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   prevGeocode: (location) => dispatch(getGeocode(location)),
+  clearErrors: () => dispatch(_clearErrors()),
 });
 
 export default connect(mapState, mapDispatch)(PostForm);
