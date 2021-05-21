@@ -1,5 +1,5 @@
-import React from "react";
-import { postImagesRef, storage } from "../firebase";
+import React from 'react';
+import { postImagesRef, storage } from '../firebase';
 import {
   uploadBytes,
   ref,
@@ -11,11 +11,13 @@ import { getGeocode } from "../store/location";
 import PostFormMap from "./PostFormMap";
 import { connect } from "react-redux";
 import EditImageForm from "./myAccount/EditImageForm";
+import LoadingPage from './LoadingPage';
+import { _clearErrors } from '../store/error';
 
 const initialState = {
-  title: "",
-  description: "",
-  category: "other",
+  title: '',
+  description: '',
+  category: 'other',
   latitude: null,
   longitude: null,
   imagesToUpload: [],
@@ -23,7 +25,7 @@ const initialState = {
   postImages: [],
   pickupDetails: "",
   isLoading: false,
-  location: "",
+  location: '',
 };
 
 class PostForm extends React.Component {
@@ -49,7 +51,7 @@ class PostForm extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === "latitude" || event.target.name === "longitude") {
+    if (event.target.name === 'latitude' || event.target.name === 'longitude') {
       this.setState({ [event.target.name]: +event.target.value });
     } else if (event.target.name === "imagesToUpload") {
       const newImagesArray = [
@@ -104,7 +106,7 @@ class PostForm extends React.Component {
     } = this.state;
 
     //pass necessary items from state to either updatePost or addPost (which is passed from wrapper components)
-    if (type === "create") {
+    if (type === 'create') {
       submit(
         {
           title,
@@ -120,7 +122,7 @@ class PostForm extends React.Component {
         userId,
         location
       );
-    } else if (type === "edit") {
+    } else if (type === 'edit') {
       submit({ ...this.state });
     }
   };
@@ -139,9 +141,12 @@ class PostForm extends React.Component {
     prevGeocode(location);
   };
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   render() {
-    const { post } = this.props;
-    console.log("post", post);
+    const { post, postError, previewError, loading } = this.props;
     const title = this.state.title || "";
     const description = this.state.description || "";
     const category = this.state.category || "";
@@ -156,13 +161,19 @@ class PostForm extends React.Component {
       userLocation = [latitude, longitude];
     }
     console.log(userLocation);
+    
+    if (loading) {
+      console.log('we are rendering something new in post form');
+      return <LoadingPage />;
+    }
 
     return (
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
+          {postError ? <span className="error">{postError}</span> : ''}
           <div>
             <label>
-              Post Title <span style={{ color: "red" }}>*</span>
+              Post Title <span style={{ color: 'red' }}>*</span>
             </label>
             <input
               name="title"
@@ -196,7 +207,7 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             />
             <label>
-              Location <span style={{ color: "red" }}>*</span>
+              Location <span style={{ color: 'red' }}>*</span>
             </label>
 
             <p className="form-instructions">
@@ -223,7 +234,7 @@ class PostForm extends React.Component {
             >
               Preview Location
             </button>
-
+            {previewError ? <span className="error">{previewError}</span> : ''}
             <PostFormMap userLocation={userLocation} />
             <label>Category</label>
             <select
@@ -232,7 +243,7 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             >
               <option value="" disabled>
-                {""}
+                {''}
               </option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
@@ -253,7 +264,7 @@ class PostForm extends React.Component {
               ""
             )}
             <label>
-              Add Photos <span style={{ color: "red" }}>*</span>
+              Add Photos <span style={{ color: 'red' }}>*</span>
             </label>
             <input
               type="file"
@@ -292,10 +303,14 @@ class PostForm extends React.Component {
 const mapState = (state) => ({
   latitude: state.location.lat,
   longitude: state.location.lng,
+  postError: state.error.postForm,
+  previewError: state.error.previewLocation,
+  loading: state.loading.submit,
 });
 
 const mapDispatch = (dispatch) => ({
   prevGeocode: (location) => dispatch(getGeocode(location)),
+  clearErrors: () => dispatch(_clearErrors()),
 });
 
 export default connect(mapState, mapDispatch)(PostForm);
