@@ -31,6 +31,13 @@ p {
   white-space: pre-wrap;
 }
 
+.error {
+  color: red;
+  font-weight: bold;
+  display: block;
+  margin: 0.5rem 0;
+}
+
 /* navbar */
 #logo {
   width: 30px;
@@ -92,9 +99,8 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("nycBrownstones.jpg");
+    url('nycBrownstones.jpg');
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -661,7 +667,7 @@ summary {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 2px;
   text-align: center;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 14px;
 }
 .tooltip-wrap:hover .tooltip-content {
