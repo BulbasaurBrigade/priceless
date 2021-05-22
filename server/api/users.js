@@ -33,13 +33,16 @@ router.put("/:id", async (req, res, next) => {
     // Change displayName
     user.displayName = displayName;
 
-    // Change location string to GeoCode
+    // Change location
+    user.location = location;
+
+    // Convert location string to GeoCode
     const geocode = await getGeocode(location);
     user.latitude = geocode.lat;
     user.longitude = geocode.lng;
 
     // Proper Photo Stuff will happen here at some point
-    user.imageURL = imageURL;
+    // user.imageURL = imageURL;
     await user.save();
 
     res.send(user);
