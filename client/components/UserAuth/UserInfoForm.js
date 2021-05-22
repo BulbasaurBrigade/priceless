@@ -1,25 +1,40 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import UserInfoMap from './UserInfoMap';
-import { getGeocode } from '../../store/location';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import UserInfoMap from "./UserInfoMap";
+import { getGeocode } from "../../store/location";
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: '',
-      location: '',
-      imageURL: '',
+      displayName: "",
+      location: "",
+      imageURL: "",
       lat: null,
       lng: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.displayName) {
+      const { displayName } = this.props;
+      this.setState({ displayName });
+    }
+    if (this.props.userLat) {
+      const { userLat, userLng } = this.props;
+      this.setState({ lat: userLat, lng: userLng });
+    }
+    if (this.props.location) {
+      const { location } = this.props;
+      this.setState({ location });
+    }
+  }
+
   handlePreviewLocation = async (address) => {
     const { prevGeocode } = this.props;
-    prevGeocode(address);
-    this.setState({ lat: this.props.lat, lng: this.props.lng });
+    await prevGeocode(address);
+    this.setState({ lat: this.props.newLat, lng: this.props.newLng });
   };
 
   handleChange = (evt) => {
@@ -36,6 +51,7 @@ class UserInfoForm extends Component {
 
   render() {
     const { displayName, location, imageURL } = this.state;
+    console.log("THIS.STATE:", this.state);
 
     let userLocation;
     if (this.state.lat) {
@@ -94,8 +110,12 @@ class UserInfoForm extends Component {
 const mapState = (state) => {
   return {
     userId: state.auth.id,
-    lat: state.location.lat,
-    lng: state.location.lng,
+    newLat: state.location.lat,
+    newLng: state.location.lng,
+    displayName: state.auth.displayName,
+    location: state.auth.location,
+    userLat: state.auth.latitude,
+    userLng: state.auth.longitude,
   };
 };
 

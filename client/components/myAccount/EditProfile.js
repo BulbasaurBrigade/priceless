@@ -6,21 +6,15 @@ import { updateUserInfo } from "../../store/auth";
 
 class EditProfile extends React.Component {
   render() {
-    const { user, updateProfile } = this.props;
+    const { updateProfile } = this.props;
     return (
       <div className="form-container">
-        <h2>Edit your display name and location</h2>
-        <UserInfoForm submit={updateProfile} user={user} />
+        <h2>Edit your profile</h2>
+        <UserInfoForm submit={updateProfile} />
       </div>
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth,
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -28,4 +22,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+export default connect(null, mapDispatchToProps)(EditProfile);
