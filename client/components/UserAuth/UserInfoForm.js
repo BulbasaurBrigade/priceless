@@ -16,6 +16,8 @@ class UserInfoForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  //When a user is editing their profile, the form will get populated with their current information
+  //The form areas are broken up because a user may not have a location
   componentDidMount() {
     if (this.props.displayName) {
       const { displayName } = this.props;
@@ -31,18 +33,21 @@ class UserInfoForm extends Component {
     }
   }
 
+  //When a user clicks the 'preview location', a call is made to the google geocode api to get the coords
   handlePreviewLocation = async (address) => {
-    const { prevGeocode } = this.props;
-    await prevGeocode(address);
+    const { previewGeocode } = this.props;
+    await previewGeocode(address);
     this.setState({ lat: this.props.newLat, lng: this.props.newLng });
   };
 
+  //As a user types, state changes
   handleChange = (evt) => {
     this.setState({
       [evt.target.name]: evt.target.value,
     });
   };
 
+  //A user's information is updated in the database
   handleSubmit = (evt) => {
     evt.preventDefault();
     const { submit, userId } = this.props;
@@ -51,7 +56,6 @@ class UserInfoForm extends Component {
 
   render() {
     const { displayName, location, imageURL } = this.state;
-    console.log("THIS.STATE:", this.state);
 
     let userLocation;
     if (this.state.lat) {
@@ -62,8 +66,12 @@ class UserInfoForm extends Component {
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="displayName">
-            Display Name <span>*</span>
+            Display Name <span style={{ color: "red" }}>*</span>
           </label>
+          <p className="form-instructions">
+            Your display name is what will be visible to your Priceless
+            Neighbors when you list an item or use the chat.
+          </p>
           <input
             type="text"
             id="displayName"
@@ -73,8 +81,15 @@ class UserInfoForm extends Component {
             required
           />
           <label htmlFor="location">
-            Address or Search Location <span>*</span>
+            Address or Search Location <span style={{ color: "red" }}>*</span>
           </label>
+          <p className="form-instructions">
+            The location you enter here will be the center of your personal
+            neighborhood map. This location will NOT be visible to anyone. You
+            may choose to use a specific address, cross streets, a neighborhood,
+            or a zip code. And you can preview where the center of your map will
+            be using the 'Preview Location' button below.
+          </p>
           <input
             type="text"
             id="location"
@@ -120,7 +135,7 @@ const mapState = (state) => {
 };
 
 const mapDispatch = (dispatch) => ({
-  prevGeocode: (location) => dispatch(getGeocode(location)),
+  previewGeocode: (location) => dispatch(getGeocode(location)),
 });
 
 export default connect(mapState, mapDispatch)(UserInfoForm);
