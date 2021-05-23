@@ -5,7 +5,6 @@ import SinglePost from "./SinglePost";
 class ListView extends React.Component {
   render() {
     const { posts, postFilters } = this.props;
-    console.log("postFilters", postFilters.filter);
 
     return (
       <div id="list-view">
@@ -13,8 +12,8 @@ class ListView extends React.Component {
           posts.map((post) => <SinglePost key={post.id} post={post} />)
         ) : (
           <div id="no-posts">
-            There are no posts in your immediate area. Scroll to a different
-            area to see posts.
+            There are no posts in your immediate area. Zoom out or drag the map
+            to a different neighborhood to see posts.
           </div>
         )}
       </div>
