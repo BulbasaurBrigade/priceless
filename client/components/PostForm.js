@@ -198,8 +198,7 @@ class PostForm extends React.Component {
                 </div>
               </div>
             </label>
-
-            <input
+            <textarea
               id="description"
               name="description"
               value={description}
@@ -216,23 +215,20 @@ class PostForm extends React.Component {
                 </div>
               </div>
             </label>
-
             <input
               id="pickup details"
               name="pickupDetails"
               value={pickupDetails}
               onChange={this.handleChange}
             />
-
-            <label>Category</label>
+            <label>
+              Category <div> </div>
+            </label>
             <select
               name="category"
               value={category}
               onChange={this.handleChange}
             >
-              <option value="" disabled>
-                {""}
-              </option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
               <option value="clothing">Clothing</option>
@@ -245,19 +241,24 @@ class PostForm extends React.Component {
               <option value="pet supplies">Pet Supplies</option>
               <option value="other">Other</option>
             </select>
-
             <label>
               Location <span style={{ color: "red" }}>*</span>
               <div className="tooltip-wrap">
                 <i className="fa fa-info-circle" aria-hidden="true"></i>
                 <div className="tooltip-content">
-                  Include an address, intersection, neighborhood, or zip code in
-                  which you'd like to do your handoff. You can use the "Preview
-                  Marker" button below to see where your item's marker will be
-                  on the map! <br />
-                  PLEASE NOTE: The location you list here will be visible to all
-                  Priceless users, so it's best to list a location that is not
-                  your home address.
+                  <p>
+                    Include an address, intersection, neighborhood, or zip code
+                    in which you'd like to do your handoff.
+                  </p>
+                  <p>
+                    You can use the "Preview Marker" button below to see where
+                    your item's marker will be on the map!
+                  </p>
+                  <p>
+                    PLEASE NOTE: The location you list here will be visible to
+                    all Priceless users, so it's best to list a location that is
+                    not your home address.
+                  </p>
                 </div>
               </div>
             </label>
@@ -278,25 +279,26 @@ class PostForm extends React.Component {
             </button>
             {previewError ? <span className="error">{previewError}</span> : ""}
             <PostFormMap userLocation={userLocation} />
-
             {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
             {this.state.postImages.length ? (
               <EditImageForm postImages={postImages} postId={post.id} />
             ) : (
               ""
             )}
+
             <label>
               Add Photos <span style={{ color: "red" }}>*</span>
             </label>
+
             <input
               type="file"
               name="imagesToUpload"
               onChange={this.handleChange}
               id="image_upload"
             ></input>
-            <br />
+
             {this.state.imagesToUpload.length ? (
-              <label>Preview of photos</label>
+              <p>Preview of photos</p>
             ) : (
               <div />
             )}
@@ -307,7 +309,11 @@ class PostForm extends React.Component {
                   height={200}
                   className="photo-preview"
                 />
-                <button onClick={this.handleDeletePhoto} value={file.name}>
+                <button
+                  className="delete-photo"
+                  onClick={this.handleDeletePhoto}
+                  value={file.name}
+                >
                   x
                 </button>
               </div>
