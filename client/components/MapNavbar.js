@@ -46,7 +46,7 @@ class MapNavBar extends React.Component {
 
         <div className="tooltip-wrap">
           <Link to="/add">
-            <img src="https://static.thenounproject.com/png/214735-200.png" />
+            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
           </Link>
           <div className="tooltip-content">
             <p>tip: create a post</p>

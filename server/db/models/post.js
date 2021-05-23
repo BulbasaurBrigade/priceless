@@ -1,12 +1,11 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
+
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../db');
-// const Chat = require('./chat');
-// const Message = require('./message');
-const io = require('../../index');
 
-const Post = db.define('post', {
+
+const Post = db.define("post", {
   title: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -30,30 +29,31 @@ const Post = db.define('post', {
   },
   category: {
     type: Sequelize.ENUM([
-      'furniture',
-      'clothing',
-      'books',
-      'decor',
-      'kitchen',
-      'food',
-      'personal care',
-      'pet supplies',
-      'entertainment',
+      "furniture",
+      "clothing",
+      "books",
+      "decor",
+      "kitchen",
+      "food",
+      "personal care",
+      "pet supplies",
+      "entertainment",
       `children's items`,
-      'other',
+      "other",
     ]),
-    defaultValue: 'other',
+    defaultValue: "other",
   },
   status: {
-    type: Sequelize.ENUM(['lottery', 'open', 'pending', 'claimed']),
-    defaultValue: 'lottery',
+    type: Sequelize.ENUM(["lottery", "open", "pending", "claimed", "deleted"]),
+    defaultValue: "lottery",
     allowNull: false,
   },
   type: {
-    type: Sequelize.ENUM(['listing', 'request']),
-    defaultValue: 'listing',
+    type: Sequelize.ENUM(["listing", "request"]),
+    defaultValue: "listing",
     allowNull: false,
   },
 });
+
 
 module.exports = Post;

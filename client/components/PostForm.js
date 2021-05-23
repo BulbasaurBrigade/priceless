@@ -1,5 +1,5 @@
-import React from 'react';
-import { postImagesRef, storage } from '../firebase';
+import React from "react";
+import { postImagesRef, storage } from "../firebase";
 import {
   uploadBytes,
   ref,
@@ -11,13 +11,13 @@ import { getGeocode } from "../store/location";
 import PostFormMap from "./PostFormMap";
 import { connect } from "react-redux";
 import EditImageForm from "./myAccount/EditImageForm";
-import LoadingPage from './LoadingPage';
-import { _clearErrors } from '../store/error';
+import LoadingPage from "./LoadingPage";
+import { _clearErrors } from "../store/error";
 
 const initialState = {
-  title: '',
-  description: '',
-  category: 'other',
+  title: "",
+  description: "",
+  category: "other",
   latitude: null,
   longitude: null,
   imagesToUpload: [],
@@ -25,8 +25,9 @@ const initialState = {
   postImages: [],
   pickupDetails: "",
   isLoading: false,
-  location: '',
-};
+  location: "",
+  previewMap: false,
+
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class PostForm extends React.Component {
   }
 
   handleChange(event) {
-    if (event.target.name === 'latitude' || event.target.name === 'longitude') {
+    if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
     } else if (event.target.name === "imagesToUpload") {
       const newImagesArray = [
@@ -106,7 +107,7 @@ class PostForm extends React.Component {
     } = this.state;
 
     //pass necessary items from state to either updatePost or addPost (which is passed from wrapper components)
-    if (type === 'create') {
+    if (type === "create") {
       submit(
         {
           title,
@@ -122,7 +123,7 @@ class PostForm extends React.Component {
         userId,
         location
       );
-    } else if (type === 'edit') {
+    } else if (type === "edit") {
       submit({ ...this.state });
     }
   };
@@ -139,6 +140,7 @@ class PostForm extends React.Component {
   handlePreviewLocation = async (location) => {
     const { prevGeocode } = this.props;
     prevGeocode(location);
+    this.setState({ previewMap: true });
   };
 
   componentWillUnmount() {
@@ -160,20 +162,19 @@ class PostForm extends React.Component {
     if (latitude) {
       userLocation = [latitude, longitude];
     }
-    console.log(userLocation);
-    
+
+
     if (loading) {
-      console.log('we are rendering something new in post form');
       return <LoadingPage />;
     }
 
     return (
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
-          {postError ? <span className="error">{postError}</span> : ''}
+          {postError ? <span className="error">{postError}</span> : ""}
           <div>
             <label>
-              Post Title <span style={{ color: 'red' }}>*</span>
+              Post Title <span style={{ color: "red" }}>*</span>
             </label>
             <input
               name="title"
@@ -181,25 +182,40 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
               required
             />
-            <label>Description</label>
-            <p className="form-instructions">
-              You are encouraged to include as many relevant details as you can
-              to help your neighbors know whether they should request your item.
-              Some suggestions include: size, dimensions, and any noticeable
-              wear/tear.
-            </p>
-            <input
+            <label>
+              Description
+              <div className="tooltip-wrap">
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                <div className="tooltip-content">
+                  <p>
+                    You are encouraged to include as many relevant details as
+                    you can to help your neighbors know whether they should
+                    request your item.
+                  </p>
+                  <p>
+                    Some suggestions include: size, dimensions, and any
+                    noticeable wear/tear.
+                  </p>
+                </div>
+              </div>
+            </label>
+            <textarea
               id="description"
               name="description"
               value={description}
               onChange={this.handleChange}
             />
-            <label>Pickup Details</label>
-            <p className="form-instructions">
-              What days/times are you generally available for the handoff? Do
-              you have a specific time at which you would ideally like to meet?
-              Include it here!
-            </p>
+            <label>
+              Pickup details
+              <div className="tooltip-wrap">
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                <div className="tooltip-content">
+                  What days/times are you generally available for the handoff?
+                  Do you have a specific time at which you would ideally like to
+                  meet? Include it here!
+                </div>
+              </div>
+            </label>
             <input
               id="pickup details"
               name="pickupDetails"
@@ -207,43 +223,16 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             />
             <label>
-              Location <span style={{ color: 'red' }}>*</span>
-            </label>
 
-            <p className="form-instructions">
-              Include an address, intersection, neighborhood, or zip code in
-              which you'd like to do your handoff. You can use the "Preview
-              Marker" button below to see where your item's marker will be on
-              the map! <br />
-              PLEASE NOTE: The location you list here will be visible to all
-              Priceless users, so it's best to list a location that is not your
-              home address.
-            </p>
-            <input
-              id="location"
-              name="location"
-              type="text"
-              value={location}
-              onChange={this.handleChange}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => this.handlePreviewLocation(location)}
-            >
-              Preview Location
-            </button>
-            {previewError ? <span className="error">{previewError}</span> : ''}
-            <PostFormMap userLocation={userLocation} />
-            <label>Category</label>
+              Category <div> </div>
+            </label>
             <select
               name="category"
               value={category}
               onChange={this.handleChange}
             >
-              <option value="" disabled>
-                {''}
-              </option>
+
+
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
               <option value="clothing">Clothing</option>
@@ -256,24 +245,67 @@ class PostForm extends React.Component {
               <option value="pet supplies">Pet Supplies</option>
               <option value="other">Other</option>
             </select>
-            {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
-            {this.state.postImages.length ? (
-              <EditImageForm postImages={postImages} postId={post.id} />
+            <label>
+              Location <span style={{ color: "red" }}>*</span>
+              <div className="tooltip-wrap">
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                <div className="tooltip-content">
+                  <p>
+                    Include an address, intersection, neighborhood, or zip code
+                    in which you'd like to do your handoff.
+                  </p>
+                  <p>
+                    You can use the "Preview Marker" button below to see where
+                    your item's marker will be on the map!
+                  </p>
+                  <p>
+                    PLEASE NOTE: The location you list here will be visible to
+                    all Priceless users, so it's best to list a location that is
+                    not your home address.
+                  </p>
+                </div>
+              </div>
+            </label>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              value={location}
+              onChange={this.handleChange}
+              required
+            />
+            <button
+              className="preview-button"
+              type="button"
+              onClick={() => this.handlePreviewLocation(location)}
+            >
+              Preview Location
+            </button>
+            {previewError ? <span className="error">{previewError}</span> : ""}
+            {this.state.previewMap ? (
+              <PostFormMap userLocation={userLocation} />
             ) : (
               ""
             )}
+
             <label>
-              Add Photos <span style={{ color: 'red' }}>*</span>
+              Add Photos <span style={{ color: "red" }}>*</span>
             </label>
+
             <input
               type="file"
               name="imagesToUpload"
               onChange={this.handleChange}
               id="image_upload"
             ></input>
-            <br />
+            {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
+            {this.state.postImages.length ? (
+              <EditImageForm postImages={postImages} postId={post.id} />
+            ) : (
+              ""
+            )}
             {this.state.imagesToUpload.length ? (
-              <label>Preview of photos</label>
+              <p>Preview of photos</p>
             ) : (
               <div />
             )}
@@ -284,7 +316,11 @@ class PostForm extends React.Component {
                   height={200}
                   className="photo-preview"
                 />
-                <button onClick={this.handleDeletePhoto} value={file.name}>
+                <button
+                  className="delete-photo"
+                  onClick={this.handleDeletePhoto}
+                  value={file.name}
+                >
                   x
                 </button>
               </div>

@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+
 import axios from 'axios';
 import { ADD_REQUESTER, UPDATE_POST } from './singlePost';
 import { _setCategory, _setBounds } from './postFilters';
@@ -6,10 +7,10 @@ import { _isLoading, _formLoading } from './loading';
 import { setPostFormErrorMsg } from './error';
 
 //action type
-const SET_POSTS = 'SET_POSTS';
-export const CREATE_POST = 'CREATE_POST';
-const EDIT_POST = 'EDIT_POST';
-export const DELETE_POST = 'DELETE_POST';
+const SET_POSTS = "SET_POSTS";
+export const CREATE_POST = "CREATE_POST";
+const EDIT_POST = "EDIT_POST";
+export const DELETE_POST = "DELETE_POST";
 
 // action creator
 export const _setPosts = (posts) => {
@@ -50,10 +51,10 @@ export const _updatePost = (post) => ({
 export const setPosts = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get('/api/posts');
+      const { data } = await axios.get("/api/posts");
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log('error fetching all posts via thunk', err);
+      console.log("error fetching all posts via thunk", err);
     }
   };
 };
@@ -70,7 +71,7 @@ export const setLocalPosts =
       );
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log('error fetching all posts via thunk');
+      console.log("error fetching all posts via thunk");
     }
   };
 
@@ -88,7 +89,7 @@ export const setFilteredPosts = (category) => {
       );
       dispatch(_setPosts(data));
     } catch (err) {
-      console.log('error in set filtered posts thunk', err);
+      console.log("error in set filtered posts thunk", err);
     }
   };
 };
@@ -99,7 +100,7 @@ export const createPost = (post, userId, history) => {
       dispatch(_formLoading());
       const { data } = await axios.post(`/api/posts?id=${userId}`, post);
       dispatch(_createPost(data));
-      history.push('./posts');
+      history.push("./posts");
     } catch (err) {
       dispatch(setPostFormErrorMsg(err.response.data));
     }
@@ -111,9 +112,9 @@ export const editPost = (post, history) => {
     try {
       const { data } = await axios.put(`/api/posts/${post.id}`, post);
       dispatch(_editPost(data));
-      history.push('../myposts');
+      history.push("../myposts");
     } catch (err) {
-      console.log('error editing post via thunk', err);
+      console.log("error editing post via thunk", err);
     }
   };
 };
@@ -124,7 +125,7 @@ export const deletePost = (id) => {
       const { data } = await axios.delete(`/api/posts/${id}`);
       dispatch(_deletePost(data));
     } catch (err) {
-      console.log('error deleting post via thunk', err);
+      console.log("error deleting post via thunk", err);
     }
   };
 };
@@ -138,22 +139,17 @@ export default (state = [], action) => {
     case CREATE_POST:
       return [...state, action.post];
 
+
     case UPDATE_POST:
     case ADD_REQUESTER:
     case EDIT_POST:
       return state.map((post) =>
         post.id === action.post.id ? action.post : post
       );
+
     case DELETE_POST:
       return state.filter((post) => post.id !== action.post.id);
 
-    // case ADD_REQUESTER:
-    //   return state.map((post) => {
-    //     if (post.id === action.post.id) {
-    //       return action.post;
-    //     }
-    //     return post;
-    //   });
 
     default:
       return state;
