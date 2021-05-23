@@ -743,8 +743,9 @@ summary {
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 5px;
-  text-align: center;
-  color: dodgerblue;
+  text-align: left;
+  color: gray;
+  border: 1px solid lightgray;
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;
