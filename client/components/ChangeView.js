@@ -1,8 +1,7 @@
-import { useMap } from "react-leaflet"
+import { useMap } from "react-leaflet";
 
-export default function ChangeView({center, zoom }) {
-    const map = useMap()
-    map.setView(center, zoom, { animate: true })
-    console.log('change view')
-    return null
+export default function ChangeView({ center, zoom }) {
+  const map = useMap();
+  map.setView(center, zoom, { animate: true });
+  return null;
 }
