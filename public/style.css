@@ -18,10 +18,6 @@ a {
   color: black;
 }
 
-label {
-  display: block;
-}
-
 form div {
   margin: 1em;
   display: inline-block;
@@ -161,12 +157,11 @@ nav ul ul li:hover {
 .developer img {
   width: 150px;
   border-radius: 50%;
-  background-color: white;
+  border: 6px solid #286157;
 }
 
 /* main container */
 #main-container-bottom {
-  /* background-color: #dbebd5; */
   padding: 10px 50px 0 50px;
   display: flex;
   justify-content: space-between;
@@ -364,7 +359,7 @@ nav ul ul li:hover {
   margin-top: 5px;
   font-size: 18px;
   text-align: left;
-  width: 200px;
+  display: block;
 }
 
 .form-container input {
