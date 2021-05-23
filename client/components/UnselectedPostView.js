@@ -6,11 +6,9 @@ const UnselectedPostView = (props) => {
   return (
     <div id="single-post">
       <div id="post-image">
-        {images.map((image) => (
-          <div key={image.id}>
-            <img src={image.imageUrl} />
-          </div>
-        ))}
+        <div>
+          <img src={images[0].imageUrl} />
+        </div>
       </div>
       <div id="post-details">
         <h1>{post.title}</h1>
