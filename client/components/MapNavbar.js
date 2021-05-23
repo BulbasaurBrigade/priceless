@@ -43,15 +43,7 @@ class MapNavBar extends React.Component {
             <option value="other">Other</option>
           </select>
         </div>
-
-        <div className="tooltip-wrap">
-          <Link to="/add">
-            <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </Link>
-          <div className="tooltip-content">
-            <p>tip: create a post</p>
-          </div>
-        </div>
+        <Link to="/add">Create a Post</Link>
       </div>
     );
   }
