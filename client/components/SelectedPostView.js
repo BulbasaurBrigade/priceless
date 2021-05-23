@@ -27,7 +27,18 @@ class SelectedPostView extends React.Component {
         <div id="post-image">
           {images.map((image) => (
             <div key={image.id}>
-              <img src={image.imageUrl} />
+              <a href={`#popup${image.id}`}>
+                <img src={image.imageUrl} />
+              </a>
+
+              <div id={`popup${image.id}`} className="overlay">
+                <div className="popup">
+                  <img src={image.imageUrl} />
+                  <a className="close" href="#">
+                    &times;
+                  </a>
+                </div>
+              </div>
             </div>
           ))}
         </div>

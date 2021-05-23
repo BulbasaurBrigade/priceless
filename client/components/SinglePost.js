@@ -16,7 +16,7 @@ class SinglePost extends React.Component {
   }
 
   render() {
-    const { post, selectedPost } = this.props;
+    const { post, selectedPost, userId } = this.props;
 
     return (
       <div
