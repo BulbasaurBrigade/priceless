@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import UserInfoMap from './UserInfoMap';
-import { getGeocode } from '../../store/location';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import UserInfoMap from "./UserInfoMap";
+import { getGeocode } from "../../store/location";
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: '',
-      location: '',
-      imageURL: '',
+      displayName: "",
+      location: "",
+      imageURL: "",
       lat: null,
       lng: null,
     };
@@ -68,6 +68,7 @@ class UserInfoForm extends Component {
             required
           />
           <button
+            className="preview-button"
             type="button"
             onClick={() => this.handlePreviewLocation(location)}
           >

@@ -57,16 +57,22 @@ class SinglePost extends React.Component {
         </div>
         <div id="post-details">
           <h1>{post.title}</h1>
-          {post.location && (
-            <p>
-              <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
-              {post.location}
-            </p>
-          )}
-          <p>
-            <b>Status: </b>
-            {post.status}
-          </p>
+          <div className="location-status">
+            {post.location && (
+              <h3>
+                <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
+                {post.location}
+              </h3>
+            )}
+            <h4>
+              <div className="tooltip-wrap">
+                Status <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <div className="tooltip-content">explanation</div>
+              </div>
+              <span style={{ color: "red" }}>{post.status}</span>
+            </h4>
+          </div>
+
           {/* if the post is selected, show more information */}
           {post.id === selectedPost.id && (
             <div>
@@ -84,7 +90,10 @@ class SinglePost extends React.Component {
               {/* if user doesn't own the post, show the request button AND they haven't requested it*/}
               {selectedPost.posterId !== userId &&
                 !ticketsArray.includes(selectedPost.id) && (
-                  <button className="button" onClick={this.handleRequest}>
+                  <button
+                    className="request-button"
+                    onClick={this.handleRequest}
+                  >
                     Request
                   </button>
                 )}
