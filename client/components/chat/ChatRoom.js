@@ -1,25 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ChatHeader from './ChatHeader';
 import MessageContainer from './MessageContainer';
 import ChatInput from './ChatInput';
 import { getChat, _clearChat } from '../../store/singleChat';
-import { connect } from 'react-redux';
 
 import { getMessages, _newMessage } from '../../store/messages';
 import socket from '../../socket';
 
 class ChatRoom extends React.Component {
   componentDidMount() {
-    const { selectedChatId, fetchChatInfo, clearChatInfo, userId, recMessage } =
-      this.props;
+    const { selectedChatId, fetchChatInfo, clearChatInfo, userId } = this.props;
     if (selectedChatId) {
       fetchChatInfo(userId, selectedChatId);
     } else {
       clearChatInfo();
     }
-    socket.on('new message', ({ message }) => {
-      recMessage(message);
-    });
+    // socket.on('new message', ({ message }) => {
+    //   recMessage(message);
+    // });
   }
 
   componentDidUpdate(prevProps) {
@@ -46,7 +45,7 @@ class ChatRoom extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.off('new message');
+    // socket.off('new message');
     this.props.clearChatInfo();
   }
 
