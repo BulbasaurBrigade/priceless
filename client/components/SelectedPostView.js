@@ -40,17 +40,31 @@ class SelectedPostView extends React.Component {
           </div>
         </div>
         <div id="post-details">
+          {/*if user owns the post, display a note that says so*/}
+          {post.posterId === userId && (
+            <div>
+              <h3>** This is your post **</h3>
+              <Link to={`/mypost/${post.id}`}>
+                <button className="submit">edit details</button>
+              </Link>
+            </div>
+          )}
           <h1>{post.title}</h1>
-          {post.location && (
-            <p>
+          <div className="location-status">
+            <h3>
               <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
               {post.location}
-            </p>
-          )}
-          <p>
-            <b>Status: </b>
-            {post.status}
-          </p>
+            </h3>
+
+            <h4>
+              <div className="tooltip-wrap">
+                Status <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <div className="tooltip-content">explanation</div>
+              </div>
+              <span style={{ color: "red" }}>{post.status}</span>
+            </h4>
+          </div>
+
           {post.description && (
             <p>
               <b>Description:</b>
@@ -67,20 +81,11 @@ class SelectedPostView extends React.Component {
           )}
           {/* if user doesn't own the post, show the request button AND they haven't requested it*/}
           {post.posterId !== userId && !ticketsArray.includes(post.id) && (
-            <button className="button" onClick={this.handleRequest}>
+            <button className="submit" onClick={this.handleRequest}>
               Request
             </button>
           )}
-          {/*if user owns the post, display a note that says so*/}
-          {post.posterId === userId && (
-            <h3>
-              <b>This is your post!</b>
-              <br />
-              <button className="button">
-                <Link to={`/mypost/${post.id}`}>edit details</Link>
-              </button>
-            </h3>
-          )}
+
           {/*if user has entered lottery, display a note that says so*/}
           {ticketsArray.includes(post.id) && (
             <h3>

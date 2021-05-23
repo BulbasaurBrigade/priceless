@@ -38,8 +38,11 @@ class UserInfoForm extends Component {
   handlePreviewLocation = async (address) => {
     const { previewGeocode } = this.props;
     await previewGeocode(address);
-    this.setState({ lat: this.props.newLat, lng: this.props.newLng });
-
+    this.setState({
+      lat: this.props.newLat,
+      lng: this.props.newLng,
+      previewMap: true,
+    });
   };
 
   //As a user types, state changes
