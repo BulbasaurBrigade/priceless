@@ -71,9 +71,10 @@ export const destroyImage = (postId, imageId) => {
 // reducer
 export default (state = {}, action) => {
   switch (action.type) {
+    case UPDATE_POST:
+      return state.id === action.post.id ? action.post : state;
     case SET_SINGLE_POST:
     case ADD_REQUESTER:
-    case UPDATE_POST:
       return action.post;
     case DESTROY_IMAGE:
       const newPostImages = state.postImages.filter(

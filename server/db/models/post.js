@@ -2,9 +2,9 @@
 /* eslint-disable func-names */
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../db');
-const Chat = require('./chat');
-const Message = require('./message');
-// const io = require('../../index');
+// const Chat = require('./chat');
+// const Message = require('./message');
+const io = require('../../index');
 
 const Post = db.define('post', {
   title: {
