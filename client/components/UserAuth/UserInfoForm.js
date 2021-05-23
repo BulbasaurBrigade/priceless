@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserInfoMap from './UserInfoMap';
 import { getGeocode } from '../../store/location';
+import LoadingPage from '../LoadingPage';
 
 class UserInfoForm extends Component {
   constructor(props) {
@@ -57,16 +58,21 @@ class UserInfoForm extends Component {
 
   render() {
     const { displayName, location, imageURL, previewMap } = this.state;
-    const { previewError } = this.props;
+    const { previewError, userInfoError, loading } = this.props;
 
     let userLocation;
     if (this.state.lat) {
       userLocation = [this.state.lat, this.state.lng];
     }
 
+    if (loading) {
+      return <LoadingPage />;
+    }
+
     return (
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
+          {userInfoError ? <span className="error">{userInfoError}</span> : ''}
           <label htmlFor="displayName">
             Display Name <span style={{ color: 'red' }}>*</span>
           </label>
@@ -137,6 +143,8 @@ const mapState = (state) => {
     userLat: state.auth.latitude,
     userLng: state.auth.longitude,
     previewError: state.error.previewLocation,
+    userInfoError: state.error.userProfile,
+    loading: state.loading.submit,
   };
 };
 
