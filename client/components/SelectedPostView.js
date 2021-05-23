@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { addRequester } from "../store/singlePost";
+import ImageSlideshow from "./ImageSlideshow";
 
 class SelectedPostView extends React.Component {
   constructor() {
@@ -25,22 +26,18 @@ class SelectedPostView extends React.Component {
     return (
       <div id="single-post">
         <div id="post-image">
-          {images.map((image) => (
-            <div key={image.id}>
-              <a href={`#popup${image.id}`}>
-                <img src={image.imageUrl} />
-              </a>
+          <a href={`#popup${post.id}`}>
+            <img src={images[0].imageUrl} />
+          </a>
 
-              <div id={`popup${image.id}`} className="overlay">
-                <div className="popup">
-                  <img src={image.imageUrl} />
-                  <a className="close" href="#">
-                    &times;
-                  </a>
-                </div>
-              </div>
+          <div id={`popup${post.id}`} className="overlay">
+            <div className="popup">
+              <ImageSlideshow slides={images} />
+              <a className="close" href="#">
+                &times;
+              </a>
             </div>
-          ))}
+          </div>
         </div>
         <div id="post-details">
           <h1>{post.title}</h1>
