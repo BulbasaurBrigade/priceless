@@ -11,11 +11,12 @@ const unselectedIcon = new L.icon({
 
 export default class PostFormMap extends React.Component {
   render() {
-    console.log(this.props, "map props");
+
     const userLocation = this.props.userLocation;
     return (
       <div>
         <MapContainer
+
           className="preview-map"
           scrollWheelZoom={true}
           touchZoom={true}

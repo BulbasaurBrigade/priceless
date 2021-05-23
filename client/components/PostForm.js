@@ -27,7 +27,7 @@ const initialState = {
   isLoading: false,
   location: "",
   previewMap: false,
-};
+
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -162,10 +162,9 @@ class PostForm extends React.Component {
     if (latitude) {
       userLocation = [latitude, longitude];
     }
-    console.log(userLocation);
+
 
     if (loading) {
-      console.log("we are rendering something new in post form");
       return <LoadingPage />;
     }
 
@@ -224,6 +223,7 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
             />
             <label>
+
               Category <div> </div>
             </label>
             <select
@@ -231,6 +231,8 @@ class PostForm extends React.Component {
               value={category}
               onChange={this.handleChange}
             >
+
+
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
               <option value="clothing">Clothing</option>

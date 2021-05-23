@@ -16,7 +16,6 @@ class MyPosts extends React.Component {
 
   render() {
     const { userPosts } = this.props;
-    console.log("post", userPosts);
     return (
       <div id="my-posts">
         <h2>My Posts</h2>
