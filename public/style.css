@@ -303,7 +303,7 @@ nav ul ul li:hover {
   font-size: 40px;
 }
 
-/* create post */
+/* FORM */
 /* create post && sign Up*/
 .form-container {
   text-align: center;
@@ -358,13 +358,6 @@ nav ul ul li:hover {
 
 #image_upload {
   color: transparent;
-}
-
-.form-instructions {
-  font-size: 13px;
-  text-align: left;
-  padding-top: 0px;
-  margin: 0px;
 }
 
 .submit {
@@ -688,14 +681,15 @@ summary {
 .tooltip-wrap .tooltip-content {
   display: none;
   position: absolute;
-  right: 5%;
-  width: 200px;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  width: 500px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 2px;
+  padding: 5px;
   text-align: center;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  color: blue;
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;
