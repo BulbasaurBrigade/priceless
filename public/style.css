@@ -369,7 +369,7 @@ nav ul ul li:hover {
 
 .submit {
   font-size: 1em;
-  padding: 10px;
+  padding: 7px;
   color: #fff;
   text-decoration: none;
   background: dodgerblue;
@@ -378,6 +378,7 @@ nav ul ul li:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   width: 100px;
   margin: 0 auto;
+  border-radius: 5px;
 }
 
 .submit:hover {
@@ -389,6 +390,11 @@ nav ul ul li:hover {
   width: 35vw;
   align-items: center;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-container a {
+  color: blue;
+  text-decoration: underline;
 }
 
 /* Chat Styles */
