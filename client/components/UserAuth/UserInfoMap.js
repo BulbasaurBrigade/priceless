@@ -2,8 +2,10 @@ import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import ChangeView from "../ChangeView";
 
+
 //The default location is the center of NYC.
 const defaultLocation = [40.742, -73.9073];
+
 const unselectedIcon = new L.icon({
   iconUrl: "https://i.postimg.cc/fyhRyqqx/placeholder-2.png",
   iconSize: [40, 40],
@@ -13,11 +15,12 @@ const unselectedIcon = new L.icon({
 export default class UserInfoMap extends React.Component {
   render() {
     const userLocation = this.props.userLocation;
-    console.log("userLocation", userLocation);
+
 
     return (
       <div>
         <MapContainer
+
           className="signup-map"
           scrollWheelZoom={true}
           touchZoom={true}
@@ -26,6 +29,15 @@ export default class UserInfoMap extends React.Component {
           center={defaultLocation}
         >
           {/* The map centers on the user's location - whether that be what they currently have in their profile or a new location they are previewing. */}
+
+          className="preview-map"
+          scrollWheelZoom={true}
+          touchZoom={true}
+          zoom={13}
+          setView={true}
+          center={defaultLocation}
+        >
+
           {userLocation ? (
             <div>
               <ChangeView center={userLocation} zoom={13} />
@@ -39,7 +51,16 @@ export default class UserInfoMap extends React.Component {
                 '
             url="https://api.mapbox.com/styles/v1/acornsquash/ckoyo5692280j18lpg289wesz/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWNvcm5zcXVhc2giLCJhIjoiY2tva3JybnZqMDNrdTJvb2ZrZzUzY3RyMSJ9.GRYj5oZ7vgJhQ11zbRaTgg"
           />
-          {/* <Marker icon={unselectedIcon} position={this.props.userLocation ? this.props.userLocation : defaultLocation}/> */}
+
+          <Marker
+            icon={unselectedIcon}
+            position={
+              this.props.userLocation
+                ? this.props.userLocation
+                : defaultLocation
+            }
+          />
+
         </MapContainer>
       </div>
     );
