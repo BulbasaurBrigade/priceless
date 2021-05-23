@@ -5,7 +5,6 @@ import SinglePost from "./SinglePost";
 class ListView extends React.Component {
   render() {
     const { posts, postFilters } = this.props;
-    console.log("postFilters", postFilters.filter);
 
     return (
       <div id="list-view">
