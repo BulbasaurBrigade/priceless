@@ -55,6 +55,7 @@ router.get("/:id/posts", async (req, res, next) => {
       where: {
         posterId: req.params.id,
       },
+      order: [["updatedAt", "DESC"]],
       include: {
         model: PostImage,
       },
