@@ -29,7 +29,6 @@ class SinglePost extends React.Component {
     const userLotteryTickets = this.props.userLotteryTickets || [];
     //creates an array of the user's lottery tickets to make it easier to search
     const ticketsArray = userLotteryTickets.map((ticket) => ticket.id);
-    console.log("ticketsArray", ticketsArray);
 
     return (
       <div
