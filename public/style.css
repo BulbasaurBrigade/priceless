@@ -3,7 +3,7 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0;
-  background-color: #dbebd5;
+  background-color: #a5c49a;
 }
 
 #app {
@@ -103,11 +103,8 @@ nav ul ul li:hover {
 }
 
 #app-description {
-  background-color: white;
-  /* background-color: #c47f6f; */
+  background-color: rgb(226, 179, 161);
   padding: 80px 30px 80px 30px;
-  margin-top: 50px;
-  /* color: white; */
   font-size: 22px;
   display: flex;
 }
@@ -123,14 +120,18 @@ nav ul ul li:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
-  color: white;
 }
 
 #landing-page h1 {
-  font-size: 80px;
-  margin-bottom: 200px;
+  color: white;
+  font-size: 100px;
+  font-family: "Merienda One", cursive;
+}
+
+#landing-page i {
+  margin-top: 200px;
+  font-size: 60px;
+  color: white;
 }
 
 /* footer */
@@ -139,8 +140,9 @@ nav ul ul li:hover {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background-color: #eca595;
   font-size: 20px;
+  color: white;
+  background-color: rgb(201, 150, 129);
 }
 
 .developers {
@@ -161,20 +163,16 @@ nav ul ul li:hover {
 
 /* main container */
 #main-container-bottom {
-  background-color: #dbebd5;
+  /* background-color: #dbebd5; */
+  padding: 10px 75px 0 75px;
   display: flex;
   justify-content: space-between;
 }
 
-.chat-icon {
-  position: absolute;
-  right: 0px;
-}
-
 /* map navbar */
 #map-navbar {
-  padding: 15px;
-  background-color: #8db580;
+  padding: 20px 40px 20px 40px;
+  background-color: #7ca16d;
   display: flex;
   justify-content: space-between;
 }
@@ -191,23 +189,24 @@ nav ul ul li:hover {
 
 #map-navbar i {
   font-size: 40px;
+  color: white;
+  position: absolute;
+  right: 0px;
 }
 
 /*map view*/
 #map-view {
   width: 50vw;
-  margin: 10px 0 10px 10px;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px 40px 10px 10px;
 }
 
 .leaflet-container {
   width: 100%;
   height: 80vh;
-  border-radius: 10px;
 }
+
 /*list view*/
 #list-view {
-  /* margin: 10px; */
   height: 80vh;
   width: 50vw;
   overflow: scroll;
@@ -220,6 +219,7 @@ nav ul ul li:hover {
   background-color: white;
   align-items: flex-start;
   border-radius: 8px;
+  border: 1px solid lightgray;
 }
 
 #post-details {
@@ -255,7 +255,7 @@ nav ul ul li:hover {
   width: 300px;
   height: 120px;
   overflow: hidden;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 0;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -322,7 +322,6 @@ nav ul ul li:hover {
 .form-container {
   text-align: center;
   padding: 20px 10px 80px 10px;
-  background-color: #8db580;
 }
 
 .form-container form {
@@ -383,29 +382,9 @@ textarea {
   color: transparent;
 }
 
-/* .submit {
-  font-size: 1em;
-  padding: 7px;
-  color: #fff;
-  text-decoration: none;
-  background: dodgerblue;
-  margin: 10px;
-  border: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 100px;
-  margin: 0 auto;
-  border-radius: 5px;
-}
-
-.submit:hover {
-  box-shadow: none;
-} */
-
-.signup-map {
-  height: 35vh;
-  width: 35vw;
-  align-items: center;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+.preview-map {
+  height: 28vh;
+  width: 28vw;
 }
 
 .form-container a {
@@ -674,7 +653,7 @@ summary {
 
 #loading-page {
   font-family: "Courier New", Courier, monospace;
-  font-size: 60px;
+  font-size: 40px;
   text-align: center;
   color: green;
   margin-top: 30vh;
@@ -715,13 +694,13 @@ summary {
   position: absolute;
   z-index: 1;
   bottom: 100%;
-  left: 50%;
+  right: 30%;
   width: 500px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 5px;
   text-align: center;
-  color: blue;
+  color: dodgerblue;
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;

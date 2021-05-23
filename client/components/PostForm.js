@@ -26,6 +26,7 @@ const initialState = {
   pickupDetails: "",
   isLoading: false,
   location: "",
+  previewMap: false,
 };
 
 class PostForm extends React.Component {
@@ -139,6 +140,7 @@ class PostForm extends React.Component {
   handlePreviewLocation = async (location) => {
     const { prevGeocode } = this.props;
     prevGeocode(location);
+    this.setState({ previewMap: true });
   };
 
   componentWillUnmount() {
@@ -278,10 +280,8 @@ class PostForm extends React.Component {
               Preview Location
             </button>
             {previewError ? <span className="error">{previewError}</span> : ""}
-            <PostFormMap userLocation={userLocation} />
-            {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
-            {this.state.postImages.length ? (
-              <EditImageForm postImages={postImages} postId={post.id} />
+            {this.state.previewMap ? (
+              <PostFormMap userLocation={userLocation} />
             ) : (
               ""
             )}
@@ -296,7 +296,12 @@ class PostForm extends React.Component {
               onChange={this.handleChange}
               id="image_upload"
             ></input>
-
+            {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
+            {this.state.postImages.length ? (
+              <EditImageForm postImages={postImages} postId={post.id} />
+            ) : (
+              ""
+            )}
             {this.state.imagesToUpload.length ? (
               <p>Preview of photos</p>
             ) : (

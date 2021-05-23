@@ -12,6 +12,7 @@ class UserInfoForm extends Component {
       imageURL: "",
       lat: null,
       lng: null,
+      previewMap: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -19,7 +20,11 @@ class UserInfoForm extends Component {
   handlePreviewLocation = async (address) => {
     const { prevGeocode } = this.props;
     prevGeocode(address);
-    this.setState({ lat: this.props.lat, lng: this.props.lng });
+    this.setState({
+      lat: this.props.lat,
+      lng: this.props.lng,
+      previewMap: true,
+    });
   };
 
   handleChange = (evt) => {
@@ -35,7 +40,7 @@ class UserInfoForm extends Component {
   };
 
   render() {
-    const { displayName, location, imageURL } = this.state;
+    const { displayName, location, imageURL, previewMap } = this.state;
 
     let userLocation;
     if (this.state.lat) {
@@ -74,7 +79,8 @@ class UserInfoForm extends Component {
           >
             Preview Location
           </button>
-          <UserInfoMap userLocation={userLocation} />
+          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ""}
+
           <label htmlFor="imageURL">Profile Photo</label>
           <input
             type="text"

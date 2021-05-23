@@ -27,7 +27,6 @@ const Homepage = (props) => {
             and neighbors can browse and request items they want or need.
           </p>
         </div>
-        <img src="http://www.blog.urbact.eu/wp-content/uploads/2014/05/sharing1.jpg" />
       </div>
       <Footer />
     </div>
