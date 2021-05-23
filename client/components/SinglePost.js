@@ -23,11 +23,13 @@ class SinglePost extends React.Component {
         onClick={() => this.handleClick(post.id)}
         className={post.id === selectedPost.id ? "selected" : ""}
       >
+
         {post.id !== selectedPost.id ? (
           <UnselectedPostView post={post} />
         ) : (
           <SelectedPostView post={post} />
         )}
+
       </div>
     );
   }

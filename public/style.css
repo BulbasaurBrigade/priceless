@@ -3,7 +3,7 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0;
-  background-color: #dbebd5;
+  background-color: #a5c49a;
 }
 
 #app {
@@ -97,10 +97,22 @@ nav ul ul li:hover {
   background-color: #1f5048;
 }
 
+/*// HOMEPAGE //*/
+#home-container {
+  background-color: white;
+}
+
+#app-description {
+  background-color: rgb(226, 179, 161);
+  padding: 80px 30px 80px 30px;
+  font-size: 22px;
+  display: flex;
+}
+
 /* landing page*/
 #landing-page {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("nycBrownstones.jpg");
+  background-image: url("nycBrownstones.jpg");
+
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -109,18 +121,18 @@ nav ul ul li:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
-  color: white;
 }
 
 #landing-page h1 {
-  font-size: 80px;
+  color: white;
+  font-size: 100px;
+  font-family: "Merienda One", cursive;
 }
 
-#landing-page p {
-  font-size: 25px;
-  margin: 10px;
+#landing-page i {
+  margin-top: 200px;
+  font-size: 60px;
+  color: white;
 }
 
 /* footer */
@@ -129,9 +141,9 @@ nav ul ul li:hover {
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background-color: #103a33;
-  color: white;
   font-size: 20px;
+  color: white;
+  background-color: rgb(201, 150, 129);
 }
 
 .developers {
@@ -142,7 +154,7 @@ nav ul ul li:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 50px;
 }
 .developer img {
   width: 150px;
@@ -152,20 +164,16 @@ nav ul ul li:hover {
 
 /* main container */
 #main-container-bottom {
-  background-color: #dbebd5;
+  /* background-color: #dbebd5; */
+  padding: 10px 75px 0 75px;
   display: flex;
   justify-content: space-between;
 }
 
-.chat-icon {
-  position: absolute;
-  right: 0px;
-}
-
 /* map navbar */
 #map-navbar {
-  padding: 15px;
-  background-color: #8db580;
+  padding: 20px 40px 20px 40px;
+  background-color: #7ca16d;
   display: flex;
   justify-content: space-between;
 }
@@ -180,25 +188,26 @@ nav ul ul li:hover {
   border-radius: 5px;
 }
 
-#map-navbar img {
-  width: 50px;
+#map-navbar i {
+  font-size: 40px;
+  color: white;
+  position: absolute;
+  right: 0px;
 }
 
 /*map view*/
 #map-view {
   width: 50vw;
-  margin: 10px 0 10px 10px;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+  margin: 10px 40px 10px 10px;
 }
 
 .leaflet-container {
   width: 100%;
   height: 80vh;
-  border-radius: 10px;
 }
+
 /*list view*/
 #list-view {
-  /* margin: 10px; */
   height: 80vh;
   width: 50vw;
   overflow: scroll;
@@ -213,6 +222,7 @@ nav ul ul li:hover {
   background-color: white;
   align-items: flex-start;
   border-radius: 8px;
+  border: 1px solid lightgray;
 }
 
 #post-details {
@@ -221,20 +231,34 @@ nav ul ul li:hover {
 }
 
 #post-details h1 {
-  font-family: "DM Serif Display", serif;
-  font-size: 15px;
+  font-size: 20px;
+}
+
+.location-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#post-details h3 {
+  color: dodgerblue;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+#post-details h4 {
+  margin-right: 30px;
 }
 
 #post-details p {
-  font-family: "Poppins", sans-serif;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 #post-image {
   width: 300px;
   height: 125px;
   overflow: hidden;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 0;
   display: flex;
   align-items: flex-start;
 }
@@ -302,6 +326,8 @@ nav ul ul li:hover {
   font-size: 40px;
 }
 
+
+/* FORM */
 .image-slide {
   display: flex;
   align-items: center;
@@ -311,15 +337,15 @@ nav ul ul li:hover {
   align-self: center;
 }
 
+
 /* create post && sign Up*/
 .form-container {
   text-align: center;
-  padding: 10px;
-  background-color: #dbebd5;
+  padding: 20px 10px 80px 10px;
 }
 
 .form-container form {
-  width: 50%;
+  width: 40%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -334,17 +360,19 @@ nav ul ul li:hover {
   margin-top: 5px;
   font-size: 18px;
   text-align: left;
+  width: 200px;
 }
 
 .form-container input {
-  background-color: rgb(231, 231, 231);
+  background-color: rgb(255, 255, 255);
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
+  /* display: inline-block; */
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  float: left;
 }
 
 .form-container input:focus {
@@ -352,8 +380,15 @@ nav ul ul li:hover {
   background-color: white;
 }
 
+input[type="file"] {
+  border: none;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+}
 .form-container select {
-  background-color: rgb(231, 231, 231);
   width: 100%;
   padding: 12px 10px;
   margin: 8px 0;
@@ -367,36 +402,20 @@ nav ul ul li:hover {
   color: transparent;
 }
 
-.form-instructions {
-  font-size: 13px;
-  text-align: left;
-  padding-top: 0px;
-  margin: 0px;
+.preview-map {
+  height: 28vh;
+  width: 28vw;
 }
 
-.submit {
-  font-size: 1em;
-  padding: 10px;
-  color: #fff;
-  text-decoration: none;
-  background: dodgerblue;
-  margin: 10px;
-  border: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 100px;
-  margin: 0 auto;
+.form-container a {
+  color: blue;
+  text-decoration: underline;
 }
 
-.submit:hover {
-  box-shadow: none;
-}
-
-.signup-map {
-  height: 35vh;
-  width: 35vw;
-  align-items: center;
-  border: 2px solid black;
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2);
+.photo-preview-div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 /* Chat Styles */
@@ -600,19 +619,29 @@ summary {
   box-shadow: none;
 }
 
-.delete {
-  background-color: dodgerblue;
-  border: none;
-  margin: 2px;
-  color: white;
-  border-radius: 5px;
-  padding: 7px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  height: 30px;
+.submit,
+.preview-button,
+.delete,
+.request-button {
+  padding: 10px;
+  background-color: white;
+  color: dodgerblue;
+  border: 1px solid black;
+  width: 150px;
+  margin: auto;
 }
 
-.delete:hover {
-  box-shadow: none;
+.delete:hover,
+.submit:hover,
+.preview-button:hover,
+.request-button:hover {
+  color: black;
+}
+
+.delete-photo {
+  border: none;
+  background-color: white;
+  font-size: 20px;
 }
 
 /* MY ACCOUNT */
@@ -643,9 +672,11 @@ summary {
 /* loading page */
 
 #loading-page {
-  font-size: 80px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 40px;
   text-align: center;
   color: green;
+  margin-top: 30vh;
 }
 @keyframes blink {
   0% {
@@ -681,14 +712,15 @@ summary {
 .tooltip-wrap .tooltip-content {
   display: none;
   position: absolute;
-  right: 5%;
-  width: 200px;
+  z-index: 1;
+  bottom: 100%;
+  right: 30%;
+  width: 500px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 2px;
+  padding: 5px;
   text-align: center;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  color: dodgerblue;
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;

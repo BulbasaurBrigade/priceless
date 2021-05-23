@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import UserInfoMap from './UserInfoMap';
-import { getGeocode } from '../../store/location';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import UserInfoMap from "./UserInfoMap";
+import { getGeocode } from "../../store/location";
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: '',
-      location: '',
-      imageURL: '',
+      displayName: "",
+      location: "",
+      imageURL: "",
       lat: null,
       lng: null,
+      previewMap: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -19,7 +20,11 @@ class UserInfoForm extends Component {
   handlePreviewLocation = async (address) => {
     const { prevGeocode } = this.props;
     prevGeocode(address);
-    this.setState({ lat: this.props.lat, lng: this.props.lng });
+    this.setState({
+      lat: this.props.lat,
+      lng: this.props.lng,
+      previewMap: true,
+    });
   };
 
   handleChange = (evt) => {
@@ -35,7 +40,7 @@ class UserInfoForm extends Component {
   };
 
   render() {
-    const { displayName, location, imageURL } = this.state;
+    const { displayName, location, imageURL, previewMap } = this.state;
 
     let userLocation;
     if (this.state.lat) {
@@ -68,12 +73,14 @@ class UserInfoForm extends Component {
             required
           />
           <button
+            className="preview-button"
             type="button"
             onClick={() => this.handlePreviewLocation(location)}
           >
             Preview Location
           </button>
-          <UserInfoMap userLocation={userLocation} />
+          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ""}
+
           <label htmlFor="imageURL">Profile Photo</label>
           <input
             type="text"
