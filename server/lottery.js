@@ -55,9 +55,9 @@ module.exports = (io) => {
       const recipient = await this.getRecipient();
       // console.log({ poster });
       // console.log({ recipient });
-      let content = `Congrats! \nYou have connected on the post: ${this.title}.\nThe poster is: ${poster.displayName}.\nThe recipient is: ${recipient.displayName}.`;
+      let content = `Congrats! You have connected on this post. \n\nThe poster is: ${poster.displayName}.\nThe recipient is: ${recipient.displayName}.`;
       if (this.pickupDetails)
-        content += `\nTo get you started, here are the pick up details that ${poster.displayName} left for the listing:\n${this.pickupDetails}`;
+        content += `\n\nTo get you started, here are the pick up details that ${poster.displayName} left for the listing: \n\n${this.pickupDetails}`;
       const [chat, message] = await Promise.all([
         Chat.create(),
         Message.create({

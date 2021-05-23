@@ -29,6 +29,7 @@ form div {
 
 p {
   white-space: pre-wrap;
+  margin: 5px;
 }
 
 .error {
@@ -431,12 +432,12 @@ textarea {
 
 /* Chat Panel */
 #chat-panel {
-  flex: 0 0 240px;
+  flex: 0 0 350px;
   border-right: 1px solid black;
 }
 
 #chat-search {
-  background-color: lightgray;
+  background-color: #a5c49a;
   border-bottom: 1px solid darkgray;
   padding: 15px;
 }
@@ -467,10 +468,12 @@ textarea {
 .chat-card {
   border-bottom: 1px darkgray solid;
   padding: 10px;
-
   text-decoration: none;
 }
 
+.chat-card p {
+  font-size: 15px;
+}
 .chat-card.closed {
   background-color: rgb(224, 224, 224);
 }
@@ -492,15 +495,28 @@ textarea {
 #chat-header {
   display: flex;
   justify-content: space-between;
-  padding: 10px 10px 10px 10px;
+  padding: 5px;
   font-size: 30px;
-  background-color: lightgray;
-  border-bottom: 1px darkgray solid;
+  background-color: #a5c49a;
+  border-bottom: 1px lightgray solid;
+  font-weight: bold;
+  align-items: center;
+}
+
+#chat-header h1 {
+  font-size: 22px;
+}
+
+#chat-header-details {
+  font-size: 16px;
+  display: flex;
   font-weight: bold;
 }
 
-#button-group button {
+#chat-header button {
   margin: 5px;
+  background-color: black;
+  border-radius: 4px;
 }
 
 #message-container {
@@ -513,7 +529,7 @@ textarea {
 }
 
 #user-msg-input {
-  background-color: lightgray;
+  background-color: #a5c49a;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -558,7 +574,9 @@ textarea {
 
 .message {
   border-radius: 5px;
-  font-size: 20px;
+  font-size: 18px;
+  padding: 5px;
+  background-color: #a5c49a;
 }
 
 .message.sent {

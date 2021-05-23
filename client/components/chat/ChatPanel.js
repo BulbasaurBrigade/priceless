@@ -1,9 +1,9 @@
-import React from 'react';
-import ChatCard from './ChatCard';
-import { getChats } from '../../store/chats';
-import { connect } from 'react-redux';
+import React from "react";
+import ChatCard from "./ChatCard";
+import { getChats } from "../../store/chats";
+import { connect } from "react-redux";
 // import socket from '../../socket';
-import { _updateChat } from '../../store/singleChat';
+import { _updateChat } from "../../store/singleChat";
 
 class ChatPanel extends React.Component {
   componentDidMount() {
@@ -46,7 +46,7 @@ class ChatPanel extends React.Component {
         <div id="chat-card-list">
           {chats.length
             ? chats.map((chat) => <ChatCard chat={chat} key={chat.id} />)
-            : 'You have no chats!'}
+            : "You have no chats!"}
         </div>
       </div>
     );
