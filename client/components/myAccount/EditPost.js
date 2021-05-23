@@ -6,11 +6,6 @@ import { editPost } from "../../store/posts";
 import PostForm from "../PostForm";
 
 class EditPost extends React.Component {
-  constructor(props) {
-    super(props);
-    //this.handleDelete = this.handleDelete.bind(this)
-  }
-
   componentDidMount() {
     this.props.getSinglePost(this.props.match.params.id);
   }
@@ -26,9 +21,6 @@ class EditPost extends React.Component {
           userId={userId}
           type="edit"
         />
-        {/* <button type="button" onClick={this.handleDelete}>
-            Delete This Post
-        </button> */}
       </div>
     );
   }

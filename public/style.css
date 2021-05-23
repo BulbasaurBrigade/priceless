@@ -91,6 +91,7 @@ nav ul ul li {
   float: none;
   display: list-item;
   position: relative;
+  z-index: 10;
 }
 
 nav ul ul li:hover {
@@ -187,11 +188,15 @@ nav ul ul li:hover {
   border-radius: 5px;
 }
 
-#map-navbar i {
-  font-size: 40px;
+#map-navbar a {
+  font-size: 20px;
   color: white;
   position: absolute;
-  right: 0px;
+  right: 20px;
+}
+
+#map-navbar a:hover {
+  color: lightgray;
 }
 
 /*map view*/
@@ -624,25 +629,34 @@ summary {
   font-size: 20px;
 }
 
+.my-post-button {
+  background-color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  margin: 1px;
+}
+
+.my-post-button:hover {
+  background-color: lightgray;
+}
+
 /* MY ACCOUNT */
 /* my posts */
 #my-posts {
-  padding: 10px;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  padding: 30px;
 }
 
 #my-post {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 30px 10px 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 10px;
-  border-radius: 8px;
-  flex-basis: 33%;
-  font-size: 22px;
+  margin: auto;
+  margin-bottom: 10px;
+  font-size: 18px;
   background-color: white;
+  width: 500px;
 }
 
 #my-post div {
