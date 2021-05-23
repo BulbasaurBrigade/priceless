@@ -2,37 +2,36 @@ import React from 'react';
 import ChatCard from './ChatCard';
 import { getChats } from '../../store/chats';
 import { connect } from 'react-redux';
-import socket from '../../socket';
+// import socket from '../../socket';
 import { _updateChat } from '../../store/singleChat';
 
 class ChatPanel extends React.Component {
   componentDidMount() {
-    const { fetchChats, userId, chats, updateChat } = this.props;
+    const { fetchChats, userId } = this.props;
     fetchChats(userId);
-    socket.on('updated chat', this.handleNewChat);
+    // socket.on('updated chat', this.handleNewChat);
   }
 
-  handleNewChat = ({ chat }) => {
-    const { chats, updateChat } = this.props;
-    if (
-      chats.some((localChat) => {
-        return localChat.id === chat.id;
-      })
-    ) {
-      updateChat(chat);
-    }
-  };
+  // handleNewChat = ({ chat }) => {
+  //   const { chats, updateChat } = this.props;
+  //   if (
+  //     chats.some((localChat) => {
+  //       return localChat.id === chat.id;
+  //     })
+  //   ) {
+  //     updateChat(chat);
+  //   }
+  // };
 
   handleSubmit = (evt) => {
     evt.preventDefault();
   };
 
-  componentWillUnmount() {
-    socket.off('updated chat');
-  }
+  // componentWillUnmount() {
+  //   socket.off('updated chat');
+  // }
 
   render() {
-    // refer to chats store for full, weird, format
     const { chats } = this.props;
     return (
       <div id="chat-panel">

@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import axios from "axios";
-import { ADD_REQUESTER } from "./singlePost";
-import { _setCategory, _setBounds } from "./postFilters";
-import { _isLoading, _formLoading } from "./loading";
-import { setPostFormErrorMsg } from "./error";
+
+import axios from 'axios';
+import { ADD_REQUESTER, UPDATE_POST } from './singlePost';
+import { _setCategory, _setBounds } from './postFilters';
+import { _isLoading, _formLoading } from './loading';
+import { setPostFormErrorMsg } from './error';
 
 //action type
 const SET_POSTS = "SET_POSTS";
@@ -39,6 +40,11 @@ export const _deletePost = (post) => {
     post,
   };
 };
+
+export const _updatePost = (post) => ({
+  type: UPDATE_POST,
+  post,
+});
 
 // thunk creators
 
@@ -132,18 +138,18 @@ export default (state = [], action) => {
       return action.posts;
     case CREATE_POST:
       return [...state, action.post];
-    case DELETE_POST:
+
+
+    case UPDATE_POST:
+    case ADD_REQUESTER:
     case EDIT_POST:
       return state.map((post) =>
         post.id === action.post.id ? action.post : post
       );
-    case ADD_REQUESTER:
-      return state.map((post) => {
-        if (post.id === action.post.id) {
-          return action.post;
-        }
-        return post;
-      });
+
+    case DELETE_POST:
+      return state.filter((post) => post.id !== action.post.id);
+
 
     default:
       return state;

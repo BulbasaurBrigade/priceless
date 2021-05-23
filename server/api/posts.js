@@ -3,8 +3,10 @@ const { CronJob } = require("cron");
 const { Op } = require("sequelize");
 const getGeocode = require("../middleware/getGeocode");
 const {
-  models: { Post, PostImage, LotteryTicket, Chat },
-} = require("../db");
+
+  models: { Post, PostImage, Chat },
+} = require('../db');
+
 module.exports = router;
 
 // GET all posts
@@ -115,7 +117,7 @@ router.post("/", async (req, res, next) => {
 
     // Create a date object for when the job should run
     // Currently set for 1 minute
-    const date = new Date(Date.now() + 60 * 1000);
+    const date = new Date(Date.now() + 10 * 1000);
 
     // create and schedule the Cron Job to run the lottery
     const job = new CronJob(date, () => {
@@ -171,7 +173,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 //DELETE /posts/:postId/images/:imageId
-router.delete("/:postId/images/:imageId", async (req, res, next) => {
+router.delete('/:postId/images/:imageId', async (req, res, next) => {
   try {
     const image = await PostImage.findByPk(req.params.imageId);
     console.log(image);
