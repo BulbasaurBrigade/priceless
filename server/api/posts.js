@@ -3,9 +3,8 @@ const { CronJob } = require("cron");
 const { Op } = require("sequelize");
 const getGeocode = require("../middleware/getGeocode");
 const {
-
   models: { Post, PostImage, Chat },
-} = require('../db');
+} = require("../db");
 
 module.exports = router;
 
@@ -128,8 +127,6 @@ router.post("/", async (req, res, next) => {
     // start the job
     job.start();
 
-    // await post.setRequester([2]);
-
     // send the post
     res.send(postWithImage);
   } catch (err) {
@@ -173,7 +170,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 //DELETE /posts/:postId/images/:imageId
-router.delete('/:postId/images/:imageId', async (req, res, next) => {
+router.delete("/:postId/images/:imageId", async (req, res, next) => {
   try {
     const image = await PostImage.findByPk(req.params.imageId);
     console.log(image);

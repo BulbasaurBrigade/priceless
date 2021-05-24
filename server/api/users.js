@@ -59,6 +59,7 @@ router.get("/:id/posts", async (req, res, next) => {
         posterId: req.params.id,
         status: { [Op.ne]: "deleted" },
       },
+      //make the most recently updated post appear at the top
       order: [["updatedAt", "DESC"]],
       include: {
         model: PostImage,
