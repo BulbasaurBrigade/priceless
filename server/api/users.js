@@ -67,8 +67,11 @@ router.get('/:id/posts', requireToken, async (req, res, next) => {
     const posts = await Post.findAll({
       where: {
         posterId: req.params.id,
+        status: { [Op.ne]: "deleted" },
       },
-      order: [['updatedAt', 'DESC']],
+
+      //make the most recently updated post appear at the top
+      order: [["updatedAt", "DESC"]],
       include: {
         model: PostImage,
       },
@@ -85,8 +88,9 @@ router.get('/:id/lotteryTickets', requireToken, async (req, res, next) => {
       throw new Error("You don't have permission to access that information");
     }
     const lottery = await Post.findAll({
+      //only sends back active lottery tickets
       where: {
-        status: { [Op.ne]: 'claimed' },
+        status: { [Op.notIn]: ["claimed", "deleted"] },
       },
       include: {
         model: User,

@@ -7,6 +7,7 @@ const {
 } = require('../db');
 const { requireToken } = require('../middleware/gatekeeping');
 
+
 module.exports = router;
 
 // GET all posts
@@ -196,7 +197,7 @@ router.delete('/:id', requireToken, async (req, res, next) => {
 });
 
 //DELETE /posts/:postId/images/:imageId
-router.delete('/:postId/images/:imageId', async (req, res, next) => {
+router.delete("/:postId/images/:imageId", async (req, res, next) => {
   try {
     const image = await PostImage.findByPk(req.params.imageId);
     console.log(image);
