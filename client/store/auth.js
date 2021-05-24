@@ -8,7 +8,9 @@ import {
 } from 'firebase/auth';
 
 import history from '../history';
-import { _isLoading } from './loading';
+import { setUserProfileError } from './error';
+import { _isLoading, _formLoading } from './loading';
+
 
 const TOKEN = 'token';
 
@@ -80,17 +82,19 @@ export const authenticate = (email, password, method) => async (dispatch) => {
 
 export const updateUserInfo = (user) => async (dispatch) => {
   try {
-    dispatch(_isLoading());
+
+    dispatch(_formLoading());
     const token = await getAuth().currentUser.getIdToken();
     const { data } = await axios.put(`/api/users/${user.id}`, user, {
       headers: {
         authorization: token,
       },
     });
+
     dispatch(setAuth(data));
     history.push('/');
   } catch (error) {
-    console.error(error);
+    dispatch(setUserProfileError(error.response.data));
   }
 };
 

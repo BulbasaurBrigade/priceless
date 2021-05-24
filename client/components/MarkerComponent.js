@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react';
 // import MapPopUp from "./MapPopUp";
-import { Marker, Popup } from "react-leaflet";
-import { connect } from "react-redux";
-import { setSinglePost } from "../store/singlePost";
-import L from "leaflet";
+import { Marker, Popup } from 'react-leaflet';
+import { connect } from 'react-redux';
+import { setSinglePost, _setSinglePost } from '../store/singlePost';
+import L from 'leaflet';
 
 const selectedIcon = new L.icon({
   //iconUrl: "https://i.postimg.cc/4N5hZ4Jd/noun-map-pointer-2317847.png",
-  iconUrl: "https://i.postimg.cc/hPk7xMJ3/placeholder-1.png",
+  iconUrl: 'https://i.postimg.cc/hPk7xMJ3/placeholder-1.png',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
 
 const unselectedIcon = new L.icon({
   //iconUrl: "https://i.postimg.cc/ryBFQZr9/noun-map-pointer-3859353.png",
-  iconUrl: "https://i.postimg.cc/fyhRyqqx/placeholder-2.png",
+  iconUrl: 'https://i.postimg.cc/fyhRyqqx/placeholder-2.png',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
 
 const viewedIcon = new L.icon({
-  iconUrl: "https://i.postimg.cc/sxZggdJf/placeholder.png",
+  iconUrl: 'https://i.postimg.cc/sxZggdJf/placeholder.png',
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
@@ -34,16 +34,21 @@ class MarkerComponent extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(id) {
-    this.props.getSinglePost(id);
-  }
-
   componentDidUpdate() {
     if (
       this.props.singlePost.id === this.props.post.id &&
       this.state.marker === unselectedIcon
     ) {
       this.setState({ marker: viewedIcon });
+    }
+  }
+
+  handleClick(id) {
+    const { singlePost, getSinglePost, resetSinglePost } = this.props;
+    if (id === singlePost.id) {
+      resetSinglePost();
+    } else {
+      getSinglePost(id);
     }
   }
 
@@ -84,6 +89,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
+    resetSinglePost: () => dispatch(_setSinglePost({})),
   };
 };
 

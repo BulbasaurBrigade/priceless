@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import { ADD_REQUESTER, UPDATE_POST } from './singlePost';
-import { _setCategory, _setBounds } from './postFilters';
+import { _setCategory, _setBounds, _setSearch } from './postFilters';
 import { _isLoading, _formLoading } from './loading';
 import { setPostFormErrorMsg } from './error';
 
@@ -64,10 +64,10 @@ export const setLocalPosts =
     try {
       dispatch(_setBounds(north, east, south, west));
       const {
-        postFilters: { filter },
+        postFilters: { filter, search },
       } = getState();
       const { data } = await axios.get(
-        `/api/posts/filtered?filter=${filter}&n=${north}&e=${east}&s=${south}&w=${west}`
+        `/api/posts/filtered?filter=${filter}&n=${north}&e=${east}&s=${south}&w=${west}&search=${search}`
       );
       dispatch(_setPosts(data));
     } catch (err) {
@@ -82,16 +82,35 @@ export const setFilteredPosts = (category) => {
       const {
         postFilters: {
           bounds: { north, east, south, west },
+          search,
         },
       } = getState();
       const { data } = await axios.get(
-        `/api/posts/filtered?filter=${category}&n=${north}&e=${east}&s=${south}&w=${west}`
+        `/api/posts/filtered?filter=${category}&n=${north}&e=${east}&s=${south}&w=${west}&search=${search}`
       );
       dispatch(_setPosts(data));
     } catch (err) {
       console.log('error in set filtered posts thunk', err);
     }
   };
+};
+
+export const setSearchedPosts = (search) => async (dispatch, getState) => {
+  try {
+    dispatch(_setSearch(search));
+    const {
+      postFilters: {
+        bounds: { north, east, south, west },
+        filter,
+      },
+    } = getState();
+    const { data } = await axios.get(
+      `/api/posts/filtered?filter=${filter}&n=${north}&e=${east}&s=${south}&w=${west}&search=${search}`
+    );
+    dispatch(_setPosts(data));
+  } catch (error) {
+    console.error('error in set searched posts thunk', error);
+  }
 };
 
 export const createPost = (post, userId, history) => {

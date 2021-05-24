@@ -13,6 +13,7 @@ module.exports = router;
 router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({
+
       // only finds posts that haven't been claimed or deleted
       where: { status: { [Op.notIn]: ['claimed', 'deleted'] } },
       include: PostImage,
@@ -26,7 +27,9 @@ router.get('/', async (req, res, next) => {
 // GET all posts filtered by category and map bounds
 router.get('/filtered', async (req, res, next) => {
   try {
-    const { filter, n, e, s, w } = req.query;
+
+    const { filter, n, e, s, w, search } = req.query;
+
     // only finds possts tha haven't been claimed or deleted
     const whereStatement = { status: { [Op.notIn]: ['claimed', 'deleted'] } };
 
@@ -40,6 +43,21 @@ router.get('/filtered', async (req, res, next) => {
         { latitude: { [Op.lte]: +n } },
         { longitude: { [Op.gte]: +w } },
         { longitude: { [Op.lte]: +e } },
+      ];
+    }
+
+    if (search) {
+      whereStatement[Op.or] = [
+        {
+          title: {
+            [Op.iLike]: `%${search}%`,
+          },
+        },
+        {
+          description: {
+            [Op.iLike]: `%${search}%`,
+          },
+        },
       ];
     }
 
@@ -64,6 +82,7 @@ router.get('/:postId', async (req, res, next) => {
 });
 
 // POST a new post
+
 router.post('/', requireToken, async (req, res, next) => {
   try {
     const {
@@ -139,6 +158,7 @@ router.post('/', requireToken, async (req, res, next) => {
 });
 
 // PUT edit single post
+
 router.put('/:id', requireToken, async (req, res, next) => {
   try {
     const { imageUrls } = req.body;
@@ -160,6 +180,7 @@ router.put('/:id', requireToken, async (req, res, next) => {
 });
 
 // DELETE single post - note: this doesn't actually delete a post. it remains in the db.
+
 router.delete('/:id', requireToken, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id);
@@ -187,6 +208,7 @@ router.delete('/:postId/images/:imageId', async (req, res, next) => {
 });
 
 // PUT to either pass on or claim a post
+
 router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
   try {
     // find the relevant chat and post
@@ -212,6 +234,7 @@ router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
       if (req.user.id !== chat.posterId) {
         throw new Error('You do not have permission to do that.');
       }
+
       message = await post.claim(req.params.chatId);
     }
 
@@ -221,6 +244,7 @@ router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
     next(err);
   }
 });
+
 
 router.post('/:postId/users/:userId', requireToken, async (req, res, next) => {
   try {
