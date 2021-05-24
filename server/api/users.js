@@ -43,6 +43,8 @@ router.put('/:id', requireToken, async (req, res, next) => {
     // Change location
     user.location = location;
 
+    user.imageURL = imageURL;
+
     // Convert location string to GeoCode
     const geocode = await getGeocode(location);
     user.latitude = geocode.lat;

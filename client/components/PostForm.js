@@ -1,12 +1,6 @@
 import React from "react";
 import { postImagesRef, storage } from "../firebase";
-import {
-  uploadBytes,
-  ref,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
-import axios from "axios";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { getGeocode } from "../store/location";
 import PostFormMap from "./PostFormMap";
 import { connect } from "react-redux";
