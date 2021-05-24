@@ -35,6 +35,7 @@ class PostForm extends React.Component {
     this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
     this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
+    this.preventSubmitOnEnter = this.preventSubmitOnEnter.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -147,6 +148,12 @@ class PostForm extends React.Component {
     this.setState({ previewMap: true });
   };
 
+  preventSubmitOnEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
   componentWillUnmount() {
     this.props.clearErrors();
   }
@@ -183,6 +190,7 @@ class PostForm extends React.Component {
               name="title"
               value={title}
               onChange={this.handleChange}
+              onKeyPress={this.preventSubmitOnEnter}
               required
             />
             <label>
@@ -224,6 +232,7 @@ class PostForm extends React.Component {
               name="pickupDetails"
               value={pickupDetails}
               onChange={this.handleChange}
+              onKeyPress={this.preventSubmitOnEnter}
             />
             <label>
               Category <div> </div>
@@ -272,6 +281,7 @@ class PostForm extends React.Component {
               type="text"
               value={location}
               onChange={this.handleChange}
+              onKeyPress={this.preventSubmitOnEnter}
               required
             />
             <button
