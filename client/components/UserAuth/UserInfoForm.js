@@ -36,6 +36,10 @@ class UserInfoForm extends Component {
       const { location } = this.props;
       this.setState({ location });
     }
+    if (this.props.imageURL) {
+      const { imageURL } = this.props;
+      this.setState({ imageURL });
+    }
   }
 
   //When a user clicks the 'preview location', a call is made to the google geocode api to get the coords
@@ -136,7 +140,7 @@ class UserInfoForm extends Component {
           ></input>
           {imageToUpload.name && (
             <div>
-              <p>Preview</p>
+              <p>Preview Of New Photo</p>
               <div className="photo-preview-div">
                 <img
                   src={URL.createObjectURL(imageToUpload)}
@@ -146,6 +150,20 @@ class UserInfoForm extends Component {
                 <button
                   className="delete-photo"
                   onClick={this.handleDeletePhoto}
+                >
+                  x
+                </button>
+              </div>
+            </div>
+          )}
+          {imageURL && (
+            <div>
+              <p>Current Photo</p>
+              <div className="photo-preview-div">
+                <img src={imageURL} height={200} className="photo-preview" />
+                <button
+                  className="delete-photo"
+                  onClick={this.handleRemovePhoto}
                 >
                   x
                 </button>
@@ -170,6 +188,7 @@ const mapState = (state) => {
     location: state.auth.location,
     userLat: state.auth.latitude,
     userLng: state.auth.longitude,
+    imageURL: state.auth.imageURL,
   };
 };
 
