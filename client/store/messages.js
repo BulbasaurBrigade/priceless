@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 import socket from '../socket';
 
 // Action Types
@@ -20,8 +21,14 @@ export const _newMessage = (message) => ({
 // Thunk Creators
 export const getMessages = (userId, chatId) => async (dispatch) => {
   try {
+    const token = await getAuth().currentUser.getIdToken();
     const { data } = await axios.get(
-      `/api/users/${userId}/chats/${chatId}/messages`
+      `/api/users/${userId}/chats/${chatId}/messages`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
     );
     dispatch(_getMessages(data));
   } catch (err) {
@@ -31,9 +38,15 @@ export const getMessages = (userId, chatId) => async (dispatch) => {
 
 export const sentMessage = (userId, chatId, content) => async (dispatch) => {
   try {
+    const token = await getAuth().currentUser.getIdToken();
     const { data } = await axios.post(
       `/api/users/${userId}/chats/${chatId}/messages`,
-      { content }
+      { content },
+      {
+        headers: {
+          authorization: token,
+        },
+      }
     );
 
     socket.emit('new message', {

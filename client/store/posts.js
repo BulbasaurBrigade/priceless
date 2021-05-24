@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 import { ADD_REQUESTER, UPDATE_POST } from './singlePost';
 import { _setCategory, _setBounds, _setSearch } from './postFilters';
 import { _isLoading, _formLoading } from './loading';
@@ -117,7 +117,12 @@ export const createPost = (post, userId, history) => {
   return async (dispatch) => {
     try {
       dispatch(_formLoading());
-      const { data } = await axios.post(`/api/posts?id=${userId}`, post);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.post(`/api/posts?id=${userId}`, post, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_createPost(data));
       history.push('./posts');
     } catch (err) {
@@ -129,7 +134,12 @@ export const createPost = (post, userId, history) => {
 export const editPost = (post, history) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/posts/${post.id}`, post);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.put(`/api/posts/${post.id}`, post, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_editPost(data));
       history.push('../myposts');
     } catch (err) {
@@ -141,7 +151,12 @@ export const editPost = (post, history) => {
 export const deletePost = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/posts/${id}`);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.delete(`/api/posts/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_deletePost(data));
     } catch (err) {
       console.log('error deleting post via thunk', err);
