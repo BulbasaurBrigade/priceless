@@ -5,9 +5,17 @@ import { setPosts, deletePost } from "../../store/posts";
 import { getUserPosts } from "../../store/userPosts";
 
 class MyPosts extends React.Component {
-  handleClick = () => {
-    this.props.removePost();
-  };
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    if (confirm("Are you sure you want to delete this post?")) {
+      const postId = event.target.value;
+      this.props.removePost(postId);
+    }
+  }
 
   componentDidMount() {
     const { userId } = this.props;
@@ -30,7 +38,8 @@ class MyPosts extends React.Component {
               </button>
               <button
                 className="my-post-button"
-                onClick={() => this.props.removePost(post.id)}
+                value={post.id}
+                onClick={this.handleClick}
               >
                 X
               </button>
