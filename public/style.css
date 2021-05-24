@@ -163,8 +163,8 @@ nav ul ul li:hover {
 }
 
 #landing-page i {
-  margin-top: 200px;
-  font-size: 60px;
+  margin-top: 100px;
+  font-size: 50px;
   color: white;
 }
 
@@ -188,12 +188,15 @@ nav ul ul li:hover {
   align-items: center;
   padding: 50px;
 }
-.developer img {
+.developer > img {
   width: 150px;
   border-radius: 50%;
   border: 6px solid #286157;
 }
 
+.linkedIn-logo {
+  width: 30px;
+}
 /* main container */
 #main-container-bottom {
   padding: 10px 50px 0 50px;
