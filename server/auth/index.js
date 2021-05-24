@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const {
   models: { User },
 } = require('../db');
+const { requireToken } = require('../middleware/gatekeeping');
 
 module.exports = router;
 
@@ -35,11 +36,8 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
-router.post('/signup/moreinfo', async (req, res, next) => {
+router.post('/signup/moreinfo', requireToken, async (req, res, next) => {
   try {
-    const decodedToken = await admin
-      .auth()
-      .verifyIdToken(req.headers.authorization);
     const [numRows, users] = await User.update(
       {
         displayName: req.body.displayName,
@@ -48,7 +46,7 @@ router.post('/signup/moreinfo', async (req, res, next) => {
       },
       {
         where: {
-          authId: decodedToken.uid,
+          authId: req.user.authId,
         },
         returning: true,
       }
@@ -59,17 +57,9 @@ router.post('/signup/moreinfo', async (req, res, next) => {
   }
 });
 
-router.get('/me', async (req, res, next) => {
+router.get('/me', requireToken, async (req, res, next) => {
   try {
-    const decodedToken = await admin
-      .auth()
-      .verifyIdToken(req.headers.authorization);
-    const user = await User.findOne({
-      where: {
-        authId: decodedToken.uid,
-      },
-    });
-    res.send(user);
+    res.send(req.user);
   } catch (ex) {
     next(ex);
   }

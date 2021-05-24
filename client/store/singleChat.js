@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 import socket from '../socket';
 import { _newMessage, CLEAR_CHAT } from './messages';
 
@@ -33,7 +34,12 @@ export const _clearChat = () => ({
 export const getChat = (userId, chatId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${userId}/chats/${chatId}`);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.get(`/api/users/${userId}/chats/${chatId}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_getChat(data));
     } catch (error) {
       console.error(error);
@@ -45,8 +51,14 @@ export const getChat = (userId, chatId) => {
 export const closeChat = (claimOrPass, chatId, postId) => {
   return async (dispatch) => {
     try {
+      const token = await getAuth().currentUser.getIdToken();
       const { data } = await axios.put(
-        `/api/posts/${postId}/chats/${chatId}?action=${claimOrPass}`
+        `/api/posts/${postId}/chats/${chatId}?action=${claimOrPass}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
       );
       dispatch(_closeChat(data.chat));
       socket.emit('new message', {

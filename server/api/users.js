@@ -1,21 +1,22 @@
-const router = require("express").Router();
-const getGeocode = require("../middleware/getGeocode");
+const router = require('express').Router();
+const getGeocode = require('../middleware/getGeocode');
 const {
   models: { User, Post, PostImage },
-} = require("../db");
+} = require('../db');
 module.exports = router;
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
+const { requireToken, isAdmin } = require('../middleware/gatekeeping');
 
-router.use("/:userId/chats", require("./chats"));
+router.use('/:userId/chats', require('./chats'));
 
 // GET all users
-router.get("/", async (req, res, next) => {
+router.get('/', requireToken, isAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and username fields - even though
+      // explicitly select only the id and displayName fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ["id", "username"],
+      attributes: ['id', 'displayName'],
     });
     res.json(users);
   } catch (err) {
@@ -23,8 +24,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.id && !req.user.isAdmin) {
+      console.log('param id: ', req.params.id);
+      console.log('user id: ', req.user.id);
+      throw new Error('You do not have permission to do that');
+    }
+
     const { displayName, location, imageURL } = req.body;
 
     // Find user
@@ -51,14 +58,18 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/:id/posts", async (req, res, next) => {
+router.get('/:id/posts', requireToken, async (req, res, next) => {
   try {
-    //grab all posts associated with a particular user and include postImages
+    if (req.user.id !== +req.params.id) {
+      throw new Error("You don't have permission to view those");
+    }
+    // grab all posts associated with a particular user and include postImages
     const posts = await Post.findAll({
       where: {
         posterId: req.params.id,
         status: { [Op.ne]: "deleted" },
       },
+
       //make the most recently updated post appear at the top
       order: [["updatedAt", "DESC"]],
       include: {
@@ -70,8 +81,12 @@ router.get("/:id/posts", async (req, res, next) => {
     next(error);
   }
 });
-router.get("/:id/lotteryTickets", async (req, res, next) => {
+
+router.get('/:id/lotteryTickets', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.id) {
+      throw new Error("You don't have permission to access that information");
+    }
     const lottery = await Post.findAll({
       //only sends back active lottery tickets
       where: {
@@ -79,14 +94,14 @@ router.get("/:id/lotteryTickets", async (req, res, next) => {
       },
       include: {
         model: User,
-        as: "requester",
+        as: 'requester',
         where: {
           id: req.params.id,
         },
         required: true,
         attributes: [],
       },
-      attributes: ["id"],
+      attributes: ['id'],
     });
     res.send(lottery);
   } catch (err) {
