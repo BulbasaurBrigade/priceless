@@ -24,7 +24,10 @@ class SinglePost extends React.Component {
 
     return (
       <div
-        onClick={() => this.handleClick(post.id)}
+        onClick={(evt) => {
+          console.log(evt.target);
+          this.handleClick(post.id);
+        }}
         className={post.id === selectedPost.id ? 'selected' : ''}
       >
         {post.id !== selectedPost.id ? (

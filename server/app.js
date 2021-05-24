@@ -44,5 +44,5 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res
     .status(err.status || 500)
-    .send('Something went wrong. Try again in a few minutes.');
+    .send(err.message || 'Something went wrong. Try again in a few minutes.');
 });
