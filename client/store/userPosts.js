@@ -1,10 +1,11 @@
-import axios from "axios";
-import { DELETE_POST } from "./posts";
+import axios from 'axios';
+import { getAuth } from 'firebase/auth';
+import { DELETE_POST } from './posts';
 
-//action type
-const GET_USER_POSTS = "GET_USER_POSTS";
+// action type
+const GET_USER_POSTS = 'GET_USER_POSTS';
 
-//action creator
+// action creator
 const _getUserPosts = (userPosts) => {
   return {
     type: GET_USER_POSTS,
@@ -12,11 +13,16 @@ const _getUserPosts = (userPosts) => {
   };
 };
 
-//thunk creator
+// thunk creator
 export const getUserPosts = (userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${userId}/posts`);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.get(`/api/users/${userId}/posts`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_getUserPosts(data));
     } catch (error) {
       console.log("error fetching user's posts via thunk");
@@ -24,7 +30,7 @@ export const getUserPosts = (userId) => {
   };
 };
 
-//reducer
+// reducer
 export default (state = [], action) => {
   switch (action.type) {
     case GET_USER_POSTS:

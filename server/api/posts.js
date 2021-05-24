@@ -1,20 +1,21 @@
-const router = require("express").Router();
-const { CronJob } = require("cron");
-const { Op } = require("sequelize");
-const getGeocode = require("../middleware/getGeocode");
+const router = require('express').Router();
+const { CronJob } = require('cron');
+const { Op } = require('sequelize');
+const getGeocode = require('../middleware/getGeocode');
 const {
-
   models: { Post, PostImage, Chat },
 } = require('../db');
+const { requireToken } = require('../middleware/gatekeeping');
 
 module.exports = router;
 
 // GET all posts
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({
-      //only finds posts that haven't been claimed or deleted
-      where: { status: { [Op.notIn]: ["claimed", "deleted"] } },
+
+      // only finds posts that haven't been claimed or deleted
+      where: { status: { [Op.notIn]: ['claimed', 'deleted'] } },
       include: PostImage,
     });
     res.send(posts);
@@ -24,11 +25,13 @@ router.get("/", async (req, res, next) => {
 });
 
 // GET all posts filtered by category and map bounds
-router.get("/filtered", async (req, res, next) => {
+router.get('/filtered', async (req, res, next) => {
   try {
-    const { filter, n, e, s, w } = req.query;
-    //only finds possts tha haven't been claimed or deleted
-    const whereStatement = { status: { [Op.notIn]: ["claimed", "deleted"] } };
+
+    const { filter, n, e, s, w, search } = req.query;
+
+    // only finds possts tha haven't been claimed or deleted
+    const whereStatement = { status: { [Op.notIn]: ['claimed', 'deleted'] } };
 
     if (filter) {
       whereStatement.category = filter;
@@ -43,6 +46,21 @@ router.get("/filtered", async (req, res, next) => {
       ];
     }
 
+    if (search) {
+      whereStatement[Op.or] = [
+        {
+          title: {
+            [Op.iLike]: `%${search}%`,
+          },
+        },
+        {
+          description: {
+            [Op.iLike]: `%${search}%`,
+          },
+        },
+      ];
+    }
+
     const posts = await Post.findAll({
       where: whereStatement,
       include: PostImage,
@@ -54,7 +72,7 @@ router.get("/filtered", async (req, res, next) => {
 });
 
 // GET a single post by ID
-router.get("/:postId", async (req, res, next) => {
+router.get('/:postId', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, { include: PostImage });
     res.send(post);
@@ -64,9 +82,9 @@ router.get("/:postId", async (req, res, next) => {
 });
 
 // POST a new post
-router.post("/", async (req, res, next) => {
+
+router.post('/', requireToken, async (req, res, next) => {
   try {
-    console.log("REQ.BODY", req.body);
     const {
       imageUrls,
       title,
@@ -103,7 +121,7 @@ router.post("/", async (req, res, next) => {
     // iterate over imageUrls provided
     // create a PostImage for each url, and associate that postImage to the Post
     for (let i = 0; i < imageUrls.length; i++) {
-      let currUrl = imageUrls[i];
+      const currUrl = imageUrls[i];
       // let currRef = imageRefs[i];
       const postImage = await PostImage.create({ imageUrl: currUrl });
       await post.addPostImage(postImage);
@@ -122,18 +140,16 @@ router.post("/", async (req, res, next) => {
     // create and schedule the Cron Job to run the lottery
     const job = new CronJob(date, () => {
       post.lottery();
-      console.log("time to check");
+      console.log('time to check');
     });
 
     // start the job
     job.start();
 
-    // await post.setRequester([2]);
-
     // send the post
     res.send(postWithImage);
   } catch (err) {
-    if (err.name === "GeocodeError") {
+    if (err.name === 'GeocodeError') {
       res.status(400).send(err.message);
     } else {
       next(err);
@@ -142,10 +158,14 @@ router.post("/", async (req, res, next) => {
 });
 
 // PUT edit single post
-router.put("/:id", async (req, res, next) => {
+
+router.put('/:id', requireToken, async (req, res, next) => {
   try {
     const { imageUrls } = req.body;
     const post = await Post.findByPk(req.params.id, { include: PostImage });
+    if (req.user.id !== post.posterId) {
+      throw new Error('You do not have permission to do that');
+    }
     for (let i = 0; i < imageUrls.length; i++) {
       let currUrl = imageUrls[i];
       //let currRef = imageRefs[i];
@@ -160,11 +180,14 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // DELETE single post - note: this doesn't actually delete a post. it remains in the db.
-router.delete("/:id", async (req, res, next) => {
+
+router.delete('/:id', requireToken, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id);
-    //await post.destroy();
-    post.status = "deleted";
+    if (req.user.id !== post.posterId && !req.user.isAdmin) {
+      throw new Error('You do not have permission to do that');
+    }
+    post.status = 'deleted';
     post.save();
     res.send(post);
   } catch (error) {
@@ -185,7 +208,8 @@ router.delete('/:postId/images/:imageId', async (req, res, next) => {
 });
 
 // PUT to either pass on or claim a post
-router.put("/:id/chats/:chatId", async (req, res, next) => {
+
+router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
   try {
     // find the relevant chat and post
     const chat = await Chat.findByPk(req.params.chatId, {
@@ -201,9 +225,16 @@ router.put("/:id/chats/:chatId", async (req, res, next) => {
 
     // call the correct method based on which action was sent
     const { action } = req.query;
-    if (action === "pass") {
+    if (action === 'pass') {
+      if (req.user.id !== chat.recipientId || req.user.id !== chat.posterId) {
+        throw new Error('You do not have permission to do that.');
+      }
       message = await post.pass(req.params.chatId);
-    } else if (action === "claim") {
+    } else if (action === 'claim') {
+      if (req.user.id !== chat.posterId) {
+        throw new Error('You do not have permission to do that.');
+      }
+
       message = await post.claim(req.params.chatId);
     }
 
@@ -214,7 +245,8 @@ router.put("/:id/chats/:chatId", async (req, res, next) => {
   }
 });
 
-router.post("/:postId/users/:userId", async (req, res, next) => {
+
+router.post('/:postId/users/:userId', requireToken, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId, {
       include: {
@@ -223,7 +255,7 @@ router.post("/:postId/users/:userId", async (req, res, next) => {
     });
 
     await post.addRequester(req.params.userId);
-    if (post.status === "open") {
+    if (post.status === 'open') {
       await post.lottery(); // post.reload()???
     }
     res.send(post).status(201);
