@@ -239,6 +239,8 @@ class PostForm extends React.Component {
               <option value="kitchen">Kitchen</option>
               <option value="personal care">Personal Care</option>
               <option value="pet supplies">Pet Supplies</option>
+              <option value="spots">Sports</option>
+              <option value="tech">Tech</option>
               <option value="other">Other</option>
             </select>
             <label>
