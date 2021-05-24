@@ -28,6 +28,11 @@ class SelectedPostView extends React.Component {
         <div id="post-image">
           <a href={`#popup${post.id}`}>
             <img src={images[0].imageUrl} />
+            {images.length === 1 ? (
+              <p>Click To View Image</p>
+            ) : (
+              <p>Click to View More Images</p>
+            )}
           </a>
 
           <div id={`popup${post.id}`} className="overlay">

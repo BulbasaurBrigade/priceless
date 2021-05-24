@@ -281,6 +281,10 @@ nav ul ul li:hover {
   width: 100%;
 }
 
+#post-image p {
+  text-align: center;
+}
+
 #no-posts {
   text-align: center;
   margin: auto;
@@ -331,17 +335,11 @@ nav ul ul li:hover {
   font-size: 40px;
 }
 
-
 /* FORM */
 .image-slide {
   display: flex;
   align-items: center;
 }
-
-.image-slide span {
-  align-self: center;
-}
-
 
 /* create post && sign Up*/
 .form-container {

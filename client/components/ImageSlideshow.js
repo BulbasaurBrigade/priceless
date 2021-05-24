@@ -9,6 +9,7 @@ const ImageSlideshow = (props) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    adaptiveHeight: true,
   };
   return (
     <div className="image-slideshow">
@@ -16,9 +17,9 @@ const ImageSlideshow = (props) => {
         {slides.map((slide, i) => (
           <div className="image-slide" key={slide.id}>
             <img src={slide.imageUrl} />
-            <span>
+            <p>
               {i + 1}/{slides.length}
-            </span>
+            </p>
           </div>
         ))}
       </Slider>
