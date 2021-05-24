@@ -1,14 +1,15 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { addRequester } from "../store/singlePost";
-import ImageSlideshow from "./ImageSlideshow";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addRequester } from '../store/singlePost';
+import ImageSlideshow from './ImageSlideshow';
 
 class SelectedPostView extends React.Component {
   constructor() {
     super();
     this.handleRequest = this.handleRequest.bind(this);
   }
+
   handleRequest(event) {
     event.stopPropagation();
     const {
@@ -17,6 +18,7 @@ class SelectedPostView extends React.Component {
     } = this.props;
     this.props.addNewRequester(id, userId);
   }
+
   render() {
     const { post, userId } = this.props;
     const images = post.postImages || [];
@@ -43,7 +45,7 @@ class SelectedPostView extends React.Component {
           <h1>{post.title}</h1>
           {post.location && (
             <p>
-              <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
+              <i className="fa fa-map-marker" aria-hidden="true"></i>{' '}
               {post.location}
             </p>
           )}
