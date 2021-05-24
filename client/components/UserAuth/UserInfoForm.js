@@ -11,8 +11,8 @@ class UserInfoForm extends Component {
     this.state = {
       displayName: "",
       location: "",
-      imageToUpload: {},
-      imageURL: "",
+      imageToUpload: null,
+      imageURL: null,
       lat: null,
       lng: null,
       previewMap: false,
@@ -68,12 +68,16 @@ class UserInfoForm extends Component {
   handleSubmit = async (evt) => {
     evt.preventDefault();
     const { submit, userId } = this.props;
-    const file = this.state.imageToUpload;
-    const newFileName = file.name + `user${this.state.displayName}${userId}`;
-    const imageRef = ref(userImagesRef, newFileName);
-    await uploadBytes(imageRef, file);
-    const url = await getDownloadURL(ref(storage, `userImages/${newFileName}`));
-    this.setState({ imageURL: url });
+    if (this.state.imageToUpload) {
+      const file = this.state.imageToUpload;
+      const newFileName = file.name + `user${this.state.displayName}${userId}`;
+      const imageRef = ref(userImagesRef, newFileName);
+      await uploadBytes(imageRef, file);
+      const url = await getDownloadURL(
+        ref(storage, `userImages/${newFileName}`)
+      );
+      this.setState({ imageURL: url });
+    }
     submit({ ...this.state, id: userId });
   };
 
@@ -151,7 +155,7 @@ class UserInfoForm extends Component {
             onChange={this.handleChange}
             id="image_upload"
           ></input>
-          {imageToUpload.name && (
+          {imageToUpload && (
             <div>
               <p>Preview Of New Photo</p>
               <div className="photo-preview-div">
