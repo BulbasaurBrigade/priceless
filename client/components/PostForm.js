@@ -307,6 +307,7 @@ class PostForm extends React.Component {
               name="imagesToUpload"
               onChange={this.handleChange}
               id="image_upload"
+              required={!this.state.postImages.length}
             ></input>
             {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
             {this.state.postImages.length ? (
