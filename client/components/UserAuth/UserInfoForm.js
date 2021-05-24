@@ -91,7 +91,7 @@ class UserInfoForm extends Component {
   handleRemovePhoto(event) {
     event.preventDefault();
     if (confirm("Are you sure you want to remove this photo?")) {
-      this.setState({ imageURL: "" });
+      this.setState({ imageURL: null });
     }
   }
 
