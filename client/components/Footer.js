@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
     <div id="footer">
-      <h3>Meet Our Team</h3>
+      <h1>Meet Our Team</h1>
       <div className="developers">
         <div className="developer">
           <img src="https://robohash.org/peasant" />
@@ -14,7 +14,7 @@ const Footer = () => {
           <p>Meredith Cornelius</p>
         </div>
         <div className="developer">
-          <img src="/Leora2.png" />
+          <img src="/Leora.jpg" />
           <p>Leora Douek</p>
         </div>
         <div className="developer">

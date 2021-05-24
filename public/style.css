@@ -1,5 +1,5 @@
 body {
-  font-family: 'Tajawal', sans-serif;
+  font-family: "Tajawal", sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -98,19 +98,54 @@ nav ul ul li:hover {
 /*// HOMEPAGE //*/
 #home-container {
   background-color: white;
+  font-family: Poppins;
+  font-size: 18px;
+}
+
+#home-container h1 {
+  text-align: center;
+  font-size: 30px;
+  font-family: "DM Serif Display", serif;
+  color: #103a33;
+}
+
+#home-container h3 {
+  color: #103a33;
+  font-family: "DM Serif Display", serif;
+}
+
+#home-container p {
+  margin-bottom: 15px;
+  font-family: "Poppins", sans-serif;
 }
 
 #app-description {
+  background-color: rgb(218, 169, 148);
+  padding: 50px;
+}
+
+#how-to-container {
   background-color: rgb(226, 179, 161);
-  padding: 80px 30px 80px 30px;
-  font-size: 22px;
+  padding: 50px;
   display: flex;
+  flex-direction: column;
+}
+
+.how-to-right {
+  text-align: right;
+  align-self: flex-end;
+  width: 53vw;
+  margin-bottom: 10px;
+}
+
+.how-to-left {
+  width: 53vw;
+  text-align: justify;
 }
 
 /* landing page*/
 #landing-page {
-  background-image: url('nycBrownstones.jpg');
-
+  background-image: url("nycBrownstones.jpg");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -124,7 +159,7 @@ nav ul ul li:hover {
 #landing-page h1 {
   color: white;
   font-size: 100px;
-  font-family: 'Merienda One', cursive;
+  font-family: "Shadows Into Light", cursive;
 }
 
 #landing-page i {
@@ -140,8 +175,7 @@ nav ul ul li:hover {
   align-items: center;
   padding: 10px;
   font-size: 20px;
-  color: white;
-  background-color: rgb(201, 150, 129);
+  background-color: rgb(241, 208, 193);
 }
 
 .developers {
@@ -366,7 +400,6 @@ nav ul ul li:hover {
   align-items: center;
 }
 
-
 .image-slide span {
   align-self: center;
 }
@@ -413,7 +446,7 @@ nav ul ul li:hover {
   background-color: white;
 }
 
-input[type='file'] {
+input[type="file"] {
   border: none;
 }
 
@@ -730,7 +763,7 @@ summary {
 /* loading page */
 
 #loading-page {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 40px;
   text-align: center;
   color: green;
