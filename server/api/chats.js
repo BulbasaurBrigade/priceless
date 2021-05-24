@@ -1,13 +1,17 @@
-const router = require("express").Router({ mergeParams: true });
-const { Op } = require("sequelize");
+const router = require('express').Router({ mergeParams: true });
+const { Op } = require('sequelize');
+const { requireToken } = require('../middleware/gatekeeping');
 const {
   models: { Chat, Post, User, Message, PostImage },
 } = require("../db");
 module.exports = router;
 
 // GET /api/users/:userId/chats
-router.get("/", async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to view those.');
+    }
     const chats = await Chat.findAll({
       where: {
         [Op.or]: [
@@ -34,8 +38,12 @@ router.get("/", async (req, res, next) => {
 });
 
 // GET /api/users/:userId/chats/:chatId
-router.get("/:chatId", async (req, res, next) => {
+
+router.get('/:chatId', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to view those.');
+    }
     const chat = await Chat.findByPk(req.params.chatId, {
       include: [
         {
@@ -61,8 +69,11 @@ router.get("/:chatId", async (req, res, next) => {
 });
 
 // GET /api/users/:userId/chats/:chatId/messages
-router.get("/:chatId/messages", async (req, res, next) => {
+router.get('/:chatId/messages', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to view those.');
+    }
     const messages = await Message.findAll({
       include: {
         model: User,
@@ -81,8 +92,12 @@ router.get("/:chatId/messages", async (req, res, next) => {
 });
 
 // POST /api/users/:userId/chats/:chatId/messages
-router.post("/:chatId/messages", async (req, res, next) => {
+router.post('/:chatId/messages', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to do that.');
+    }
+
     const { userId, chatId } = req.params;
 
     const message = await Message.create({ content: req.body.content });

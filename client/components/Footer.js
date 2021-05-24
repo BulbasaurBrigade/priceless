@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
           <p>Ina Agee</p>
         </div>
         <div className="developer">
-          <img src="https://robohash.org/rapbot" />
+          <img src="meredith.png" />
           <p>Meredith Cornelius</p>
         </div>
         <div className="developer">
@@ -18,7 +18,7 @@ const Footer = () => {
           <p>Leora Douek</p>
         </div>
         <div className="developer">
-          <img src="https://robohash.org/matrix" />
+          <img src="/ZerodSarah_blurred.png" />
           <p>Sarah Zerod</p>
         </div>
       </div>

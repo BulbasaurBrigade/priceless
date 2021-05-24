@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-case-declarations */
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 
 // action type
 const SET_SINGLE_POST = 'SET_SINGLE_POST';
@@ -46,7 +47,16 @@ export const setSinglePost = (postId) => {
 export const addRequester = (postId, userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/posts/${postId}/users/${userId}`);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.post(
+        `/api/posts/${postId}/users/${userId}`,
+        {},
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
 
       dispatch(_addRequester(data));
     } catch (err) {

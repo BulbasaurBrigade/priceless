@@ -35,6 +35,7 @@ class PostForm extends React.Component {
     this.state = initialState;
     this.handleChange = this.handleChange.bind(this);
     this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
+    this.preventSubmitOnEnter = this.preventSubmitOnEnter.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -55,11 +56,16 @@ class PostForm extends React.Component {
     if (event.target.name === "latitude" || event.target.name === "longitude") {
       this.setState({ [event.target.name]: +event.target.value });
     } else if (event.target.name === "imagesToUpload") {
-      const newImagesArray = [
-        ...this.state.imagesToUpload,
-        event.target.files[0],
-      ];
-      this.setState({ [event.target.name]: newImagesArray });
+      //if a user clicks cancel, event.target.files[0] is null and we don't want that
+      //value added to state
+      if (event.target.files[0]) {
+        const newImagesArray = [
+          ...this.state.imagesToUpload,
+          event.target.files[0],
+        ];
+        this.setState({ [event.target.name]: newImagesArray });
+      }
+
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
@@ -143,6 +149,12 @@ class PostForm extends React.Component {
     this.setState({ previewMap: true });
   };
 
+  preventSubmitOnEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }
+
   componentWillUnmount() {
     this.props.clearErrors();
   }
@@ -179,6 +191,7 @@ class PostForm extends React.Component {
               name="title"
               value={title}
               onChange={this.handleChange}
+              onKeyPress={this.preventSubmitOnEnter}
               required
             />
             <label>
@@ -220,6 +233,7 @@ class PostForm extends React.Component {
               name="pickupDetails"
               value={pickupDetails}
               onChange={this.handleChange}
+              onKeyPress={this.preventSubmitOnEnter}
             />
             <label>
               Category <div> </div>
@@ -240,6 +254,9 @@ class PostForm extends React.Component {
               <option value="kitchen">Kitchen</option>
               <option value="personal care">Personal Care</option>
               <option value="pet supplies">Pet Supplies</option>
+              <option value="spots">Sports</option>
+              <option value="tech">Tech</option>
+           
             </select>
             <label>
               Location <span style={{ color: "red" }}>*</span>
@@ -268,6 +285,7 @@ class PostForm extends React.Component {
               type="text"
               value={location}
               onChange={this.handleChange}
+              onKeyPress={this.preventSubmitOnEnter}
               required
             />
             <button
@@ -293,6 +311,7 @@ class PostForm extends React.Component {
               name="imagesToUpload"
               onChange={this.handleChange}
               id="image_upload"
+              required={!this.state.postImages.length}
             ></input>
             {/* when editing a post, render EditImageForm - which allows user to delete photos they already uploaded */}
             {this.state.postImages.length ? (
@@ -305,22 +324,26 @@ class PostForm extends React.Component {
             ) : (
               <div />
             )}
-            {this.state.imagesToUpload.map((file) => (
-              <div className="photo-preview-div" key={file.name}>
-                <img
-                  src={URL.createObjectURL(file)}
-                  height={200}
-                  className="photo-preview"
-                />
-                <button
-                  className="delete-photo"
-                  onClick={this.handleDeletePhoto}
-                  value={file.name}
-                >
-                  x
-                </button>
-              </div>
-            ))}
+            {this.state.imagesToUpload.map((file) => {
+              if (file) {
+                return (
+                  <div className="photo-preview-div" key={file.name}>
+                    <img
+                      src={URL.createObjectURL(file)}
+                      height={200}
+                      className="photo-preview"
+                    />
+                    <button
+                      className="delete-photo"
+                      onClick={this.handleDeletePhoto}
+                      value={file.name}
+                    >
+                      x
+                    </button>
+                  </div>
+                );
+              }
+            })}
           </div>
           <button type="submit" className="submit">
             Submit

@@ -55,13 +55,11 @@ module.exports = (io) => {
       const recipient = await this.getRecipient();
       // console.log({ poster });
       // console.log({ recipient });
-      let content = `Congrats! You have connected on this post. \n\nThe poster is: ${poster.displayName}.\nThe recipient is: ${recipient.displayName}.`;
-      if (this.pickupDetails)
-        content += `\n\nTo get you started, here are the pick up details that ${poster.displayName} left for the listing: \n\n${this.pickupDetails}`;
-      const [chat, message] = await Promise.all([
+      let opener = `Congrats! You have connected on this post.`;
+      const [chat, openingMessage] = await Promise.all([
         Chat.create(),
         Message.create({
-          content,
+          content: opener,
         }),
       ]);
 
@@ -69,8 +67,14 @@ module.exports = (io) => {
         chat.setPost(this),
         chat.setRecipient(this.recipientId),
         chat.setPoster(this.posterId),
-        message.setChat(chat),
+        openingMessage.setChat(chat),
       ]);
+
+      if (this.pickupDetails) {
+        const content = `To get you started, here are the pick up details that ${poster.displayName} left for the listing:\n${this.pickupDetails}`;
+        const pickUpMsg = await Message.create({ content });
+        await pickUpMsg.setChat(chat);
+      }
     } catch (err) {
       console.log(err);
     }

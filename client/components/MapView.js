@@ -1,14 +1,14 @@
 /* eslint-disable react/prefer-stateless-function */
-import React from 'react';
+import React from "react";
 import {
   MapContainer,
   TileLayer,
   FeatureGroup,
   useMapEvents,
-} from 'react-leaflet';
-import { connect } from 'react-redux';
-import MarkerComponent from './MarkerComponent';
-import { setLocalPosts } from '../store/posts';
+} from "react-leaflet";
+import { connect } from "react-redux";
+import MarkerComponent from "./MarkerComponent";
+import { setLocalPosts } from "../store/posts";
 
 function MapView(props) {
   const posts = props.posts || [];
