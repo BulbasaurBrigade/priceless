@@ -1,13 +1,13 @@
-import React from "react";
-import { setPosts, setFilteredPosts } from "../store/posts";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { setPosts, setFilteredPosts } from '../store/posts';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class MapNavBar extends React.Component {
   constructor() {
     super();
     this.state = {
-      category: "",
+      category: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -40,6 +40,8 @@ class MapNavBar extends React.Component {
             <option value="kitchen">Kitchen</option>
             <option value="personal care">Personal Care</option>
             <option value="pet supplies">Pet Supplies</option>
+            <option value="spots">Sports</option>
+            <option value="tech">Tech</option>
             <option value="other">Other</option>
           </select>
         </div>
