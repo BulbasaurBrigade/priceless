@@ -1,9 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { setSinglePost } from "../store/singlePost";
-import { Link } from "react-router-dom";
-import UnselectedPostView from "./UnselectedPostView";
-import SelectedPostView from "./SelectedPostView";
+import React from 'react';
+import { connect } from 'react-redux';
+import { setSinglePost, _setSinglePost } from '../store/singlePost';
+import UnselectedPostView from './UnselectedPostView';
+import SelectedPostView from './SelectedPostView';
 
 class SinglePost extends React.Component {
   constructor() {
@@ -12,7 +11,12 @@ class SinglePost extends React.Component {
   }
 
   handleClick(id) {
-    this.props.getSinglePost(id);
+    const { selectedPost, getSinglePost, resetSinglePost } = this.props;
+    if (id === selectedPost.id) {
+      resetSinglePost();
+    } else {
+      getSinglePost(id);
+    }
   }
 
   render() {
@@ -20,16 +24,17 @@ class SinglePost extends React.Component {
 
     return (
       <div
-        onClick={() => this.handleClick(post.id)}
-        className={post.id === selectedPost.id ? "selected" : ""}
+        onClick={(evt) => {
+          console.log(evt.target);
+          this.handleClick(post.id);
+        }}
+        className={post.id === selectedPost.id ? 'selected' : ''}
       >
-
         {post.id !== selectedPost.id ? (
           <UnselectedPostView post={post} />
         ) : (
           <SelectedPostView post={post} />
         )}
-
       </div>
     );
   }
@@ -44,6 +49,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getSinglePost: (id) => dispatch(setSinglePost(id)),
+    resetSinglePost: () => dispatch(_setSinglePost({})),
   };
 };
 

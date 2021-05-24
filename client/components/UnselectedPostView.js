@@ -12,16 +12,33 @@ const UnselectedPostView = (props) => {
       </div>
       <div id="post-details">
         <h1>{post.title}</h1>
-        {post.location && (
-          <p>
+        <div className="location-status">
+          <h3>
             <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
             {post.location}
-          </p>
-        )}
-        <p>
-          <b>Status: </b>
-          {post.status}
-        </p>
+          </h3>
+
+          <h4>
+            <div className="tooltip-wrap">
+              Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
+              {post.status === "open" ? (
+                <div className="tooltip-content">
+                  <p>
+                    This post is open, request it to be immediately connected!
+                  </p>
+                </div>
+              ) : (
+                <div className="tooltip-content">
+                  <p>
+                    This post is in {post.status} mode, request it for a chance
+                    to get connected with the poster.
+                  </p>
+                </div>
+              )}
+            </div>
+          </h4>
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,17 @@
 const router = require('express').Router({ mergeParams: true });
 const { Op } = require('sequelize');
+const { requireToken } = require('../middleware/gatekeeping');
 const {
   models: { Chat, Post, User, Message, PostImage },
-} = require('../db');
+} = require("../db");
 module.exports = router;
 
 // GET /api/users/:userId/chats
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to view those.');
+    }
     const chats = await Chat.findAll({
       where: {
         [Op.or]: [
@@ -21,7 +25,7 @@ router.get('/', async (req, res, next) => {
       },
       include: {
         model: Post,
-        attributes: ['title'],
+        attributes: ["title"],
         include: {
           model: PostImage,
         },
@@ -34,12 +38,26 @@ router.get('/', async (req, res, next) => {
 });
 
 // GET /api/users/:userId/chats/:chatId
-router.get('/:chatId', async (req, res, next) => {
+
+router.get('/:chatId', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to view those.');
+    }
     const chat = await Chat.findByPk(req.params.chatId, {
-      include: {
-        model: Post,
-      },
+      include: [
+        {
+          model: Post,
+        },
+        {
+          model: User,
+          as: "recipient",
+        },
+        {
+          model: User,
+          as: "poster",
+        },
+      ],
     });
 
     // const post = await Post.findByPk(chat.postId);
@@ -51,17 +69,20 @@ router.get('/:chatId', async (req, res, next) => {
 });
 
 // GET /api/users/:userId/chats/:chatId/messages
-router.get('/:chatId/messages', async (req, res, next) => {
+router.get('/:chatId/messages', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to view those.');
+    }
     const messages = await Message.findAll({
       include: {
         model: User,
-        attributes: ['displayName'],
+        attributes: ["displayName"],
       },
       where: {
         chatId: req.params.chatId,
       },
-      order: [['createdAt', 'DESC']],
+      order: [["createdAt", "DESC"]],
     });
 
     res.send(messages);
@@ -71,8 +92,12 @@ router.get('/:chatId/messages', async (req, res, next) => {
 });
 
 // POST /api/users/:userId/chats/:chatId/messages
-router.post('/:chatId/messages', async (req, res, next) => {
+router.post('/:chatId/messages', requireToken, async (req, res, next) => {
   try {
+    if (req.user.id !== +req.params.userId) {
+      throw new Error('You do not have permission to do that.');
+    }
+
     const { userId, chatId } = req.params;
 
     const message = await Message.create({ content: req.body.content });
@@ -84,7 +109,7 @@ router.post('/:chatId/messages', async (req, res, next) => {
       await Message.findByPk(message.id, {
         include: {
           model: User,
-          attributes: ['displayName'],
+          attributes: ["displayName"],
         },
       })
     );

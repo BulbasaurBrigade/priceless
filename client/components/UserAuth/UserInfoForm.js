@@ -1,18 +1,19 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import UserInfoMap from "./UserInfoMap";
-import { getGeocode } from "../../store/location";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import UserInfoMap from './UserInfoMap';
+import { getGeocode } from '../../store/location';
 import { userImagesRef, storage } from "../../firebase";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
+import LoadingPage from '../LoadingPage';
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: "",
-      location: "",
       imageToUpload: null,
       imageURL: null,
+      displayName: '',
+      location: '',
       lat: null,
       lng: null,
       previewMap: false,
@@ -47,7 +48,11 @@ class UserInfoForm extends Component {
   handlePreviewLocation = async (address) => {
     const { previewGeocode } = this.props;
     await previewGeocode(address);
-    this.setState({ lat: this.props.newLat, lng: this.props.newLng });
+    this.setState({
+      lat: this.props.newLat,
+      lng: this.props.newLng,
+      previewMap: true,
+    });
   };
 
   //As a user types, state changes
@@ -97,22 +102,35 @@ class UserInfoForm extends Component {
   render() {
     const { displayName, location, imageURL, previewMap, imageToUpload } =
       this.state;
+    const { previewError, userInfoError, loading } = this.props;
 
     let userLocation;
     if (this.state.lat) {
       userLocation = [this.state.lat, this.state.lng];
     }
 
+    if (loading) {
+      return <LoadingPage />;
+    }
+
     return (
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
+          {userInfoError ? <span className="error">{userInfoError}</span> : ''}
           <label htmlFor="displayName">
+
             Display Name <span style={{ color: "red" }}>*</span>
+            <div className="tooltip-wrap">
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
+              <div className="tooltip-content">
+                <p className="form-instructions">
+                  Your display name is what will be visible to your Priceless
+                  Neighbors when you list an item or use the chat.
+                </p>
+              </div>
+            </div>
           </label>
-          <p className="form-instructions">
-            Your display name is what will be visible to your Priceless
-            Neighbors when you list an item or use the chat.
-          </p>
+
           <input
             type="text"
             id="displayName"
@@ -122,15 +140,23 @@ class UserInfoForm extends Component {
             required
           />
           <label htmlFor="location">
+
             Address or Search Location <span style={{ color: "red" }}>*</span>
+            <div className="tooltip-wrap">
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
+              <div className="tooltip-content">
+                <p className="form-instructions">
+                  The location you enter here will be the center of your
+                  personal neighborhood map. This location will NOT be visible
+                  to anyone. You may choose to use a specific address, cross
+                  streets, a neighborhood, or a zip code. And you can preview
+                  where the center of your map will be using the 'Preview
+                  Location' button below.
+                </p>
+              </div>
+            </div>
           </label>
-          <p className="form-instructions">
-            The location you enter here will be the center of your personal
-            neighborhood map. This location will NOT be visible to anyone. You
-            may choose to use a specific address, cross streets, a neighborhood,
-            or a zip code. And you can preview where the center of your map will
-            be using the 'Preview Location' button below.
-          </p>
+
           <input
             type="text"
             id="location"
@@ -146,7 +172,9 @@ class UserInfoForm extends Component {
           >
             Preview Location
           </button>
-          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ""}
+          {previewError ? <span className="error">{previewError}</span> : ''}
+          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ''}
+
           <label htmlFor="imageURL">Profile Photo</label>
           <input
             type="file"
@@ -204,6 +232,9 @@ const mapState = (state) => {
     userLat: state.auth.latitude,
     userLng: state.auth.longitude,
     imageURL: state.auth.imageURL,
+    previewError: state.error.previewLocation,
+    userInfoError: state.error.userProfile,
+    loading: state.loading.submit,
   };
 };
 

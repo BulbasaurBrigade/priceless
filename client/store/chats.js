@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAuth } from 'firebase/auth';
 import { CLOSE_CHAT, UPDATE_CHAT } from './singleChat';
 
 // Action Type
@@ -13,7 +14,12 @@ export const _getChats = (chats) => ({
 // Thunk Creators
 export const getChats = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/api/users/${id}/chats`);
+    const token = await getAuth().currentUser.getIdToken();
+    const { data } = await axios.get(`/api/users/${id}/chats`, {
+      headers: {
+        authorization: token,
+      },
+    });
     dispatch(_getChats(data));
   } catch (err) {
     console.log('error in chats thunk');

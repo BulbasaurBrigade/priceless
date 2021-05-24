@@ -2,7 +2,6 @@ import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import ChangeView from "../ChangeView";
 
-
 //The default location is the center of NYC.
 const defaultLocation = [40.742, -73.9073];
 
@@ -16,20 +15,10 @@ export default class UserInfoMap extends React.Component {
   render() {
     const userLocation = this.props.userLocation;
 
-
     return (
       <div>
+        {/* The map centers on the user's location - whether that be what they currently have in their profile or a new location they are previewing. */}
         <MapContainer
-
-          className="signup-map"
-          scrollWheelZoom={true}
-          touchZoom={true}
-          zoom={11}
-          setView={true}
-          center={defaultLocation}
-        >
-          {/* The map centers on the user's location - whether that be what they currently have in their profile or a new location they are previewing. */}
-
           className="preview-map"
           scrollWheelZoom={true}
           touchZoom={true}
@@ -37,7 +26,6 @@ export default class UserInfoMap extends React.Component {
           setView={true}
           center={defaultLocation}
         >
-
           {userLocation ? (
             <div>
               <ChangeView center={userLocation} zoom={13} />
@@ -60,7 +48,6 @@ export default class UserInfoMap extends React.Component {
                 : defaultLocation
             }
           />
-
         </MapContainer>
       </div>
     );

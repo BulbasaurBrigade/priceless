@@ -16,7 +16,7 @@ module.exports = async (address) => {
   } catch (err) {
     if (err.name === 'TypeError') {
       const customErr = new Error(
-        "There was a problem verifying the post location. Please try a different location and preview the marker to make sure it's where you expect it to be."
+        "There was a problem verifying the location. Please try a different location and preview the marker to make sure it's where you expect it to be."
       );
       err.name = 'GeocodeError';
       throw customErr;
