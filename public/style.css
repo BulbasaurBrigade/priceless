@@ -421,6 +421,10 @@ textarea {
   justify-content: center;
 }
 
+.photo-preview {
+  border-radius: 50%;
+}
+
 /* Chat Styles */
 #chat {
   display: flex;

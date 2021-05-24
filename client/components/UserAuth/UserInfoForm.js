@@ -59,13 +59,13 @@ class UserInfoForm extends Component {
   //A user's information is updated in the database
   handleSubmit = async (evt) => {
     evt.preventDefault();
+    const { submit, userId } = this.props;
     const file = this.state.imageToUpload;
     const newFileName = file.name + `user${this.state.displayName}${userId}`;
     const imageRef = ref(userImagesRef, newFileName);
     await uploadBytes(imageRef, file);
     const url = await getDownloadURL(ref(storage, `userImages/${newFileName}`));
     this.setState({ imageURL: url });
-    const { submit, userId } = this.props;
     submit({ ...this.state, id: userId });
   };
 
