@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import UserInfoMap from "./UserInfoMap";
-import { getGeocode } from "../../store/location";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import UserInfoMap from './UserInfoMap';
+import { getGeocode } from '../../store/location';
+import LoadingPage from '../LoadingPage';
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: "",
-      location: "",
-      imageURL: "",
+      displayName: '',
+      location: '',
+      imageURL: '',
       lat: null,
       lng: null,
       previewMap: false,
@@ -39,7 +40,6 @@ class UserInfoForm extends Component {
     const { previewGeocode } = this.props;
     await previewGeocode(address);
     this.setState({ lat: this.props.newLat, lng: this.props.newLng });
-
   };
 
   //As a user types, state changes
@@ -58,17 +58,23 @@ class UserInfoForm extends Component {
 
   render() {
     const { displayName, location, imageURL, previewMap } = this.state;
+    const { previewError, userInfoError, loading } = this.props;
 
     let userLocation;
     if (this.state.lat) {
       userLocation = [this.state.lat, this.state.lng];
     }
 
+    if (loading) {
+      return <LoadingPage />;
+    }
+
     return (
       <div className="form-container">
         <form onSubmit={this.handleSubmit}>
+          {userInfoError ? <span className="error">{userInfoError}</span> : ''}
           <label htmlFor="displayName">
-            Display Name <span style={{ color: "red" }}>*</span>
+            Display Name <span style={{ color: 'red' }}>*</span>
           </label>
           <p className="form-instructions">
             Your display name is what will be visible to your Priceless
@@ -83,7 +89,7 @@ class UserInfoForm extends Component {
             required
           />
           <label htmlFor="location">
-            Address or Search Location <span style={{ color: "red" }}>*</span>
+            Address or Search Location <span style={{ color: 'red' }}>*</span>
           </label>
           <p className="form-instructions">
             The location you enter here will be the center of your personal
@@ -107,7 +113,8 @@ class UserInfoForm extends Component {
           >
             Preview Location
           </button>
-          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ""}
+          {previewError ? <span className="error">{previewError}</span> : ''}
+          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ''}
 
           <label htmlFor="imageURL">Profile Photo</label>
           <input
@@ -135,6 +142,9 @@ const mapState = (state) => {
     location: state.auth.location,
     userLat: state.auth.latitude,
     userLng: state.auth.longitude,
+    previewError: state.error.previewLocation,
+    userInfoError: state.error.userProfile,
+    loading: state.loading.submit,
   };
 };
 

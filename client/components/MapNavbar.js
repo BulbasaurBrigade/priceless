@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { setPosts, setFilteredPosts, setSearchedPosts } from '../store/posts';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { _setSearch } from '../store/postFilters';
+
 
 class MapNavBar extends React.Component {
   constructor() {
@@ -10,6 +12,8 @@ class MapNavBar extends React.Component {
     this.state = {
       category: '',
       search: '',
+
+
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -56,6 +60,8 @@ class MapNavBar extends React.Component {
             <option value="kitchen">Kitchen</option>
             <option value="personal care">Personal Care</option>
             <option value="pet supplies">Pet Supplies</option>
+            <option value="spots">Sports</option>
+            <option value="tech">Tech</option>
             <option value="other">Other</option>
           </select>
           <form

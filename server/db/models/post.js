@@ -4,8 +4,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../db');
 
-
-const Post = db.define("post", {
+const Post = db.define('post', {
   title: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -29,31 +28,32 @@ const Post = db.define("post", {
   },
   category: {
     type: Sequelize.ENUM([
-      "furniture",
-      "clothing",
-      "books",
-      "decor",
-      "kitchen",
-      "food",
-      "personal care",
-      "pet supplies",
-      "entertainment",
-      `children's items`,
-      "other",
+      'furniture',
+      'clothing',
+      'books',
+      'decor',
+      'kitchen',
+      'food',
+      'personal care',
+      'pet supplies',
+      'entertainment',
+      "children's items",
+      'sports',
+      'tech',
+      'other',
     ]),
-    defaultValue: "other",
+    defaultValue: 'other',
   },
   status: {
-    type: Sequelize.ENUM(["lottery", "open", "pending", "claimed", "deleted"]),
-    defaultValue: "lottery",
+    type: Sequelize.ENUM(['lottery', 'open', 'pending', 'claimed', 'deleted']),
+    defaultValue: 'lottery',
     allowNull: false,
   },
   type: {
-    type: Sequelize.ENUM(["listing", "request"]),
-    defaultValue: "listing",
+    type: Sequelize.ENUM(['listing', 'request']),
+    defaultValue: 'listing',
     allowNull: false,
   },
 });
-
 
 module.exports = Post;
