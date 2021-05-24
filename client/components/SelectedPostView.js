@@ -40,16 +40,16 @@ class SelectedPostView extends React.Component {
           </div>
         </div>
         <div id="post-details">
+          <h1>{post.title}</h1>
           {/*if user owns the post, display a note that says so*/}
           {post.posterId === userId && (
             <div>
-              <h3>** This is your post **</h3>
-              <Link to={`/mypost/${post.id}`}>
-                <button className="submit">edit details</button>
-              </Link>
+              <p>
+                This is your post, edit details
+                <Link to={`/mypost/${post.id}`}> here </Link>
+              </p>
             </div>
           )}
-          <h1>{post.title}</h1>
           <div className="location-status">
             <h3>
               <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
@@ -58,10 +58,23 @@ class SelectedPostView extends React.Component {
 
             <h4>
               <div className="tooltip-wrap">
-                Status <i class="fa fa-info-circle" aria-hidden="true"></i>
-                <div className="tooltip-content">explanation</div>
+                Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                {post.status === "open" ? (
+                  <div className="tooltip-content">
+                    <p>
+                      This post is open, request it to be immediately connected!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="tooltip-content">
+                    <p>
+                      This post is in {post.status} mode, request it for a
+                      chance to get connected with the poster.
+                    </p>
+                  </div>
+                )}
               </div>
-              <span style={{ color: "red" }}>{post.status}</span>
             </h4>
           </div>
 
@@ -72,6 +85,7 @@ class SelectedPostView extends React.Component {
               {post.description}
             </p>
           )}
+          <br />
           {post.pickupDetails && (
             <p>
               <b>Pick Up Details: </b>
@@ -88,9 +102,7 @@ class SelectedPostView extends React.Component {
 
           {/*if user has entered lottery, display a note that says so*/}
           {ticketsArray.includes(post.id) && (
-            <h3>
-              <b>You've requested this post!</b>
-            </h3>
+            <h5>You've requested this post!</h5>
           )}
         </div>
       </div>

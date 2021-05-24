@@ -21,7 +21,7 @@ const UnselectedPostView = (props) => {
           <h4>
             <div className="tooltip-wrap">
               Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
               {post.status === "open" ? (
                 <div className="tooltip-content">
                   <p>
