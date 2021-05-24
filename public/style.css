@@ -716,6 +716,10 @@ summary {
   margin: auto;
 }
 
+.preview-button {
+  display: block;
+}
+
 .delete:hover,
 .submit:hover,
 .preview-button:hover,
