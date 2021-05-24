@@ -1,6 +1,6 @@
-import React from 'react';
-import { closeChat } from '../../store/singleChat';
-import { connect } from 'react-redux';
+import React from "react";
+import { closeChat } from "../../store/singleChat";
+import { connect } from "react-redux";
 
 class ChatHeader extends React.Component {
   handleClick = (e) => {
@@ -10,14 +10,25 @@ class ChatHeader extends React.Component {
   };
 
   render() {
-    const { postTitle, postId, chatId } = this.props;
+    const { postTitle, postId, chatId, singleChat } = this.props;
 
     return (
       <div id="chat-header">
-        <span>{postTitle}</span>
-        <div id="button-group">
-          {postId ? (
-            <>
+        {singleChat.poster ? (
+          <>
+            <h1>{postTitle}</h1>
+            <div id="chat-header-details">
+              <div>
+                <p>
+                  <span style={{ color: "green" }}>Poster: </span>
+                  {singleChat.poster.displayName}
+                </p>
+                <p>
+                  <span style={{ color: "green" }}>Recipient: </span>
+                  {singleChat.recipient.displayName}
+                </p>
+              </div>
+
               <button
                 className="button"
                 type="button"
@@ -36,16 +47,21 @@ class ChatHeader extends React.Component {
               >
                 pass
               </button>
-            </>
-          ) : (
-            ''
-          )}
-        </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    singleChat: state.singleChat,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     changeChat: (claimOrPass, chatId, postId) =>
@@ -53,4 +69,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ChatHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatHeader);

@@ -65,6 +65,7 @@ class PostForm extends React.Component {
         ];
         this.setState({ [event.target.name]: newImagesArray });
       }
+
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
@@ -242,6 +243,7 @@ class PostForm extends React.Component {
               value={category}
               onChange={this.handleChange}
             >
+              <option value="other">Other</option>
               <option value="books">Books</option>
               <option value="children's items">Children's Items</option>
               <option value="clothing">Clothing</option>
@@ -254,7 +256,7 @@ class PostForm extends React.Component {
               <option value="pet supplies">Pet Supplies</option>
               <option value="spots">Sports</option>
               <option value="tech">Tech</option>
-              <option value="other">Other</option>
+           
             </select>
             <label>
               Location <span style={{ color: "red" }}>*</span>

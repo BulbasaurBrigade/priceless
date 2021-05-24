@@ -2,13 +2,13 @@
 /* eslint-disable func-names */
 const {
   models: { Chat, Message, Post },
-} = require('./db');
+} = require("./db");
 
 module.exports = (io) => {
   // instance method to run the lottery and select a winner
   // or change the post status to open if there are no current requesters
   Post.prototype.lottery = async function () {
-    console.log('running lottery now!');
+    console.log("running lottery now!");
 
     try {
       // get all of a post's associated requesters
@@ -22,9 +22,9 @@ module.exports = (io) => {
 
       // if there are none, change post status to open
       if (!requestersWaiting.length) {
-        this.status = 'open';
+        this.status = "open";
         this.save();
-        io.sockets.emit('post status update', { post: this });
+        io.sockets.emit("post status update", { post: this });
 
         return;
       }
@@ -37,10 +37,10 @@ module.exports = (io) => {
       winner.lotteryTicket.isWaiting = false;
       await winner.lotteryTicket.save();
       await this.setRecipient(winner.id);
-      this.status = 'pending';
+      this.status = "pending";
       this.save();
 
-      io.sockets.emit('post status update', { post: this });
+      io.sockets.emit("post status update", { post: this });
       // create a chat for this new post, poster, recipient combo
       await this.chat();
     } catch (err) {
@@ -85,7 +85,7 @@ module.exports = (io) => {
     try {
       // send a message to the chat letting participants see it was passed on
       const message = await Message.create({
-        content: 'This exchange was passed on. This post is now closed.',
+        content: "This exchange was passed on. This post is now closed.",
       });
       await message.setChat(chatId);
       await this.setRecipient(null);
@@ -104,12 +104,12 @@ module.exports = (io) => {
     try {
       // send a message to the chat letting participants see it was marked claimed
       const message = await Message.create({
-        content: 'This item was successfully claimed. This post is now closed.',
+        content: "This item was successfully claimed. This post is now closed.",
       });
       await message.setChat(chatId);
 
       // Mark post as claimed
-      this.status = 'claimed';
+      this.status = "claimed";
       this.save();
 
       // return message to pass it through to the redux store

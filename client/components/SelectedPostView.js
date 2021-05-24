@@ -48,16 +48,44 @@ class SelectedPostView extends React.Component {
         </div>
         <div id="post-details">
           <h1>{post.title}</h1>
-          {post.location && (
-            <p>
-              <i className="fa fa-map-marker" aria-hidden="true"></i>{' '}
-              {post.location}
-            </p>
+
+          {/*if user owns the post, display a note that says so*/}
+          {post.posterId === userId && (
+            <div>
+              <p>
+                This is your post, edit details
+                <Link to={`/mypost/${post.id}`}> here </Link>
+              </p>
+            </div>
           )}
-          <p>
-            <b>Status: </b>
-            {post.status}
-          </p>
+          <div className="location-status">
+            <h3>
+              <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
+              {post.location}
+            </h3>
+
+            <h4>
+              <div className="tooltip-wrap">
+                Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
+                <i className="fa fa-info-circle" aria-hidden="true"></i>
+                {post.status === "open" ? (
+                  <div className="tooltip-content">
+                    <p>
+                      This post is open, request it to be immediately connected!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="tooltip-content">
+                    <p>
+                      This post is in {post.status} mode, request it for a
+                      chance to get connected with the poster.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </h4>
+          </div>
+
           {post.description && (
             <p>
               <b>Description:</b>
@@ -65,6 +93,7 @@ class SelectedPostView extends React.Component {
               {post.description}
             </p>
           )}
+          <br />
           {post.pickupDetails && (
             <p>
               <b>Pick Up Details: </b>
@@ -74,25 +103,14 @@ class SelectedPostView extends React.Component {
           )}
           {/* if user doesn't own the post, show the request button AND they haven't requested it*/}
           {post.posterId !== userId && !ticketsArray.includes(post.id) && (
-            <button className="button" onClick={this.handleRequest}>
+            <button className="submit" onClick={this.handleRequest}>
               Request
             </button>
           )}
-          {/*if user owns the post, display a note that says so*/}
-          {post.posterId === userId && (
-            <h3>
-              <b>This is your post!</b>
-              <br />
-              <button className="button">
-                <Link to={`/mypost/${post.id}`}>edit details</Link>
-              </button>
-            </h3>
-          )}
+
           {/*if user has entered lottery, display a note that says so*/}
           {ticketsArray.includes(post.id) && (
-            <h3>
-              <b>You've requested this post!</b>
-            </h3>
+            <h5>You've requested this post!</h5>
           )}
         </div>
       </div>

@@ -13,6 +13,9 @@ const AuthForm = (props) => {
     <div className="form-container">
       <h2>{displayName}</h2>
       <form onSubmit={handleSubmit} name={name}>
+        {error && error.response && (
+          <div className="error"> {error.response.data} </div>
+        )}
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -39,7 +42,6 @@ const AuthForm = (props) => {
             Don't have an account? <Link to="signup">Sign Up</Link>
           </div>
         )}
-        {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
   );
