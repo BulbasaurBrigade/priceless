@@ -162,17 +162,20 @@ class UserInfoForm extends Component {
                   src={URL.createObjectURL(imageToUpload)}
                   id="photo-preview"
                 />
+                <button
+                  className="delete-photo"
+                  onClick={this.handleDeletePhoto}
+                >
+                  x
+                </button>
               </div>
-              <button className="delete-photo" onClick={this.handleDeletePhoto}>
-                x
-              </button>
             </div>
           )}
           {imageURL && (
             <div>
               <p>Current Photo</p>
-              <div className="photo-preview-div">
-                <img src={imageURL} height={200} className="photo-preview" />
+              <div className="photo-preview-container">
+                <img src={imageURL} id="photo-preview" />
                 <button
                   className="delete-photo"
                   onClick={this.handleRemovePhoto}
