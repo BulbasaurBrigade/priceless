@@ -1,8 +1,9 @@
-import axios from "axios";
-import { ADD_REQUESTER } from "./singlePost";
+import axios from 'axios';
+import { getAuth } from 'firebase/auth';
+import { ADD_REQUESTER } from './singlePost';
 
 //action type
-const GET_USER_LOTTERYTICKETS = "SET_USER_LOTTERYTICKETS";
+const GET_USER_LOTTERYTICKETS = 'SET_USER_LOTTERYTICKETS';
 
 //action creator
 export const _getUserLotteryTickets = (tickets) => {
@@ -16,10 +17,15 @@ export const _getUserLotteryTickets = (tickets) => {
 export const getUserLotteryTickets = (userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${userId}/lotteryTickets`);
+      const token = await getAuth().currentUser.getIdToken();
+      const { data } = await axios.get(`/api/users/${userId}/lotteryTickets`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(_getUserLotteryTickets(data));
     } catch (error) {
-      console.log("error fetching userLotteryTickets via thunk", error);
+      console.log('error fetching userLotteryTickets via thunk', error);
     }
   };
 };

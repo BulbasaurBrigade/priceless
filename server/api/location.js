@@ -1,10 +1,11 @@
+const { requireToken } = require('../middleware/gatekeeping');
 const getGeocode = require('../middleware/getGeocode');
 
 const router = require('express').Router();
 
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try {
     const { address } = req.query;
 
