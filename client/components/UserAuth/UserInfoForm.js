@@ -55,7 +55,6 @@ class UserInfoForm extends Component {
     if (event.target.name === "imageToUpload" && event.target.files[0]) {
       this.setState({
         [event.target.name]: event.target.files[0],
-        imageURL: "",
       });
     } else {
       this.setState({
@@ -84,7 +83,7 @@ class UserInfoForm extends Component {
   //deletes photo from imageToUpload in local state
   handleDeletePhoto(event) {
     event.preventDefault();
-    this.setState({ imageToUpload: {} });
+    this.setState({ imageToUpload: null });
   }
 
   //removes photo from imageURL in local state
@@ -158,19 +157,15 @@ class UserInfoForm extends Component {
           {imageToUpload && (
             <div>
               <p>Preview Of New Photo</p>
-              <div className="photo-preview-div">
+              <div className="photo-preview-container">
                 <img
                   src={URL.createObjectURL(imageToUpload)}
-                  height={200}
-                  className="photo-preview"
+                  id="photo-preview"
                 />
-                <button
-                  className="delete-photo"
-                  onClick={this.handleDeletePhoto}
-                >
-                  x
-                </button>
               </div>
+              <button className="delete-photo" onClick={this.handleDeletePhoto}>
+                x
+              </button>
             </div>
           )}
           {imageURL && (

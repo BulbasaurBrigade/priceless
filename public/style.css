@@ -415,18 +415,33 @@ textarea {
   text-decoration: underline;
 }
 
-.photo-preview-div {
+.photo-preview-container {
   display: flex;
   align-items: flex-start;
   justify-content: center;
 }
 
-.photo-preview {
+.image-cropper {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+#photo-preview {
+  display: inline;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+
+/* #photo-preview {
   width: 200px;
   height: 200px;
   border-radius: 50%;
   background-color: white;
-}
+} */
 
 /* Chat Styles */
 #chat {
