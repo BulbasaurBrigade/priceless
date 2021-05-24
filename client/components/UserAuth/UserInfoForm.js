@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import UserInfoMap from "./UserInfoMap";
 import { getGeocode } from "../../store/location";
+import { userImagesRef, storage } from "../../firebase";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 
 class UserInfoForm extends Component {
   constructor(props) {
@@ -9,12 +11,14 @@ class UserInfoForm extends Component {
     this.state = {
       displayName: "",
       location: "",
+      imageToUpload: {},
       imageURL: "",
       lat: null,
       lng: null,
       previewMap: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
   }
 
   //When a user is editing their profile, the form will get populated with their current information
@@ -39,25 +43,40 @@ class UserInfoForm extends Component {
     const { previewGeocode } = this.props;
     await previewGeocode(address);
     this.setState({ lat: this.props.newLat, lng: this.props.newLng });
-
   };
 
   //As a user types, state changes
-  handleChange = (evt) => {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
+  handleChange = (event) => {
+    if (event.target.name === "imageToUpload" && event.target.files[0]) {
+      this.setState({ [event.target.name]: event.target.files[0] });
+    } else {
+      this.setState({
+        [event.target.name]: event.target.value,
+      });
+    }
   };
 
   //A user's information is updated in the database
-  handleSubmit = (evt) => {
+  handleSubmit = async (evt) => {
     evt.preventDefault();
+    const file = this.state.imageToUpload;
+    const newFileName = file.name + `user${this.state.displayName}${userId}`;
+    const imageRef = ref(userImagesRef, newFileName);
+    await uploadBytes(imageRef, file);
+    const url = await getDownloadURL(ref(storage, `userImages/${newFileName}`));
+    this.setState({ imageURL: url });
     const { submit, userId } = this.props;
     submit({ ...this.state, id: userId });
   };
 
+  handleDeletePhoto(event) {
+    event.preventDefault();
+    this.setState({ imageToUpload: {} });
+  }
+
   render() {
-    const { displayName, location, imageURL, previewMap } = this.state;
+    const { displayName, location, imageURL, previewMap, imageToUpload } =
+      this.state;
 
     let userLocation;
     if (this.state.lat) {
@@ -108,15 +127,31 @@ class UserInfoForm extends Component {
             Preview Location
           </button>
           {previewMap ? <UserInfoMap userLocation={userLocation} /> : ""}
-
           <label htmlFor="imageURL">Profile Photo</label>
           <input
-            type="text"
-            id="imageURL"
-            name="imageURL"
-            value={imageURL}
+            type="file"
+            name="imageToUpload"
             onChange={this.handleChange}
-          />
+            id="image_upload"
+          ></input>
+          {imageToUpload.name && (
+            <div>
+              <p>Preview</p>
+              <div className="photo-preview-div">
+                <img
+                  src={URL.createObjectURL(imageToUpload)}
+                  height={200}
+                  className="photo-preview"
+                />
+                <button
+                  className="delete-photo"
+                  onClick={this.handleDeletePhoto}
+                >
+                  x
+                </button>
+              </div>
+            </div>
+          )}
           <button type="submit" className="submit">
             Submit
           </button>
