@@ -1,5 +1,5 @@
 body {
-  font-family: 'Tajawal', sans-serif;
+  font-family: "Tajawal", sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -109,7 +109,7 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-  background-image: url('nycBrownstones.jpg');
+  background-image: url("nycBrownstones.jpg");
 
   background-size: cover;
   width: 100vw;
@@ -124,7 +124,7 @@ nav ul ul li:hover {
 #landing-page h1 {
   color: white;
   font-size: 100px;
-  font-family: 'Merienda One', cursive;
+  font-family: "Merienda One", cursive;
 }
 
 #landing-page i {
@@ -156,6 +156,7 @@ nav ul ul li:hover {
 }
 .developer img {
   width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 6px solid #286157;
 }
@@ -366,7 +367,6 @@ nav ul ul li:hover {
   align-items: center;
 }
 
-
 .image-slide span {
   align-self: center;
 }
@@ -413,7 +413,7 @@ nav ul ul li:hover {
   background-color: white;
 }
 
-input[type='file'] {
+input[type="file"] {
   border: none;
 }
 
@@ -465,6 +465,15 @@ textarea {
   border-right: 1px solid black;
 }
 
+#chat-placeholder {
+  background-color: #a5c49a;
+  border-bottom: 1px solid darkgray;
+  padding: 7px;
+}
+
+#chat-placeholder h1 {
+  font-size: 20px;
+}
 #chat-search {
   background-color: #a5c49a;
   border-bottom: 1px solid darkgray;
@@ -492,6 +501,11 @@ textarea {
 #chat-search-form button {
   border-radius: 6px;
   border: none;
+}
+
+#chat-card-list {
+  overflow: scroll;
+  height: 83vh;
 }
 
 .chat-card {
@@ -527,7 +541,7 @@ textarea {
   padding: 5px;
   font-size: 30px;
   background-color: #a5c49a;
-  border-bottom: 1px lightgray solid;
+  border-bottom: 1px solid darkgray;
   font-weight: bold;
   align-items: center;
 }
@@ -730,7 +744,7 @@ summary {
 /* loading page */
 
 #loading-page {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 40px;
   text-align: center;
   color: green;
