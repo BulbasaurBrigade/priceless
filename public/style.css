@@ -307,6 +307,10 @@ nav ul ul li:hover {
   width: 100%;
 }
 
+#post-image p {
+  text-align: center;
+}
+
 #no-posts {
   text-align: center;
   margin: auto;
@@ -362,6 +366,7 @@ nav ul ul li:hover {
   display: flex;
   align-items: center;
 }
+
 
 .image-slide span {
   align-self: center;
