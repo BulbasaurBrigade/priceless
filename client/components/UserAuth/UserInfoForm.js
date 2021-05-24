@@ -19,6 +19,7 @@ class UserInfoForm extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
+    this.handleRemovePhoto = this.handleRemovePhoto.bind(this);
   }
 
   //When a user is editing their profile, the form will get populated with their current information
@@ -52,7 +53,10 @@ class UserInfoForm extends Component {
   //As a user types, state changes
   handleChange = (event) => {
     if (event.target.name === "imageToUpload" && event.target.files[0]) {
-      this.setState({ [event.target.name]: event.target.files[0] });
+      this.setState({
+        [event.target.name]: event.target.files[0],
+        imageURL: "",
+      });
     } else {
       this.setState({
         [event.target.name]: event.target.value,
@@ -73,9 +77,18 @@ class UserInfoForm extends Component {
     submit({ ...this.state, id: userId });
   };
 
+  //deletes photo from imageToUpload in local state
   handleDeletePhoto(event) {
     event.preventDefault();
     this.setState({ imageToUpload: {} });
+  }
+
+  //removes photo from imageURL in local state
+  handleRemovePhoto(event) {
+    event.preventDefault();
+    if (confirm("Are you sure you want to remove this photo?")) {
+      this.setState({ imageURL: "" });
+    }
   }
 
   render() {
