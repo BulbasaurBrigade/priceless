@@ -57,6 +57,7 @@ router.get("/:id/posts", async (req, res, next) => {
     const posts = await Post.findAll({
       where: {
         posterId: req.params.id,
+        status: { [Op.ne]: "deleted" },
       },
       order: [["updatedAt", "DESC"]],
       include: {
@@ -71,8 +72,9 @@ router.get("/:id/posts", async (req, res, next) => {
 router.get("/:id/lotteryTickets", async (req, res, next) => {
   try {
     const lottery = await Post.findAll({
+      //only sends back active lottery tickets
       where: {
-        status: { [Op.ne]: "claimed" },
+        status: { [Op.notIn]: ["claimed", "deleted"] },
       },
       include: {
         model: User,
