@@ -27,7 +27,7 @@ const Footer = () => {
           </a>
         </div>
         <div className="developer">
-          <img src="/ZerodSarah_blurred.png" />
+          <img src="/ZerodSarah_Brick.jpg" />
           <p>Sarah Zerod</p>
           <a href="https://www.linkedin.com/in/sarahzerod/">
             <img className="linkedIn-logo" src="/LinkedIn.png" />
