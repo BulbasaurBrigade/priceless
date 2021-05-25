@@ -164,9 +164,11 @@ class PostForm extends React.Component {
     const postImages = this.state.postImages || [];
     const pickupDetails = this.state.pickupDetails || "";
     const location = this.state.location || "";
-    let userLocation;
+    let userlat;
+    let userlng
     if (latitude) {
-      userLocation = [latitude, longitude];
+      userlat = latitude
+      userlng = longitude
     }
 
     if (loading) {
@@ -291,7 +293,7 @@ class PostForm extends React.Component {
             </button>
             {previewError ? <span className="error">{previewError}</span> : ""}
             {this.state.previewMap ? (
-              <PostFormMap userLocation={userLocation} />
+              <PostFormMap userlat={userlat} userlng={userlng} />
             ) : (
               ""
             )}

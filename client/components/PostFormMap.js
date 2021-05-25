@@ -12,22 +12,21 @@ const unselectedIcon = new L.icon({
 export default class PostFormMap extends React.Component {
   render() {
 
-    const userLocation = this.props.userLocation;
+    const userlat = this.props.userlat;
+    const userlng = this.props.userlng
     return (
       <div>
-        <MapContainer
-
+        <MapContainer 
           className="preview-map"
           scrollWheelZoom={true}
           touchZoom={true}
           zoom={13}
-          setView={true}
           center={defaultLocation}
         >
-          {userLocation ? (
+          {userlat ? (
             <div>
-              <ChangeView center={userLocation} zoom={13} />
-              <Marker icon={unselectedIcon} position={userLocation} />
+              <ChangeView center={[userlat - 0.01, userlng + 0.008]} zoom={13} />
+              <Marker icon={unselectedIcon} position={[userlat, userlng]} />
             </div>
           ) : (
             <div> Loading location .. </div>
