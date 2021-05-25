@@ -36,7 +36,8 @@ export default (state = initialLoadingState, action) => {
     case SET_POSTFORM_ERROR:
     case SET_USERPROFILE_ERROR:
     case SET_AUTH:
-    default:
       return noLoading;
+    default:
+      return state;
   }
 };
