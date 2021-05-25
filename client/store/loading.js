@@ -27,7 +27,7 @@ export default (state = loadingState, action) => {
     case IS_LOADING:
       return { ...state, general: true };
     case SET_AUTH:
-      return { ...state, general: false };
+      return loadingState;
     case FORM_LOADING:
       return { ...state, submit: true };
     case CREATE_POST:
