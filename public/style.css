@@ -314,11 +314,17 @@ nav ul ul li:hover {
   margin-right: 30px;
 }
 
+#post-details h5 {
+  font-size: 16px;
+  color: red;
+}
+
 #post-details p {
   font-size: 16px;
 }
 
 #post-details a {
+  text-decoration: underline;
   color: red;
 }
 
@@ -811,8 +817,6 @@ summary {
   display: none;
   position: absolute;
   z-index: 1;
-  bottom: 100%;
-  right: 30%;
   width: 500px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -821,6 +825,12 @@ summary {
   color: gray;
   border: 1px solid lightgray;
 }
+
+#tooltip-left {
+  bottom: 40%;
+  right: 10%;
+}
+
 .tooltip-wrap:hover .tooltip-content {
   display: block;
 }

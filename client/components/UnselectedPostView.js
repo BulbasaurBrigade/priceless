@@ -23,13 +23,13 @@ const UnselectedPostView = (props) => {
               Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
               <i className="fa fa-info-circle" aria-hidden="true"></i>
               {post.status === "open" ? (
-                <div className="tooltip-content">
+                <div className="tooltip-content" id="tooltip-left">
                   <p>
                     This post is open, request it to be immediately connected!
                   </p>
                 </div>
               ) : (
-                <div className="tooltip-content">
+                <div className="tooltip-content" id="tooltip-left">
                   <p>
                     This post is in {post.status} mode, request it for a chance
                     to get connected with the poster.

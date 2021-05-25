@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { addRequester } from '../store/singlePost';
-import ImageSlideshow from './ImageSlideshow';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { addRequester } from "../store/singlePost";
+import ImageSlideshow from "./ImageSlideshow";
 
 class SelectedPostView extends React.Component {
   constructor() {
@@ -52,10 +52,10 @@ class SelectedPostView extends React.Component {
           {/*if user owns the post, display a note that says so*/}
           {post.posterId === userId && (
             <div>
-              <p>
-                This is your post, edit details
-                <Link to={`/mypost/${post.id}`}> here </Link>
-              </p>
+              <h5>
+                This is your post, edit details{" "}
+                <Link to={`/mypost/${post.id}`}>here </Link>
+              </h5>
             </div>
           )}
           <div className="location-status">
@@ -69,13 +69,13 @@ class SelectedPostView extends React.Component {
                 Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
                 <i className="fa fa-info-circle" aria-hidden="true"></i>
                 {post.status === "open" ? (
-                  <div className="tooltip-content">
+                  <div className="tooltip-content" id="tooltip-left">
                     <p>
                       This post is open, request it to be immediately connected!
                     </p>
                   </div>
                 ) : (
-                  <div className="tooltip-content">
+                  <div className="tooltip-content" id="tooltip-left">
                     <p>
                       This post is in {post.status} mode, request it for a
                       chance to get connected with the poster.
