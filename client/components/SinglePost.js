@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { setSinglePost, _setSinglePost } from "../store/singlePost";
-import UnselectedPostView from "./UnselectedPostView";
-import SelectedPostView from "./SelectedPostView";
+import React from 'react';
+import { connect } from 'react-redux';
+import { setSinglePost, _setSinglePost } from '../store/singlePost';
+import UnselectedPostView from './UnselectedPostView';
+import SelectedPostView from './SelectedPostView';
 
 class SinglePost extends React.Component {
   constructor() {
@@ -24,10 +24,8 @@ class SinglePost extends React.Component {
 
     return (
       <div
-        onClick={(evt) => {
-          this.handleClick(post.id);
-        }}
-        className={post.id === selectedPost.id ? "selected" : ""}
+        onClick={() => this.handleClick(post.id)}
+        className={post.id === selectedPost.id ? 'selected' : ''}
       >
         {post.id !== selectedPost.id ? (
           <UnselectedPostView post={post} />

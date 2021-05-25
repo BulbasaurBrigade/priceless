@@ -1,5 +1,5 @@
 body {
-  font-family: "Tajawal", sans-serif;
+  font-family: 'Tajawal', sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -98,19 +98,54 @@ nav ul ul li:hover {
 /*// HOMEPAGE //*/
 #home-container {
   background-color: white;
+  font-family: Poppins;
+  font-size: 18px;
+}
+
+#home-container h1 {
+  text-align: center;
+  font-size: 30px;
+  font-family: 'DM Serif Display', serif;
+  color: #103a33;
+}
+
+#home-container h3 {
+  color: #103a33;
+  font-family: 'DM Serif Display', serif;
+}
+
+#home-container p {
+  margin-bottom: 15px;
+  font-family: 'Poppins', sans-serif;
 }
 
 #app-description {
+  background-color: rgb(218, 169, 148);
+  padding: 50px;
+}
+
+#how-to-container {
   background-color: rgb(226, 179, 161);
-  padding: 80px 30px 80px 30px;
-  font-size: 22px;
+  padding: 50px;
   display: flex;
+  flex-direction: column;
+}
+
+.how-to-right {
+  text-align: right;
+  align-self: flex-end;
+  width: 53vw;
+  margin-bottom: 10px;
+}
+
+.how-to-left {
+  width: 53vw;
+  text-align: justify;
 }
 
 /* landing page*/
 #landing-page {
-  background-image: url("nycBrownstones.jpg");
-
+  background-image: url('nycBrownstones.jpg');
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -124,12 +159,12 @@ nav ul ul li:hover {
 #landing-page h1 {
   color: white;
   font-size: 100px;
-  font-family: "Merienda One", cursive;
+  font-family: 'Shadows Into Light', cursive;
 }
 
 #landing-page i {
-  margin-top: 200px;
-  font-size: 60px;
+  margin-top: 100px;
+  font-size: 50px;
   color: white;
 }
 
@@ -140,8 +175,7 @@ nav ul ul li:hover {
   align-items: center;
   padding: 10px;
   font-size: 20px;
-  color: white;
-  background-color: rgb(201, 150, 129);
+  background-color: rgb(241, 208, 193);
 }
 
 .developers {
@@ -154,12 +188,15 @@ nav ul ul li:hover {
   align-items: center;
   padding: 50px;
 }
-.developer img {
+.developer > img {
   width: 150px;
   border-radius: 50%;
   border: 6px solid #286157;
 }
 
+.linkedIn-logo {
+  width: 30px;
+}
 /* main container */
 #main-container-bottom {
   padding: 10px 50px 0 50px;
@@ -192,6 +229,7 @@ nav ul ul li:hover {
   width: 250px;
   border: none;
   font-size: 15px;
+  border-radius: 5px;
 }
 
 #map-navbar input {
@@ -200,7 +238,6 @@ nav ul ul li:hover {
   width: 225px;
   border: none;
   font-size: 15px;
-  border-radius: 5px;
 }
 
 #map-navbar button {
@@ -277,11 +314,17 @@ nav ul ul li:hover {
   margin-right: 30px;
 }
 
+#post-details h5 {
+  font-size: 16px;
+  color: red;
+}
+
 #post-details p {
   font-size: 16px;
 }
 
 #post-details a {
+  text-decoration: underline;
   color: red;
 }
 
@@ -356,6 +399,7 @@ nav ul ul li:hover {
   font-size: 30px;
   color: #333;
 }
+
 .popup .close:hover {
   font-size: 40px;
 }
@@ -412,7 +456,7 @@ nav ul ul li:hover {
   background-color: white;
 }
 
-input[type="file"] {
+input[type='file'] {
   border: none;
 }
 
@@ -699,6 +743,10 @@ summary {
   margin: auto;
 }
 
+.preview-button {
+  display: block;
+}
+
 .delete:hover,
 .submit:hover,
 .preview-button:hover,
@@ -749,7 +797,7 @@ summary {
 /* loading page */
 
 #loading-page {
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 40px;
   text-align: center;
   color: green;
@@ -790,8 +838,6 @@ summary {
   display: none;
   position: absolute;
   z-index: 1;
-  bottom: 100%;
-  right: 30%;
   width: 500px;
   background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -800,6 +846,12 @@ summary {
   color: gray;
   border: 1px solid lightgray;
 }
+
+#tooltip-left {
+  bottom: 40%;
+  right: 10%;
+}
+
 .tooltip-wrap:hover .tooltip-content {
   display: block;
 }
