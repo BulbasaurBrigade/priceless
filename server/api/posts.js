@@ -132,8 +132,8 @@ router.post('/', requireToken, async (req, res, next) => {
     });
 
     // Create a date object for when the job should run
-    // Currently set for 1 minute
-    const date = new Date(Date.now() + 10 * 1000);
+    // Currently set for 5 minutes
+    const date = new Date(Date.now() + 5 * 60 * 1000);
 
     // create and schedule the Cron Job to run the lottery
     const job = new CronJob(date, () => {
