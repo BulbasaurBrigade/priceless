@@ -3,7 +3,7 @@ const { CronJob } = require('cron');
 const { Op } = require('sequelize');
 const getGeocode = require('../middleware/getGeocode');
 const {
-  models: { Post, PostImage, Chat, Message },
+  models: { Post, PostImage, Chat, Message, User },
 } = require('../db');
 const { requireToken } = require('../middleware/gatekeeping');
 
@@ -137,7 +137,7 @@ router.post('/', requireToken, async (req, res, next) => {
 
     // create and schedule the Cron Job to run the lottery
     const job = new CronJob(date, () => {
-      post.lottery();
+      postWithImage.lottery();
       console.log('time to check');
     });
 
@@ -192,7 +192,22 @@ router.delete('/:id', requireToken, async (req, res, next) => {
         postId: post.id,
         isOpen: true,
       },
+      include: [
+        {
+          model: Post,
+        },
+        {
+          model: User,
+          as: 'recipient',
+        },
+        {
+          model: User,
+          as: 'poster',
+        },
+      ],
     });
+
+    post.save();
 
     if (openChat) {
       openChat.close();
@@ -200,10 +215,10 @@ router.delete('/:id', requireToken, async (req, res, next) => {
         content: 'This post has been deleted and the chat has been closed.',
       });
       await message.setChat(openChat);
+      res.send({ post, chat: openChat, message });
+    } else {
+      res.send({ post });
     }
-
-    post.save();
-    res.send(post);
   } catch (error) {
     next(error);
   }
