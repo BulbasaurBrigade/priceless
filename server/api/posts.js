@@ -7,14 +7,12 @@ const {
 } = require('../db');
 const { requireToken } = require('../middleware/gatekeeping');
 
-
 module.exports = router;
 
 // GET all posts
 router.get('/', async (req, res, next) => {
   try {
     const posts = await Post.findAll({
-
       // only finds posts that haven't been claimed or deleted
       where: { status: { [Op.notIn]: ['claimed', 'deleted'] } },
       include: PostImage,
@@ -28,7 +26,6 @@ router.get('/', async (req, res, next) => {
 // GET all posts filtered by category and map bounds
 router.get('/filtered', async (req, res, next) => {
   try {
-
     const { filter, n, e, s, w, search } = req.query;
 
     // only finds possts tha haven't been claimed or deleted
@@ -197,7 +194,7 @@ router.delete('/:id', requireToken, async (req, res, next) => {
 });
 
 //DELETE /posts/:postId/images/:imageId
-router.delete("/:postId/images/:imageId", async (req, res, next) => {
+router.delete('/:postId/images/:imageId', async (req, res, next) => {
   try {
     const image = await PostImage.findByPk(req.params.imageId);
     console.log(image);
@@ -220,14 +217,10 @@ router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
 
     let message;
 
-    // close the chat;
-    await chat.close();
-    await chat.reload();
-
     // call the correct method based on which action was sent
     const { action } = req.query;
     if (action === 'pass') {
-      if (req.user.id !== chat.recipientId || req.user.id !== chat.posterId) {
+      if (req.user.id !== chat.recipientId && req.user.id !== chat.posterId) {
         throw new Error('You do not have permission to do that.');
       }
       message = await post.pass(req.params.chatId);
@@ -239,13 +232,16 @@ router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
       message = await post.claim(req.params.chatId);
     }
 
+    // close the chat;
+    await chat.close();
+    await chat.reload();
+
     // send the updated chat instance and returned message from the method
     res.send({ chat, message });
   } catch (err) {
     next(err);
   }
 });
-
 
 router.post('/:postId/users/:userId', requireToken, async (req, res, next) => {
   try {
