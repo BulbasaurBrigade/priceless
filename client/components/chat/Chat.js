@@ -1,6 +1,6 @@
-import React from 'react';
-import ChatPanel from './ChatPanel';
-import ChatRoom from './ChatRoom';
+import React from "react";
+import ChatPanel from "./ChatPanel";
+import ChatRoom from "./ChatRoom";
 
 export default class Chat extends React.Component {
   constructor() {
@@ -8,7 +8,6 @@ export default class Chat extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const {
       match: { params },
     } = this.props;
