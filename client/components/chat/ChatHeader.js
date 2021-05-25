@@ -1,6 +1,6 @@
-import React from "react";
-import { closeChat } from "../../store/singleChat";
-import { connect } from "react-redux";
+import React from 'react';
+import { closeChat } from '../../store/singleChat';
+import { connect } from 'react-redux';
 
 class ChatHeader extends React.Component {
   handleClick = (e) => {
@@ -10,7 +10,7 @@ class ChatHeader extends React.Component {
   };
 
   render() {
-    const { postTitle, postId, chatId, singleChat } = this.props;
+    const { postTitle, postId, chatId, singleChat, userId } = this.props;
 
     return (
       <div id="chat-header">
@@ -20,11 +20,11 @@ class ChatHeader extends React.Component {
             <div id="chat-header-details">
               <div>
                 <p>
-                  <span style={{ color: "green" }}>Poster: </span>
+                  <span style={{ color: 'green' }}>Poster: </span>
                   {singleChat.poster.displayName}
                 </p>
                 <p>
-                  <span style={{ color: "green" }}>Recipient: </span>
+                  <span style={{ color: 'green' }}>Recipient: </span>
                   {singleChat.recipient.displayName}
                 </p>
               </div>
@@ -35,9 +35,14 @@ class ChatHeader extends React.Component {
                 disabled={postId === 0}
                 name="claim"
                 onClick={this.handleClick}
+                style={{
+                  visibility:
+                    userId === singleChat.posterId ? 'visible' : 'hidden',
+                }}
               >
                 claimed
               </button>
+
               <button
                 className="button"
                 type="button"
@@ -50,7 +55,7 @@ class ChatHeader extends React.Component {
             </div>
           </>
         ) : (
-          ""
+          ''
         )}
       </div>
     );
@@ -60,6 +65,7 @@ class ChatHeader extends React.Component {
 const mapStateToProps = (state) => {
   return {
     singleChat: state.singleChat,
+    userId: state.auth.id,
   };
 };
 const mapDispatchToProps = (dispatch) => {
