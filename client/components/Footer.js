@@ -6,7 +6,7 @@ const Footer = () => {
       <h1>Meet Our Team</h1>
       <div className="developers">
         <div className="developer">
-          <img src="https://robohash.org/peasant" />
+          <img src="/Inasq.JPG" />
           <p>Ina Agee</p>
           <a href="https://www.linkedin.com/in/inaagee/">
             <img className="linkedIn-logo" src="/LinkedIn.png" />

@@ -71,7 +71,7 @@ module.exports = (io) => {
       ]);
 
       if (this.pickupDetails) {
-        const content = `To get you started, here are the pick up details that ${poster.displayName} left for the listing:\n${this.pickupDetails}`;
+        const content = `To get you started, here are the pick up details that ${poster.displayName} left for the listing:\n"${this.pickupDetails}"`;
         const pickUpMsg = await Message.create({ content });
         await pickUpMsg.setChat(chat);
       }

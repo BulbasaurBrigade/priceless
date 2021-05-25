@@ -5,6 +5,7 @@ import { ADD_REQUESTER, UPDATE_POST } from './singlePost';
 import { _setCategory, _setBounds, _setSearch } from './postFilters';
 import { _isLoading, _formLoading } from './loading';
 import { setPostFormErrorMsg } from './error';
+import socket from '../socket';
 
 //action type
 const SET_POSTS = 'SET_POSTS';
@@ -157,7 +158,14 @@ export const deletePost = (id) => {
           authorization: token,
         },
       });
-      dispatch(_deletePost(data));
+      socket.emit('new message', {
+        message: data.message,
+      });
+      socket.emit('updated chat', {
+        chat: data.chat,
+      });
+
+      dispatch(_deletePost(data.post));
     } catch (err) {
       console.log('error deleting post via thunk', err);
     }
