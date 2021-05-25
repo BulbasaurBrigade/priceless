@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 const { requireToken } = require("../middleware/gatekeeping");
 const {
   models: { Chat, Post, User, Message, PostImage },
-} = require("../db");
+} = require('../db');
 module.exports = router;
 
 // GET /api/users/:userId/chats
@@ -23,13 +23,13 @@ router.get("/", requireToken, async (req, res, next) => {
           },
         ],
       },
-      include: [
-        {
-          model: Post,
-          attributes: ["title"],
-          include: {
-            model: PostImage,
-          },
+
+      include: [{
+        model: Post,
+        attributes: ['title', 'status'],
+        include: {
+          model: PostImage,
+        }
         },
         {
           model: User,
@@ -61,11 +61,11 @@ router.get("/:chatId", requireToken, async (req, res, next) => {
         },
         {
           model: User,
-          as: "recipient",
+          as: 'recipient',
         },
         {
           model: User,
-          as: "poster",
+          as: 'poster',
         },
       ],
     });
@@ -87,12 +87,14 @@ router.get("/:chatId/messages", requireToken, async (req, res, next) => {
     const messages = await Message.findAll({
       include: {
         model: User,
-        attributes: ["displayName"],
+
+        attributes: ["displayName", "imageURL"],
+
       },
       where: {
         chatId: req.params.chatId,
       },
-      order: [["createdAt", "DESC"]],
+      order: [['createdAt', 'DESC']],
     });
 
     res.send(messages);
@@ -119,7 +121,9 @@ router.post("/:chatId/messages", requireToken, async (req, res, next) => {
       await Message.findByPk(message.id, {
         include: {
           model: User,
-          attributes: ["displayName"],
+
+          attributes: ["displayName", "imageURL"],
+
         },
       })
     );

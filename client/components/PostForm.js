@@ -1,12 +1,6 @@
 import React from "react";
 import { postImagesRef, storage } from "../firebase";
-import {
-  uploadBytes,
-  ref,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
-import axios from "axios";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import { getGeocode } from "../store/location";
 import PostFormMap from "./PostFormMap";
 import { connect } from "react-redux";
@@ -65,7 +59,6 @@ class PostForm extends React.Component {
         ];
         this.setState({ [event.target.name]: newImagesArray });
       }
-
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
@@ -256,7 +249,6 @@ class PostForm extends React.Component {
               <option value="pet supplies">Pet Supplies</option>
               <option value="spots">Sports</option>
               <option value="tech">Tech</option>
-           
             </select>
             <label>
               Location <span style={{ color: "red" }}>*</span>

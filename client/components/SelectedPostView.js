@@ -29,7 +29,12 @@ class SelectedPostView extends React.Component {
       <div id="single-post">
         <div id="post-image">
           <a href={`#popup${post.id}`}>
-            <img src={images[0].imageUrl} />
+            <img
+              src={images[0].imageUrl}
+              onClick={(evt) => {
+                evt.stopPropagation();
+              }}
+            />
             {images.length === 1 ? (
               <p>Click To View Image</p>
             ) : (
@@ -37,7 +42,13 @@ class SelectedPostView extends React.Component {
             )}
           </a>
 
-          <div id={`popup${post.id}`} className="overlay">
+          <div
+            id={`popup${post.id}`}
+            className="overlay"
+            onClick={(evt) => {
+              evt.stopPropagation();
+            }}
+          >
             <div className="popup">
               <ImageSlideshow slides={images} />
               <a className="close" href="#">
@@ -52,30 +63,30 @@ class SelectedPostView extends React.Component {
           {/*if user owns the post, display a note that says so*/}
           {post.posterId === userId && (
             <div>
-              <p>
-                This is your post, edit details
-                <Link to={`/mypost/${post.id}`}> here </Link>
-              </p>
+              <h5>
+                This is your post, edit details{' '}
+                <Link to={`/mypost/${post.id}`}>here </Link>
+              </h5>
             </div>
           )}
           <div className="location-status">
             <h3>
-              <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
+              <i className="fa fa-map-marker" aria-hidden="true"></i>{' '}
               {post.location}
             </h3>
 
             <h4>
               <div className="tooltip-wrap">
-                Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
+                Status: <span style={{ color: 'red' }}>{post.status}</span>{' '}
                 <i className="fa fa-info-circle" aria-hidden="true"></i>
-                {post.status === "open" ? (
-                  <div className="tooltip-content">
+                {post.status === 'open' ? (
+                  <div className="tooltip-content" id="tooltip-left">
                     <p>
                       This post is open, request it to be immediately connected!
                     </p>
                   </div>
                 ) : (
-                  <div className="tooltip-content">
+                  <div className="tooltip-content" id="tooltip-left">
                     <p>
                       This post is in {post.status} mode, request it for a
                       chance to get connected with the poster.

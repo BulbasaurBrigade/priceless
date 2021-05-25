@@ -2,20 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import UserInfoMap from './UserInfoMap';
 import { getGeocode } from '../../store/location';
+import { userImagesRef, storage } from "../../firebase";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import LoadingPage from '../LoadingPage';
 
 class UserInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      imageToUpload: null,
+      imageURL: null,
       displayName: '',
       location: '',
-      imageURL: '',
       lat: null,
       lng: null,
       previewMap: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
+    this.handleRemovePhoto = this.handleRemovePhoto.bind(this);
   }
 
   //When a user is editing their profile, the form will get populated with their current information
@@ -33,13 +38,16 @@ class UserInfoForm extends Component {
       const { location } = this.props;
       this.setState({ location });
     }
+    if (this.props.imageURL) {
+      const { imageURL } = this.props;
+      this.setState({ imageURL });
+    }
   }
 
   //When a user clicks the 'preview location', a call is made to the google geocode api to get the coords
   handlePreviewLocation = async (address) => {
     const { previewGeocode } = this.props;
     await previewGeocode(address);
-
     this.setState({
       lat: this.props.newLat,
       lng: this.props.newLng,
@@ -48,21 +56,52 @@ class UserInfoForm extends Component {
   };
 
   //As a user types, state changes
-  handleChange = (evt) => {
-    this.setState({
-      [evt.target.name]: evt.target.value,
-    });
+  handleChange = (event) => {
+    if (event.target.name === "imageToUpload" && event.target.files[0]) {
+      this.setState({
+        [event.target.name]: event.target.files[0],
+      });
+    } else {
+      this.setState({
+        [event.target.name]: event.target.value,
+      });
+    }
   };
 
   //A user's information is updated in the database
-  handleSubmit = (evt) => {
+  handleSubmit = async (evt) => {
     evt.preventDefault();
     const { submit, userId } = this.props;
+    if (this.state.imageToUpload) {
+      const file = this.state.imageToUpload;
+      const newFileName = file.name + `user${this.state.displayName}${userId}`;
+      const imageRef = ref(userImagesRef, newFileName);
+      await uploadBytes(imageRef, file);
+      const url = await getDownloadURL(
+        ref(storage, `userImages/${newFileName}`)
+      );
+      this.setState({ imageURL: url });
+    }
     submit({ ...this.state, id: userId });
   };
 
+  //deletes photo from imageToUpload in local state
+  handleDeletePhoto(event) {
+    event.preventDefault();
+    this.setState({ imageToUpload: null });
+  }
+
+  //removes photo from imageURL in local state
+  handleRemovePhoto(event) {
+    event.preventDefault();
+    if (confirm("Are you sure you want to remove this photo?")) {
+      this.setState({ imageURL: null });
+    }
+  }
+
   render() {
-    const { displayName, location, imageURL, previewMap } = this.state;
+    const { displayName, location, imageURL, previewMap, imageToUpload } =
+      this.state;
     const { previewError, userInfoError, loading } = this.props;
 
     let userLocation;
@@ -138,12 +177,42 @@ class UserInfoForm extends Component {
 
           <label htmlFor="imageURL">Profile Photo</label>
           <input
-            type="text"
-            id="imageURL"
-            name="imageURL"
-            value={imageURL}
+            type="file"
+            name="imageToUpload"
             onChange={this.handleChange}
-          />
+            id="image_upload"
+          ></input>
+          {imageToUpload && (
+            <div>
+              <p>Preview Of New Photo</p>
+              <div className="photo-preview-container">
+                <img
+                  src={URL.createObjectURL(imageToUpload)}
+                  id="photo-preview"
+                />
+                <button
+                  className="delete-photo"
+                  onClick={this.handleDeletePhoto}
+                >
+                  x
+                </button>
+              </div>
+            </div>
+          )}
+          {imageURL && (
+            <div>
+              <p>Current Photo</p>
+              <div className="photo-preview-container">
+                <img src={imageURL} id="photo-preview" />
+                <button
+                  className="delete-photo"
+                  onClick={this.handleRemovePhoto}
+                >
+                  x
+                </button>
+              </div>
+            </div>
+          )}
           <button type="submit" className="submit">
             Submit
           </button>
@@ -162,6 +231,7 @@ const mapState = (state) => {
     location: state.auth.location,
     userLat: state.auth.latitude,
     userLng: state.auth.longitude,
+    imageURL: state.auth.imageURL,
     previewError: state.error.previewLocation,
     userInfoError: state.error.userProfile,
     loading: state.loading.submit,

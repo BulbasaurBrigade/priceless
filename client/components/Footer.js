@@ -1,25 +1,37 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
     <div id="footer">
-      <h3>Meet Our Team</h3>
+      <h1>Meet Our Team</h1>
       <div className="developers">
         <div className="developer">
-          <img src="https://robohash.org/peasant" />
+          <img src="/Inasq.JPG" />
           <p>Ina Agee</p>
+          <a href="https://www.linkedin.com/in/inaagee/">
+            <img className="linkedIn-logo" src="/LinkedIn.png" />
+          </a>
         </div>
         <div className="developer">
           <img src="meredith.png" />
           <p>Meredith Cornelius</p>
+          <a href="https://www.linkedin.com/in/meredith-cornelius/">
+            <img className="linkedIn-logo" src="/LinkedIn.png" />
+          </a>
         </div>
         <div className="developer">
-          <img src="/Leora2.png" />
+          <img src="/Leora.jpg" />
           <p>Leora Douek</p>
+          <a href="https://www.linkedin.com/in/leoradouek/">
+            <img className="linkedIn-logo" src="/LinkedIn.png" />
+          </a>
         </div>
         <div className="developer">
           <img src="/ZerodSarah_blurred.png" />
           <p>Sarah Zerod</p>
+          <a href="https://www.linkedin.com/in/sarahzerod/">
+            <img className="linkedIn-logo" src="/LinkedIn.png" />
+          </a>
         </div>
       </div>
     </div>
