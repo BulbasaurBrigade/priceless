@@ -229,6 +229,7 @@ nav ul ul li:hover {
   width: 250px;
   border: none;
   font-size: 15px;
+  border-radius: 5px;
 }
 
 #map-navbar input {
@@ -237,7 +238,6 @@ nav ul ul li:hover {
   width: 225px;
   border: none;
   font-size: 15px;
-  border-radius: 5px;
 }
 
 #map-navbar button {
@@ -399,6 +399,7 @@ nav ul ul li:hover {
   font-size: 30px;
   color: #333;
 }
+
 .popup .close:hover {
   font-size: 40px;
 }
