@@ -26,15 +26,13 @@ export default (state = loadingState, action) => {
   switch (action.type) {
     case IS_LOADING:
       return { ...state, general: true };
-    case SET_AUTH:
-      return { ...state, general: false };
     case FORM_LOADING:
       return { ...state, submit: true };
     case CREATE_POST:
     case SET_POSTFORM_ERROR:
     case SET_USERPROFILE_ERROR:
-      return { ...state, submit: false };
+    case SET_AUTH:
     default:
-      return state;
+      return loadingState;
   }
 };

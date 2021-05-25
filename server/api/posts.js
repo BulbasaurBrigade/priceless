@@ -242,7 +242,19 @@ router.put('/:id/chats/:chatId', requireToken, async (req, res, next) => {
   try {
     // find the relevant chat and post
     const chat = await Chat.findByPk(req.params.chatId, {
-      include: { model: Post },
+      include: [
+        {
+          model: Post,
+        },
+        {
+          model: User,
+          as: 'recipient',
+        },
+        {
+          model: User,
+          as: 'poster',
+        },
+      ],
     });
     const post = await Post.findByPk(req.params.id);
 
