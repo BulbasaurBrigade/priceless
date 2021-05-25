@@ -13,7 +13,7 @@ const Footer = () => {
           </a>
         </div>
         <div className="developer">
-          <img src="meredith.png" />
+          <img src="meredith_cropped.png" />
           <p>Meredith Cornelius</p>
           <a href="https://www.linkedin.com/in/meredith-cornelius/">
             <img className="linkedIn-logo" src="/LinkedIn.png" />
