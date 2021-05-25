@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-underscore-dangle */
 import { SET_AUTH } from './auth';
-import { CREATE_POST } from './posts';
+import { CREATE_POST, EDIT_POST } from './posts';
 import {
   SET_POSTFORM_ERROR,
   SET_PREVIEWLOCATION_ERROR,
@@ -40,6 +40,7 @@ export default (state = initialLoadingState, action) => {
     case SET_POSTFORM_ERROR:
     case SET_USERPROFILE_ERROR:
     case SET_PREVIEWLOCATION_ERROR:
+    case EDIT_POST:
     case SET_AUTH:
       return noLoading;
     default:
