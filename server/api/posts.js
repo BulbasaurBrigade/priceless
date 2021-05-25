@@ -3,7 +3,7 @@ const { CronJob } = require('cron');
 const { Op } = require('sequelize');
 const getGeocode = require('../middleware/getGeocode');
 const {
-  models: { Post, PostImage, Chat },
+  models: { Post, PostImage, Chat, Message },
 } = require('../db');
 const { requireToken } = require('../middleware/gatekeeping');
 
@@ -186,6 +186,22 @@ router.delete('/:id', requireToken, async (req, res, next) => {
       throw new Error('You do not have permission to do that');
     }
     post.status = 'deleted';
+
+    const openChat = await Chat.findOne({
+      where: {
+        postId: post.id,
+        isOpen: true,
+      },
+    });
+
+    if (openChat) {
+      openChat.close();
+      const message = await Message.create({
+        content: 'This post has been deleted and the chat has been closed.',
+      });
+      await message.setChat(openChat);
+    }
+
     post.save();
     res.send(post);
   } catch (error) {
@@ -193,7 +209,7 @@ router.delete('/:id', requireToken, async (req, res, next) => {
   }
 });
 
-//DELETE /posts/:postId/images/:imageId
+// DELETE /posts/:postId/images/:imageId
 router.delete('/:postId/images/:imageId', async (req, res, next) => {
   try {
     const image = await PostImage.findByPk(req.params.imageId);
