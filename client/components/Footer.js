@@ -18,7 +18,7 @@ const Footer = () => {
           <p>Leora Douek</p>
         </div>
         <div className="developer">
-          <img src="/ZerodSarah_blurred.png" />
+          <img src="/ZerodSarah_Brick.jpg" />
           <p>Sarah Zerod</p>
         </div>
       </div>
