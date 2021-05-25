@@ -6,7 +6,7 @@ const Footer = () => {
       <h3>Meet Our Team</h3>
       <div className="developers">
         <div className="developer">
-          <img src="https://robohash.org/peasant" />
+          <img src="/Inasq.JPG" />
           <p>Ina Agee</p>
         </div>
         <div className="developer">
