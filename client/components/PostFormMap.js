@@ -2,7 +2,7 @@ import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import ChangeView from "./ChangeView";
 
-const defaultLocation = [40.6679209, -73.9558908];
+const defaultLocation = [40.742, -73.9073];
 const unselectedIcon = new L.icon({
   iconUrl: "https://i.postimg.cc/fyhRyqqx/placeholder-2.png",
   iconSize: [40, 40],
@@ -12,22 +12,21 @@ const unselectedIcon = new L.icon({
 export default class PostFormMap extends React.Component {
   render() {
 
-    const userLocation = this.props.userLocation;
+    const userlat = this.props.userlat;
+    const userlng = this.props.userlng
     return (
       <div>
-        <MapContainer
-
+        <MapContainer 
           className="preview-map"
           scrollWheelZoom={true}
           touchZoom={true}
           zoom={13}
-          setView={true}
           center={defaultLocation}
         >
-          {userLocation ? (
+          {userlat ? (
             <div>
-              <ChangeView center={userLocation} zoom={13} />
-              <Marker icon={unselectedIcon} position={userLocation} />
+              <ChangeView center={[userlat - 0.009, userlng + 0.008]} zoom={13} />
+              <Marker icon={unselectedIcon} position={[userlat, userlng]} />
             </div>
           ) : (
             <div> Loading location .. </div>

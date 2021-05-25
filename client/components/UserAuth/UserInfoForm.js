@@ -104,9 +104,11 @@ class UserInfoForm extends Component {
       this.state;
     const { previewError, userInfoError, loading } = this.props;
 
-    let userLocation;
+    let userlat;
+    let userlng
     if (this.state.lat) {
-      userLocation = [this.state.lat, this.state.lng];
+      userlat = this.state.lat;
+      userlng = this.state.lng;
     }
 
     if (loading) {
@@ -173,7 +175,7 @@ class UserInfoForm extends Component {
             Preview Location
           </button>
           {previewError ? <span className="error">{previewError}</span> : ''}
-          {previewMap ? <UserInfoMap userLocation={userLocation} /> : ''}
+          {previewMap ? <UserInfoMap userlat={userlat} userlng={userlng} /> : ''}
 
           <label htmlFor="imageURL">Profile Photo</label>
           <input
