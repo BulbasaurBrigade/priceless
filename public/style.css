@@ -1,5 +1,5 @@
 body {
-  font-family: 'Tajawal', sans-serif;
+  font-family: "Tajawal", sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -109,7 +109,7 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-  background-image: url('nycBrownstones.jpg');
+  background-image: url("nycBrownstones.jpg");
 
   background-size: cover;
   width: 100vw;
@@ -124,7 +124,7 @@ nav ul ul li:hover {
 #landing-page h1 {
   color: white;
   font-size: 100px;
-  font-family: 'Merienda One', cursive;
+  font-family: "Merienda One", cursive;
 }
 
 #landing-page i {
@@ -366,7 +366,6 @@ nav ul ul li:hover {
   align-items: center;
 }
 
-
 .image-slide span {
   align-self: center;
 }
@@ -413,7 +412,7 @@ nav ul ul li:hover {
   background-color: white;
 }
 
-input[type='file'] {
+input[type="file"] {
   border: none;
 }
 
@@ -590,16 +589,29 @@ textarea {
   max-width: 55%;
 }
 
+.msg-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: white;
+  margin-top: 8px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .msg-box.sent {
   align-self: flex-end;
   justify-content: right;
   text-align: right;
+  display: flex;
 }
 
 .msg-box.received {
   align-self: flex-start;
   justify-content: left;
   text-align: left;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .msg-box.admin {
@@ -737,7 +749,7 @@ summary {
 /* loading page */
 
 #loading-page {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 40px;
   text-align: center;
   color: green;
