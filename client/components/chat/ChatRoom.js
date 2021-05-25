@@ -1,12 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
-import ChatHeader from "./ChatHeader";
-import MessageContainer from "./MessageContainer";
-import ChatInput from "./ChatInput";
-import { getChat, _clearChat } from "../../store/singleChat";
+import React from 'react';
+import { connect } from 'react-redux';
+import ChatHeader from './ChatHeader';
+import MessageContainer from './MessageContainer';
+import ChatInput from './ChatInput';
+import { getChat, _clearChat } from '../../store/singleChat';
 
-import { getMessages, _newMessage } from "../../store/messages";
-import socket from "../../socket";
+import { getMessages, _newMessage } from '../../store/messages';
+import socket from '../../socket';
 
 class ChatRoom extends React.Component {
   componentDidMount() {
@@ -29,11 +29,11 @@ class ChatRoom extends React.Component {
     ) {
       fetchChatInfo(userId, selectedChatId);
       if (prevProps.selectedChatId) {
-        socket.emit("leave room", {
+        socket.emit('leave room', {
           room: String(prevProps.selectedChatId),
         });
       }
-      socket.emit("join room", {
+      socket.emit('join room', {
         room: String(selectedChatId),
       });
     } else if (
@@ -51,14 +51,19 @@ class ChatRoom extends React.Component {
 
   render() {
     const { selectedChat, selectedChatId } = this.props;
-    const title = selectedChat.post ? selectedChat.post.title : "";
+    const title = selectedChat.post ? selectedChat.post.title : '';
     const postId = selectedChat.post ? selectedChat.post.id : 0;
+    const status = selectedChat.post ? selectedChat.post.status : '';
 
     return (
       <div id="chat-room">
         <ChatHeader postTitle={title} postId={postId} chatId={selectedChatId} />
         <MessageContainer />
-        {selectedChat.isOpen ? <ChatInput chatId={selectedChatId} /> : ""}
+        {!selectedChat.isOpen || status === 'deleted' ? (
+          ''
+        ) : (
+          <ChatInput chatId={selectedChatId} />
+        )}
       </div>
     );
   }

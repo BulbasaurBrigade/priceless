@@ -54,6 +54,7 @@ export const closeChat = (claimOrPass, chatId, postId) => {
       const token = await getAuth().currentUser.getIdToken();
       const { data } = await axios.put(
         `/api/posts/${postId}/chats/${chatId}?action=${claimOrPass}`,
+        {},
         {
           headers: {
             authorization: token,
