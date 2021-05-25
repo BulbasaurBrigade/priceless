@@ -33,16 +33,21 @@ class ChatPanel extends React.Component {
 
   render() {
     const { chats } = this.props;
+
     return (
       <div id="chat-panel">
-        <div id="chat-search">
+        {/* placeholder instead of chat search until search functionality is set up */}
+        <div id="chat-placeholder">
+          <h1>Your Chats</h1>
+        </div>
+        {/* <div id="chat-search">
           <form id="chat-search-form">
             <input type="text" placeholder="Search..." />
             <button type="submit">
               <i className="fa fa-search" aria-hidden="true"></i>
             </button>
           </form>
-        </div>
+        </div> */}
         <div id="chat-card-list">
           {chats.length
             ? chats.map((chat) => <ChatCard chat={chat} key={chat.id} />)
@@ -56,6 +61,7 @@ class ChatPanel extends React.Component {
 const mapState = (state) => ({
   chats: state.chats,
   userId: state.auth.id,
+  singleChat: state.singleChat,
 });
 
 const mapDispatch = (dispatch) => ({

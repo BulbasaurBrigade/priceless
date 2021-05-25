@@ -23,13 +23,23 @@ router.get("/", requireToken, async (req, res, next) => {
           },
         ],
       },
-      include: {
+
+      include: [{
         model: Post,
         attributes: ['title', 'status'],
         include: {
           model: PostImage,
+        }
         },
-      },
+        {
+          model: User,
+          as: "recipient",
+        },
+        {
+          model: User,
+          as: "poster",
+        },
+      ],
     });
     res.send(chats);
   } catch (err) {
