@@ -2,7 +2,7 @@ import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import ChangeView from "./ChangeView";
 
-const defaultLocation = [40.6679209, -73.9558908];
+const defaultLocation = [40.742, -73.9073];
 const unselectedIcon = new L.icon({
   iconUrl: "https://i.postimg.cc/fyhRyqqx/placeholder-2.png",
   iconSize: [40, 40],
@@ -25,7 +25,7 @@ export default class PostFormMap extends React.Component {
         >
           {userlat ? (
             <div>
-              <ChangeView center={[userlat - 0.01, userlng + 0.008]} zoom={13} />
+              <ChangeView center={[userlat - 0.009, userlng + 0.008]} zoom={13} />
               <Marker icon={unselectedIcon} position={[userlat, userlng]} />
             </div>
           ) : (

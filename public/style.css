@@ -229,8 +229,8 @@ nav ul ul li:hover {
 }
 
 .leaflet-container {
-  height: 80vh;
   width: 100%;
+  height: 80vh;
 }
 
 /*list view*/
@@ -437,14 +437,8 @@ textarea {
 
 .preview-map {
   width: 28vw;
-  height: 35vh;
+  height: 28vh;
 }
-
-/* #map-preview { 
-  height: 100vh;
-  width: 100%;
-} */
-
 
 .form-container a {
   color: blue;

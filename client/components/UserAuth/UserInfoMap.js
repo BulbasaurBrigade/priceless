@@ -13,7 +13,8 @@ const unselectedIcon = new L.icon({
 
 export default class UserInfoMap extends React.Component {
   render() {
-    const userLocation = this.props.userLocation;
+    const userlat = this.props.userlat;
+    const userlng = this.props.userlng
 
     return (
       <div>
@@ -23,13 +24,12 @@ export default class UserInfoMap extends React.Component {
           scrollWheelZoom={true}
           touchZoom={true}
           zoom={13}
-          setView={true}
           center={defaultLocation}
         >
-          {userLocation ? (
+          {userlat ? (
             <div>
-              <ChangeView center={userLocation} zoom={13} />
-              <Marker icon={unselectedIcon} position={userLocation} />
+              <ChangeView center={[userlat - 0.009, userlng + 0.008]} zoom={13} />
+              <Marker icon={unselectedIcon} position={[userlat, userlng]} />
             </div>
           ) : (
             <div> Loading location .. </div>
@@ -38,15 +38,6 @@ export default class UserInfoMap extends React.Component {
             attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>
                 '
             url="https://api.mapbox.com/styles/v1/acornsquash/ckoyo5692280j18lpg289wesz/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWNvcm5zcXVhc2giLCJhIjoiY2tva3JybnZqMDNrdTJvb2ZrZzUzY3RyMSJ9.GRYj5oZ7vgJhQ11zbRaTgg"
-          />
-
-          <Marker
-            icon={unselectedIcon}
-            position={
-              this.props.userLocation
-                ? this.props.userLocation
-                : defaultLocation
-            }
           />
         </MapContainer>
       </div>
