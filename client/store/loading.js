@@ -18,11 +18,15 @@ export const _formLoading = () => ({
 });
 
 // Reducer
-const loadingState = {
+const initialLoadingState = {
   general: true,
   submit: false,
 };
-export default (state = loadingState, action) => {
+const noLoading = {
+  general: false,
+  submit: false,
+};
+export default (state = initialLoadingState, action) => {
   switch (action.type) {
     case IS_LOADING:
       return { ...state, general: true };
@@ -33,6 +37,6 @@ export default (state = loadingState, action) => {
     case SET_USERPROFILE_ERROR:
     case SET_AUTH:
     default:
-      return loadingState;
+      return noLoading;
   }
 };
