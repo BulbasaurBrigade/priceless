@@ -1,77 +1,22 @@
-# FS-App-Template
+Welcome to Priceless! 
 
-## Setup
+www.price-less.herokuapp.com
 
-To use this as boilerplate, you'll need to take the following steps:
+## Description 
 
-* Don't fork or clone this repo! Instead, create a new, empty
-  directory on your machine and `git init` (or create an empty repo on
-  Github and clone it to your local machine)
+We are a collaborative web application focused on neighborhoods and local communities where users can post items to give away to their neighbors and can browse listings in their area. Inspired by the popular Buy Nothing Facebook groups, we aim to promote mutual aid and sustainability by offering local gift economies a dedicated platform to grow.
 
-* Now you will have to add the fs-app-template as a remote and merge it into your own repository.
+## Features   
 
-```
-git remote add boilermaker https://github.com/FullstackAcademy/fs-app-template.git
-git fetch boilermaker
-git merge boilermaker/main
-git branch -m master main
-```
+Priceless aims to improve upon the experiences we had as members of Buy Nothing groups. We found that the first-come, first-served system used in most of these groups was frustrating, and skewed the usefulness of the group toward users who were able to check for new posts several times a day. We created the lottery system to ensure that folks had more equal opportunity to express interest in and potentially receive an item they wanted. The lottery allows users to request items for 24 hours after the first request comes in. Once that time is up, it randomly selects a recipient from the pool of users who expressed interest. If the selected person passes on the item, the lottery system will select someone else. If no one expresses interest after 24 hours, the listing goes into open mode, where anyone who expresses interest can immediately claim the item. We agreed 24 hours for the lottery was a good length of time to allow for anyone who really wanted the item to express interest, but not so long that it inconvenienced the person listing the item to give away. 
 
-## Customize
-
-Now that you've got the code, follow these steps to get acclimated:
-
-* Update project name and description in `package.json`
-* `npm install`
-* Create two postgres databases (`MY_APP_NAME` should match the `name`
-  parameter in `package.json`):
-* These commands will create both your **development** and **test** databases
-
-```
-createdb <YOUR APP NAME HERE FROM package.json>
-createdb <YOUR APP NAME HERE FROM package.json>-test
-```
-
-* By default, running `npm test` will use your test database, while
-  regular development uses development database
-
-## Start
-
-Running `npm run start:dev` will make great things happen!
-
-- start:dev will both start your server and build your client side files using webpack
-- start:dev:logger is the same as start:dev, but you will see your SQL queries (can be helpful for debugging)
-- start:dev:seed will start your server and also seed your database
+We’ve also included an interactive map, which displays posts only in the immediate vicinity of the user’s location and fetches new posts when the user drags the map or changes their location. The map is connected to the list view alongside it, which shows more details on the selected post, including pictures, description, etc. This is to encourage more of the hyper local connections that make a community feel like home, as well as to add convenience and ease to the user experience. 
 
 
-### Heroku
+## Roadmap
 
-1.  Set up the [Heroku command line tools][heroku-cli]
-2.  `heroku login`
-3.  Add a git remote for heroku:
-
-[heroku-cli]: https://devcenter.heroku.com/articles/heroku-cli
-
-* **If you are creating a new app...**
-
-  1.  `heroku create` or `heroku create your-app-name` if you have a
-      name in mind.
-  2.  `heroku config:set JWT=<your secret here!>` to set a secret for JWT signing
-
-Database Setup
-
-  3.  `heroku addons:create heroku-postgresql:hobby-dev` to add
-      ("provision") a postgres database to your heroku dyno (This creates your production database)
-
-  4.  `heroku config:set SEED=true` to get heroku to sync and seed your database
-
-  5.   note everytime your app restarts, the database tables will be dropped and re-created. To avoid this you can config:unset SEED
-
-
-* **If you already have a Heroku app...**
-
-  1.  `heroku git:remote your-app-name` You'll need to be a
-      collaborator on the app.
-
-
-Now, you should be deployed!
+We hope to implement the following features in the future -- 
+Notifications for the chat feature 
+An ISO (in search of) option for posts
+The ability for users to view active lotteries they’ve entered, and see a countdown clock that shows the time remaining until those lotteries run 
+A search function that allows users to search for specific items listed within a designated area 
