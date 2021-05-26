@@ -158,13 +158,14 @@ export const deletePost = (id) => {
           authorization: token,
         },
       });
-      socket.emit('new message', {
-        message: data.message,
-      });
-      socket.emit('updated chat', {
-        chat: data.chat,
-      });
-
+      if (data.chat) {
+        socket.emit('new message', {
+          message: data.message,
+        });
+        socket.emit('updated chat', {
+          chat: data.chat,
+        });
+      }
       dispatch(_deletePost(data.post));
     } catch (err) {
       console.log('error deleting post via thunk', err);
