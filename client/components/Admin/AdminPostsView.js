@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPosts } from '../../store/posts';
+import { deletePost, setPosts } from '../../store/posts';
 
 const fields = [
   'title',
@@ -17,11 +17,7 @@ export default function AdminPostsView() {
   const posts = useSelector((state) => state.posts);
 
   useEffect(() => {
-    const getPosts = async () => {
-      await dispatch(setPosts());
-    };
-
-    getPosts();
+    dispatch(setPosts());
   }, []);
 
   return (
@@ -40,6 +36,15 @@ export default function AdminPostsView() {
               {fields.map((field) => (
                 <td key={`${post.id}-${field}`}>{post[field]}</td>
               ))}
+              <button
+                type="button"
+                className="button"
+                onClick={() => {
+                  dispatch(deletePost(post.id));
+                }}
+              >
+                Delete
+              </button>
             </tr>
           ))}
         </tbody>
