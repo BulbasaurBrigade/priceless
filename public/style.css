@@ -344,10 +344,6 @@ nav ul ul li:hover {
   height: auto;
 }
 
-#countdown-wrapper h4 {
-  margin: 0;
-}
-
 #countdown-wrapper span {
   color: red;
 }
