@@ -39,7 +39,7 @@ class Routes extends Component {
             <Route path="/mypost/:id" component={EditPost} />
             <Route path="/profile" component={EditProfile} />
             <Route path="/faq" component={FAQ} />
-            {isAdmin && <Route path="/admin" component={Admin} />}
+            {isAdmin && <Route path="/admin/:view?" component={Admin} />}
             <Redirect to="/" />
           </Switch>
         ) : (
