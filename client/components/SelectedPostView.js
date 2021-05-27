@@ -113,14 +113,15 @@ class SelectedPostView extends React.Component {
               {post.pickupDetails}
             </p>
           )}
+          {/* if the post is in lottery mode, show how much time until the lottery will run */}
+          {post.status === "lottery" && (
+            <CountdownClock createdAt={post.createdAt} />
+          )}
           {/* if user doesn't own the post, show the request button AND they haven't requested it*/}
           {post.posterId !== userId && !ticketsArray.includes(post.id) && (
             <button className="submit" onClick={this.handleRequest}>
               Request
             </button>
-          )}
-          {post.status === "lottery" && (
-            <CountdownClock createdAt={post.createdAt} />
           )}
           {/*if user has entered lottery, display a note that says so*/}
           {ticketsArray.includes(post.id) && (

@@ -105,18 +105,18 @@ nav ul ul li:hover {
 #home-container h1 {
   text-align: center;
   font-size: 30px;
-  font-family: 'DM Serif Display', serif;
+  font-family: "DM Serif Display", serif;
   color: #103a33;
 }
 
 #home-container h3 {
   color: #103a33;
-  font-family: 'DM Serif Display', serif;
+  font-family: "DM Serif Display", serif;
 }
 
 #home-container p {
   margin-bottom: 15px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 #app-description {
@@ -145,8 +145,7 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-
-  background-image: url('nycBrownstones.jpg');
+  background-image: url("nycBrownstones.jpg");
   background-size: cover;
   width: 100vw;
   height: 100vh;
@@ -161,8 +160,7 @@ nav ul ul li:hover {
   color: white;
   font-size: 100px;
 
-  font-family: 'Shadows Into Light', cursive;
-
+  font-family: "Shadows Into Light", cursive;
 }
 
 #landing-page i {
@@ -344,6 +342,14 @@ nav ul ul li:hover {
 .selected #post-image {
   width: 300px;
   height: auto;
+}
+
+#countdown-wrapper h4 {
+  margin: 0;
+}
+
+#countdown-wrapper span {
+  color: red;
 }
 
 #post-image img {
