@@ -12,7 +12,7 @@ const CountdownClock = (props) => {
       <h4>
         Time remaining until lottery drawing:{"  "}
         <span>
-          <Countdown date={lotteryTime} zeroPadDays={2} daysInHours></Countdown>
+          <Countdown date={lotteryTime} daysInHours></Countdown>
         </span>
       </h4>
     </div>
