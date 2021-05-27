@@ -3,10 +3,8 @@ import Countdown from "react-countdown";
 import moment from "moment";
 
 const CountdownClock = (props) => {
-  console.log(props.createdAt);
   const createdTime = new Date(props.createdAt);
-  const lotteryTime = moment(createdTime).add(1, "day").toDate();
-  console.log(lotteryTime);
+  const lotteryTime = moment(createdTime).add(2, "m").toDate();
   return (
     <div id="countdown-wrapper">
       <h4>
