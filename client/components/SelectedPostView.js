@@ -1,8 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { addRequester } from '../store/singlePost';
-import ImageSlideshow from './ImageSlideshow';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { addRequester } from "../store/singlePost";
+import ImageSlideshow from "./ImageSlideshow";
+import CountdownClock from "./CountdownClock";
 
 class SelectedPostView extends React.Component {
   constructor() {
@@ -64,22 +65,22 @@ class SelectedPostView extends React.Component {
           {post.posterId === userId && (
             <div>
               <h5>
-                This is your post, edit details{' '}
+                This is your post, edit details{" "}
                 <Link to={`/mypost/${post.id}`}>here </Link>
               </h5>
             </div>
           )}
           <div className="location-status">
             <h3>
-              <i className="fa fa-map-marker" aria-hidden="true"></i>{' '}
+              <i className="fa fa-map-marker" aria-hidden="true"></i>{" "}
               {post.location}
             </h3>
 
             <h4>
               <div className="tooltip-wrap">
-                Status: <span style={{ color: 'red' }}>{post.status}</span>{' '}
+                Status: <span style={{ color: "red" }}>{post.status}</span>{" "}
                 <i className="fa fa-info-circle" aria-hidden="true"></i>
-                {post.status === 'open' ? (
+                {post.status === "open" ? (
                   <div className="tooltip-content" id="tooltip-left">
                     <p>
                       This post is open, request it to be immediately connected!
@@ -118,7 +119,9 @@ class SelectedPostView extends React.Component {
               Request
             </button>
           )}
-
+          {post.status === "lottery" && (
+            <CountdownClock createdAt={post.createdAt} />
+          )}
           {/*if user has entered lottery, display a note that says so*/}
           {ticketsArray.includes(post.id) && (
             <h5>You've requested this post!</h5>
