@@ -5,7 +5,7 @@ import { deletePost, setPosts } from '../../store/posts';
 const fields = [
   'title',
   'description',
-  'pickUpDetails',
+  'pickupDetails',
   'location',
   'category',
   'status',
