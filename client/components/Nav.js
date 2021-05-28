@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../store";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
-const Nav = ({ handleClick, isLoggedIn }) => (
+const Nav = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div className="dropdown">
     {isLoggedIn ? (
       <nav>
@@ -35,6 +35,11 @@ const Nav = ({ handleClick, isLoggedIn }) => (
               <li>
                 <Link to="/myposts">My Posts</Link>
               </li>
+              {isAdmin && (
+                <li>
+                  <Link to="/admin">Admin</Link>
+                </li>
+              )}
               <li>
                 <a href="#" onClick={handleClick}>
                   Logout
@@ -92,6 +97,7 @@ const Nav = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.isAdmin,
   };
 };
 

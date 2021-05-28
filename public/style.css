@@ -35,6 +35,10 @@ p {
   margin: 0.5rem 0;
 }
 
+.flex-row {
+  display: flex;
+}
+
 /* navbar */
 #logo {
   width: 30px;
@@ -811,6 +815,15 @@ summary {
 }
 
 /* Admin View */
+#admin-container a {
+  background-color: #103a33;
+  color: white;
+  margin: 0 0.25rem;
+  padding: 0.5rem 0.25rem 0.25rem 0.25rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
 #admin-table {
   margin: 2rem;
 }
@@ -822,6 +835,10 @@ summary {
 #admin-table td {
   border-bottom: 1px dashed lightslategray;
   padding: 0.25rem 0;
+}
+
+#admin-table button {
+  margin: 1rem 0;
 }
 
 /* loading page */
