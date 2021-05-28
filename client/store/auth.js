@@ -11,7 +11,6 @@ import history from '../history';
 import { setUserProfileError } from './error';
 import { _isLoading, _formLoading } from './loading';
 
-
 const TOKEN = 'token';
 
 /**
@@ -82,7 +81,6 @@ export const authenticate = (email, password, method) => async (dispatch) => {
 
 export const updateUserInfo = (user) => async (dispatch) => {
   try {
-
     dispatch(_formLoading());
     const token = await getAuth().currentUser.getIdToken();
     const { data } = await axios.put(`/api/users/${user.id}`, user, {

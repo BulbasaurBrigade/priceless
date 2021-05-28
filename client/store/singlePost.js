@@ -4,7 +4,7 @@ import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 
 // action type
-const SET_SINGLE_POST = 'SET_SINGLE_POST';
+export const SET_SINGLE_POST = 'SET_SINGLE_POST';
 export const ADD_REQUESTER = 'ADD_REQUESTER';
 const DESTROY_IMAGE = 'DESTROY_IMAGE';
 export const UPDATE_POST = 'UPDATE_POST';

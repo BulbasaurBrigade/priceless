@@ -30,7 +30,7 @@ class SinglePost extends React.Component {
         {post.id !== selectedPost.id ? (
           <UnselectedPostView post={post} />
         ) : (
-          <SelectedPostView post={post} />
+          <SelectedPostView post={selectedPost} />
         )}
       </div>
     );

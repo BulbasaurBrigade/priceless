@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
-import { ADD_REQUESTER, UPDATE_POST } from './singlePost';
+import { ADD_REQUESTER, UPDATE_POST, SET_SINGLE_POST } from './singlePost';
 import { _setCategory, _setBounds, _setSearch } from './postFilters';
 import { _isLoading, _formLoading } from './loading';
 import { setPostFormErrorMsg } from './error';
@@ -10,7 +10,7 @@ import socket from '../socket';
 //action type
 const SET_POSTS = 'SET_POSTS';
 export const CREATE_POST = 'CREATE_POST';
-const EDIT_POST = 'EDIT_POST';
+export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 
 // action creator
@@ -177,8 +177,14 @@ export const deletePost = (id) => {
 
 export default (state = [], action) => {
   switch (action.type) {
+    case SET_SINGLE_POST:
+      return state.map((post) =>
+        post.id === action.post.id ? action.post : post
+      );
+
     case SET_POSTS:
       return action.posts;
+
     case CREATE_POST:
       return [...state, action.post];
 

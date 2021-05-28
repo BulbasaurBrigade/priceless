@@ -1,5 +1,5 @@
 body {
-  font-family: "Tajawal", sans-serif;
+  font-family: 'Tajawal', sans-serif;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -33,6 +33,10 @@ p {
   font-weight: bold;
   display: block;
   margin: 0.5rem 0;
+}
+
+.flex-row {
+  display: flex;
 }
 
 /* navbar */
@@ -145,7 +149,6 @@ nav ul ul li:hover {
 
 /* landing page*/
 #landing-page {
-
   background-image: url('nycBrownstones.jpg');
   background-size: cover;
   width: 100vw;
@@ -162,7 +165,6 @@ nav ul ul li:hover {
   font-size: 100px;
 
   font-family: 'Shadows Into Light', cursive;
-
 }
 
 #landing-page i {
@@ -460,7 +462,7 @@ nav ul ul li:hover {
   background-color: white;
 }
 
-input[type="file"] {
+input[type='file'] {
   border: none;
 }
 
@@ -812,10 +814,37 @@ summary {
   display: flex;
 }
 
+/* Admin View */
+#admin-container a {
+  background-color: #103a33;
+  color: white;
+  margin: 0 0.25rem;
+  padding: 0.5rem 0.25rem 0.25rem 0.25rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+#admin-table {
+  margin: 2rem;
+}
+
+#admin-table th {
+  border-bottom: 2px solid darkgreen;
+}
+
+#admin-table td {
+  border-bottom: 1px dashed lightslategray;
+  padding: 0.25rem 0;
+}
+
+#admin-table button {
+  margin: 1rem 0;
+}
+
 /* loading page */
 
 #loading-page {
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
   font-size: 40px;
   text-align: center;
   color: green;
