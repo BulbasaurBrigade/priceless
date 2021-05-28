@@ -1,6 +1,6 @@
-import React from "react";
-import LandingPage from "./LandingPage";
-import Footer from "./Footer";
+import React from 'react';
+import LandingPage from './LandingPage';
+import Footer from './Footer';
 
 const Homepage = (props) => {
   return (
@@ -31,7 +31,7 @@ const Homepage = (props) => {
         <div className="how-to-right">
           <h3>Create Posts</h3>
           <p>
-            Create posts to offer resources to your neighbors We encourage you
+            Create posts to offer resources to your neighbors. We encourage you
             to share plenty of information and pictures in your initial post.
           </p>
         </div>
@@ -61,7 +61,7 @@ const Homepage = (props) => {
           <h3>Chat</h3>
           <p>
             Chat with folks you have connected with on posts to arrange the pick
-            up / drop off details If you can’t find a time to connect, or the
+            up / drop off details. If you can’t find a time to connect, or the
             item isn’t quite what you need, pass on the item and the lottery
             will run again.
           </p>

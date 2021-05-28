@@ -1,6 +1,6 @@
-import React from 'react';
-import { closeChat } from '../../store/singleChat';
-import { connect } from 'react-redux';
+import React from "react";
+import { closeChat } from "../../store/singleChat";
+import { connect } from "react-redux";
 
 class ChatHeader extends React.Component {
   handleClick = (e) => {
@@ -20,11 +20,11 @@ class ChatHeader extends React.Component {
             <div id="chat-header-details">
               <div>
                 <p>
-                  <span style={{ color: 'green' }}>Poster: </span>
+                  <span style={{ color: "green" }}>Poster: </span>
                   {singleChat.poster.displayName}
                 </p>
                 <p>
-                  <span style={{ color: 'green' }}>Recipient: </span>
+                  <span style={{ color: "green" }}>Recipient: </span>
                   {singleChat.recipient.displayName}
                 </p>
               </div>
@@ -37,7 +37,9 @@ class ChatHeader extends React.Component {
                 onClick={this.handleClick}
                 style={{
                   visibility:
-                    userId === singleChat.posterId ? 'visible' : 'hidden',
+                    userId === singleChat.posterId && singleChat.isOpen
+                      ? "visible"
+                      : "hidden",
                 }}
               >
                 claimed
@@ -49,13 +51,14 @@ class ChatHeader extends React.Component {
                 disabled={postId === 0}
                 name="pass"
                 onClick={this.handleClick}
+                style={{ visibility: singleChat.isOpen ? "visible" : "hidden" }}
               >
                 pass
               </button>
             </div>
           </>
         ) : (
-          ''
+          ""
         )}
       </div>
     );

@@ -1,26 +1,28 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/UserAuth/AuthForm";
-import socket from "./socket";
+/* eslint-disable react/prefer-stateless-function */
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Login, Signup } from './components/UserAuth/AuthForm';
+import Admin from './components/Admin';
+import socket from './socket';
 
-import Homepage from "./components/Homepage";
-import MainContainer from "./components/MainContainer";
-import CreatePost from "./components/CreatePost";
-import Chat from "./components/chat/Chat";
-import MyAccount from "./components/myAccount/MyAccount";
-import MyPosts from "./components/myAccount/MyPosts";
-import EditPost from "./components/myAccount/EditPost";
-import EditProfile from "./components/myAccount/EditProfile";
-import FAQ from "./components/FAQ";
-import MoreInfo from "./components/UserAuth/MoreInfo";
+import Homepage from './components/Homepage';
+import MainContainer from './components/MainContainer';
+import CreatePost from './components/CreatePost';
+import Chat from './components/chat/Chat';
+import MyAccount from './components/myAccount/MyAccount';
+import MyPosts from './components/myAccount/MyPosts';
+import EditPost from './components/myAccount/EditPost';
+import EditProfile from './components/myAccount/EditProfile';
+import FAQ from './components/FAQ';
+import MoreInfo from './components/UserAuth/MoreInfo';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   render() {
-    const { isLoggedIn, hasDisplayName } = this.props;
+    const { isLoggedIn, hasDisplayName, isAdmin } = this.props;
 
     if (isLoggedIn && !hasDisplayName) return <MoreInfo />;
 
@@ -37,6 +39,7 @@ class Routes extends Component {
             <Route path="/mypost/:id" component={EditPost} />
             <Route path="/profile" component={EditProfile} />
             <Route path="/faq" component={FAQ} />
+            {isAdmin && <Route path="/admin/:view?" component={Admin} />}
             <Redirect to="/" />
           </Switch>
         ) : (
@@ -76,6 +79,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     hasDisplayName: !!state.auth.displayName,
+    isAdmin: state.auth.isAdmin,
   };
 };
 
