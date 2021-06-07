@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 
+// Allows sending a string and recieving a lat/lng from anywhere in the project
 module.exports = async (address) => {
   try {
     const parameters = [];

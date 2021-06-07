@@ -3,6 +3,7 @@ const {
   models: { User },
 } = require('../db');
 
+// Protects routes that only logged in users should be able to access
 const requireToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
@@ -22,6 +23,7 @@ const requireToken = async (req, res, next) => {
   }
 };
 
+// Protects routes that only an admin should be able to access
 const isAdmin = (req, res, next) => {
   if (!req.user.isAdmin) {
     res.status(403).send('Nice try!');
