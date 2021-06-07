@@ -14,7 +14,6 @@ class App extends React.Component {
   render() {
     const { loading } = this.props;
     if (loading) return <LoadingPage />;
-    // if (loading) return <span style={{ placeSelf: "center" }}>Loading</span>;
 
     return (
       <>

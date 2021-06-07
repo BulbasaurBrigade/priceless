@@ -78,6 +78,9 @@ const Nav = ({ handleClick, isLoggedIn, isAdmin }) => (
             </ul>
           </li>
           <li>
+            <Link to="/faq">FAQ</Link>
+          </li>
+          <li>
             <a>Sign In</a>
             <ul>
               <li>
