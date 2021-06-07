@@ -8,10 +8,9 @@ module.exports = (io) => {
   // instance method to run the lottery and select a winner
   // or change the post status to open if there are no current requesters
   Post.prototype.lottery = async function () {
-    console.log('running lottery now!');
-
     try {
       await this.reload();
+      // If the post was deleted before its first lottery, don't run the lottery
       if (this.status === 'deleted') return;
       // get all of a post's associated requesters
       const requesters = await this.getRequester();
@@ -27,7 +26,6 @@ module.exports = (io) => {
         this.status = 'open';
         this.save();
         io.sockets.emit('post status update', { post: this });
-
         return;
       }
 
@@ -36,13 +34,19 @@ module.exports = (io) => {
 
       // uses that number as an index to pick the winner
       const winner = requestersWaiting[randIdx];
+
+      // Change that user's lottery ticket status to no longer waiting
       winner.lotteryTicket.isWaiting = false;
       await winner.lotteryTicket.save();
+
+      // Set the user as the post's recipient
+      // Saving over the previous if applicable
       await this.setRecipient(winner.id);
       this.status = 'pending';
       this.save();
 
       io.sockets.emit('post status update', { post: this });
+
       // create a chat for this new post, poster, recipient combo
       await this.chat();
     } catch (err) {
@@ -55,9 +59,9 @@ module.exports = (io) => {
     try {
       const poster = await this.getPoster();
       const recipient = await this.getRecipient();
-      // console.log({ poster });
-      // console.log({ recipient });
-      let opener = `Congrats! You have connected on this post.`;
+
+      // Creates the chat and an opening message for the chat from the 'Admin'
+      const opener = `Congrats! You have connected on this post.`;
       const [chat, openingMessage] = await Promise.all([
         Chat.create(),
         Message.create({
@@ -65,6 +69,7 @@ module.exports = (io) => {
         }),
       ]);
 
+      // associates the users, post, and message to the new chat
       await Promise.all([
         chat.setPost(this),
         chat.setRecipient(this.recipientId),
@@ -72,6 +77,8 @@ module.exports = (io) => {
         openingMessage.setChat(chat),
       ]);
 
+      // If there were pickup details given for the post, create a message from the 'Admin'
+      // reminding the users of what was written
       if (this.pickupDetails) {
         const content = `To get you started, here are the pick up details that ${poster.displayName} left for the listing:\n"${this.pickupDetails}"`;
         const pickUpMsg = await Message.create({ content });
