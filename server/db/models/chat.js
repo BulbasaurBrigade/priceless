@@ -2,6 +2,17 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
+/*
+  Through Associations, connects a unique combination of:
+    User as Poster
+    User as Recipient
+    Post
+  Groups messages together for chats
+  {
+    isOpen: boolean that changes to false once a user has hit pass or claim on the exchange
+  }
+*/
+
 const Chat = db.define('chat', {
   id: {
     type: Sequelize.INTEGER,
