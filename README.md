@@ -1,7 +1,5 @@
 Welcome to Priceless! 
 
-www.price-less.herokuapp.com
-
 ## Description 
 
 We are a collaborative web application focused on neighborhoods and local communities where users can post items to give away to their neighbors and can browse listings in their area. Inspired by the popular Buy Nothing Facebook groups, we aim to promote mutual aid and sustainability by offering local gift economies a dedicated platform to grow.
